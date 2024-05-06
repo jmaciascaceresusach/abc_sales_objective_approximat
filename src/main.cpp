@@ -110,8 +110,8 @@ int main(int argc, char* argv[]) {
     // double salesObjective, tolerance;
 
     // Cambio (06052024)
-    int sim_numberOfIterations, sim_salesObjective, sim_tolerance;
-    double sim_customerType, sim_typeOfSeller, sim_numberOfProductsSold, sim_saleDate, sim_products, sim_totalSaleValue;
+    int numberOfIterations, salesObjective, tolerance;
+    double customerType, typeOfSeller, numberOfProductsSold, saleDate, products, totalSaleValue;
 
     // Para 3 parámetros: 
     // Parte 1: numberOfIterations, salesObjective y tolerance
@@ -122,31 +122,26 @@ int main(int argc, char* argv[]) {
     // Parte 1: numberOfIterations, salesObjective, tolerance; y
     // Parte 2: customer type, type of seller, number of products sold, sale date, products y total sale value
     readConfigFor8("simulation_config.txt", 
-                    sim_numberOfIterations, 
-                    sim_salesObjective, 
-                    sim_tolerance,
-                    sim_customerType,
-                    sim_typeOfSeller,
-                    sim_numberOfProductsSold,
-                    sim_saleDate,
-                    sim_products,
-                    sim_totalSaleValue);
-
-    std::cout << "Configurations (pre proce): " << std::endl;
-    std::cout << "numberOfIterations: " << sim_numberOfIterations << std::endl;
-    std::cout << "salesObjective: " << sim_salesObjective <<  std::endl;
-    std::cout << "tolerance: " << sim_tolerance <<  std::endl;
+                    numberOfIterations, 
+                    salesObjective, 
+                    tolerance,
+                    customerType,
+                    typeOfSeller,
+                    numberOfProductsSold,
+                    saleDate,
+                    products,
+                    totalSaleValue);
 
     // Inicializar el motor de simulación
     SimulationEngine simulationEngine;
 
     // Definir y agregar parámetros
-    Parameter Param_customerType("customer type", sim_customerType);
-    Parameter Param_typeOfSeller("type of seller", sim_typeOfSeller);
-    Parameter Param_numberOfProductsSold("number of products sold", sim_numberOfProductsSold);
-    Parameter Param_saleDate("sale date", sim_saleDate);
-    Parameter Param_products("products", sim_products);
-    Parameter Param_totalSaleValue("total sale value", sim_totalSaleValue);
+    Parameter Param_customerType("customer type", customerType);
+    Parameter Param_typeOfSeller("type of seller", typeOfSeller);
+    Parameter Param_numberOfProductsSold("number of products sold", numberOfProductsSold);
+    Parameter Param_saleDate("sale date", saleDate);
+    Parameter Param_products("products", products);
+    Parameter Param_totalSaleValue("total sale value", totalSaleValue);
 
     // Agregar parámetros
     simulationEngine.addParameter(Param_customerType);
@@ -161,20 +156,20 @@ int main(int argc, char* argv[]) {
     //double tolerance = 300; // Desviación aceptable del objetivo
 
     // Ejecutar simulaciones
-    simulationEngine.runSimulations(sim_numberOfIterations, calculateSale, sim_salesObjective, sim_tolerance);
+    simulationEngine.runSimulations(numberOfIterations, calculateSale, salesObjective, tolerance);
 
     std::cout << "Configurations: " << std::endl;
-    std::cout << "numberOfIterations: " << sim_numberOfIterations << std::endl;
-    std::cout << "salesObjective: " << sim_salesObjective <<  std::endl;
-    std::cout << "tolerance: " << sim_tolerance <<  std::endl;
+    std::cout << "numberOfIterations: " << numberOfIterations << std::endl;
+    std::cout << "salesObjective: " << salesObjective << std::endl;
+    std::cout << "tolerance: " << tolerance << std::endl;
 
     std::cout << "Initial Parameters: " << std::endl;
-    std::cout << "customer type: " << sim_customerType <<  std::endl;
-    std::cout << "type of seller: " << sim_typeOfSeller <<  std::endl;
-    std::cout << "number of products sold: " << sim_numberOfProductsSold <<  std::endl;
-    std::cout << "sale date: " << sim_saleDate <<  std::endl;
-    std::cout << "products: " << sim_products <<  std::endl;
-    std::cout << "total sale value: " << sim_totalSaleValue <<  std::endl;
+    std::cout << "customer type: " << customerType << std::endl;
+    std::cout << "type of seller: " << typeOfSeller << std::endl;
+    std::cout << "number of products sold: " << numberOfProductsSold << std::endl;
+    std::cout << "sale date: " << saleDate << std::endl;
+    std::cout << "products: " << products << std::endl;
+    std::cout << "total sale value: " << totalSaleValue << std::endl;
 
     // Parámetros refinados de salida
     std::cout << "Refined Parameters:" << std::endl;
