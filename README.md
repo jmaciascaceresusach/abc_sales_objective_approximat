@@ -16,7 +16,7 @@ From your virtual machine, run the following:
 1. git clone **https://github.com/jmaciascaceresusach/abc_sales_objective_approximat.git**
 2. mkdir abc_sales_objective_approximat/build
 3. cd abc_sales_objective_approximat/build
-4. cmake..
+4. cmake .. (Important: there is a blank space between the cmake and the two points)
 5. make
 
 After this, verify the compilation that was carried out correctly and was also executed.
