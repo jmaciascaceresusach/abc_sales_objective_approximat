@@ -48,8 +48,6 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         this->adjustParameters(saleValue, salesObjective); // Llamada recién agregada para ajustar parámetros
         std::cout << "saleValue (adjust): " << saleValue << std::endl; 
         std::cout << "\n";
-        std::cout << "Parameter: saleValue, Probability (asdsad): " << saleValue << std::endl;
-        refinedSaleValue = saleValue;
     }
 
     std::cout << "***End Simulation***\n";
@@ -59,6 +57,11 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         [salesObjective](const SimulationOutcome& a, const SimulationOutcome& b) {
             return std::abs(a.saleValue - salesObjective) < std::abs(b.saleValue - salesObjective);
         });
+
+    if (bestOutcome != outcomes.end()){
+        std::cout << "Parameter: saleValue, Probability (latest best value): " << bestOutcome << std::endl;
+        refinedSaleValue = bestOutcome;
+    }
 
     if (bestOutcome != outcomes.end() && std::abs(bestOutcome->saleValue - salesObjective) <= tolerance) {
         // Actualizar parámetros con el mejor resultado encontrado
