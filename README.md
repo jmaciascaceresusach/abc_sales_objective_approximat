@@ -23,4 +23,11 @@ After this, verify the compilation that was carried out correctly and was also e
 
 Now, to test the project, you would have to use the following statements:
 
-PENDING
+1. cd abc_sales_objective_approximat/build
+2. ./ABC_SALES_OBJECTIVE_APPROXIMAT ../simulation_config.txt
+
+The simulation_config.txt file, can be modified according to:
+
+numberOfIterations=**10000**
+salesObjective=**1000**
+tolerance=**300**

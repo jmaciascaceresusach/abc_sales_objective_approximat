@@ -34,6 +34,8 @@ double calculateSale(const std::vector<Parameter>& parameters) {
     return totalSaleValue;
 }
 
+// Para 3 parámetros: 
+// Parte 1: numberOfIterations, salesObjective y tolerance
 void readConfig(const std::string& configFilePath, int& numberOfIterations, double& salesObjective, double& tolerance) {
     std::ifstream configFile(configFilePath);
     std::string line;
@@ -54,6 +56,44 @@ void readConfig(const std::string& configFilePath, int& numberOfIterations, doub
     }
 }
 
+// Para 8 parámetros: 
+// Parte 1: numberOfIterations, salesObjective, tolerance; y
+// Parte 2: customer type, type of seller, number of products sold, sale date, products y total sale value
+void readConfigFor8(const std::string& configFilePath, 
+                    int& numberOfIterations, 
+                    double& salesObjective, 
+                    double& tolerance,
+                    double& customerType,
+                    double& typeOfSeller,
+                    double& numberOfProductsSold,
+                    double& saleDate,
+                    double& products,
+                    double& totalSaleValue) {
+    std::ifstream configFile(configFilePath);
+    std::string line;
+
+    if (configFile.is_open()) {
+        while (getline(configFile, line)) {
+            std::istringstream iss(line);
+            std::string key;
+            if (getline(iss, key, '=')) {
+                std::string value;
+                if (getline(iss, value)) {
+                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
+                    else if (key == "salesObjective") salesObjective = std::stod(value);
+                    else if (key == "tolerance") tolerance = std::stod(value);
+                    else if (key == "customerType") customerType = std::stod(value);
+                    else if (key == "typeOfSeller") typeOfSeller = std::stod(value);
+                    else if (key == "numberOfProductsSold") numberOfProductsSold = std::stod(value);
+                    else if (key == "saleDate") saleDate = std::stod(value);
+                    else if (key == "products") products = std::stod(value);
+                    else if (key == "totalSaleValue") totalSaleValue = std::stod(value);
+                }
+            }
+        }
+    }
+}
+
 int main(int argc, char* argv[]) {
     
     // Etapa 1
@@ -65,22 +105,43 @@ int main(int argc, char* argv[]) {
     double salesObjective = std::atof(argv[2]);
     double tolerance = std::atof(argv[3]);*/
 
-    // Etapa 1 (nueva)
-    int numberOfIterations;
-    double salesObjective, tolerance;
+    // Etapa 1
+    // int numberOfIterations;
+    // double salesObjective, tolerance;
 
-    readConfig("simulation_config.txt", numberOfIterations, salesObjective, tolerance);
+    // Cambio (06052024)
+    int numberOfIterations;
+    double salesObjective, tolerance, customerType, typeOfSeller, numberOfProductsSold, saleDate, products, totalSaleValue;
+
+    // Para 3 parámetros: 
+    // Parte 1: numberOfIterations, salesObjective y tolerance
+    // readConfig("simulation_config.txt", numberOfIterations, salesObjective, tolerance);
+
+    // Cambio (06052024)
+    // Para 8 parámetros: 
+    // Parte 1: numberOfIterations, salesObjective, tolerance; y
+    // Parte 2: customer type, type of seller, number of products sold, sale date, products y total sale value
+    readConfigFor8("simulation_config.txt", 
+                    numberOfIterations, 
+                    salesObjective, 
+                    tolerance,
+                    customerType,
+                    typeOfSeller,
+                    numberOfProductsSold,
+                    saleDate,
+                    products,
+                    totalSaleValue);
 
     // Inicializar el motor de simulación
     SimulationEngine simulationEngine;
 
     // Definir y agregar parámetros
-    Parameter customerType("customer type", 0.7);
+    /*Parameter customerType("customer type", 0.7);
     Parameter typeOfSeller("type of seller", 0.2);
     Parameter numberOfProductsSold("number of products sold", 0.3);
     Parameter saleDate("sale date", 0.1);
     Parameter products("products", 0.2);
-    Parameter totalSaleValue("total sale value", 0.2);
+    Parameter totalSaleValue("total sale value", 0.2);*/
 
     // Agregar parámetros
     simulationEngine.addParameter(customerType);
