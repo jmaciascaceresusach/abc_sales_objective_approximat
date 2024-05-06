@@ -137,20 +137,22 @@ int main(int argc, char* argv[]) {
     SimulationEngine simulationEngine;
 
     // Definir y agregar parámetros
-    //Parameter customerType("customer type", customerType);
-    //Parameter typeOfSeller("type of seller", typeOfSeller);
-    //Parameter numberOfProductsSold("number of products sold", numberOfProductsSold);
-    //Parameter saleDate("sale date", saleDate);
-    //Parameter products("products", products);
-    //Parameter totalSaleValue("total sale value", totalSaleValue);
+    Parameter customerTypeParameter("customer type", customerType);
+    Parameter typeOfSellerParameter("type of seller", typeOfSeller);
+    Parameter numberOfProductsSoldParameter("number of products sold", numberOfProductsSold);
+    Parameter saleDateParameter("sale date", saleDate);
+    Parameter productsParameter("products", products);
+    Parameter totalSaleValueParameter("total sale value", totalSaleValue);
+
+    std::cout << "customerTypeParameter: " << std::endl;
 
     // Agregar parámetros
-    simulationEngine.addParameter(customerType);
-    simulationEngine.addParameter(typeOfSeller);
-    simulationEngine.addParameter(numberOfProductsSold);
-    simulationEngine.addParameter(saleDate);
-    simulationEngine.addParameter(products);
-    simulationEngine.addParameter(totalSaleValue);
+    simulationEngine.addParameter(customerTypeParameter);
+    simulationEngine.addParameter(typeOfSellerParameter);
+    simulationEngine.addParameter(numberOfProductsSoldParameter);
+    simulationEngine.addParameter(saleDateParameter);
+    simulationEngine.addParameter(productsParameter);
+    simulationEngine.addParameter(totalSaleValueParameter);
 
     // Objetivo de ventas y tolerancia (antigua, ahora se hace por archivo de entrada)
     //double salesObjective = 10000; // Ejemplo de objetivo de ventas
