@@ -61,8 +61,8 @@ void readConfig(const std::string& configFilePath, int& numberOfIterations, doub
 // Parte 2: customer type, type of seller, number of products sold, sale date, products y total sale value
 void readConfigFor8(const std::string& configFilePath, 
                     int& numberOfIterations, 
-                    int& salesObjective, 
-                    int& tolerance,
+                    double& salesObjective, 
+                    double& tolerance,
                     double& customerType,
                     double& typeOfSeller,
                     double& numberOfProductsSold,
@@ -80,8 +80,8 @@ void readConfigFor8(const std::string& configFilePath,
                 std::string value;
                 if (getline(iss, value)) {
                     if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
-                    else if (key == "salesObjective") salesObjective = std::stoi(value);
-                    else if (key == "tolerance") tolerance = std::stoi(value);
+                    else if (key == "salesObjective") salesObjective = std::stod(value);
+                    else if (key == "tolerance") tolerance = std::stod(value);
                     else if (key == "customerType") customerType = std::stod(value);
                     else if (key == "typeOfSeller") typeOfSeller = std::stod(value);
                     else if (key == "numberOfProductsSold") numberOfProductsSold = std::stod(value);
@@ -110,8 +110,8 @@ int main(int argc, char* argv[]) {
     // double salesObjective, tolerance;
 
     // Cambio (06052024)
-    int numberOfIterations, salesObjective, tolerance;
-    double customerType, typeOfSeller, numberOfProductsSold, saleDate, products, totalSaleValue;
+    int numberOfIterations;
+    double salesObjective, tolerance, customerType, typeOfSeller, numberOfProductsSold, saleDate, products, totalSaleValue;
 
     // Para 3 parámetros: 
     // Parte 1: numberOfIterations, salesObjective y tolerance
@@ -154,7 +154,7 @@ int main(int argc, char* argv[]) {
     // Objetivo de ventas y tolerancia (antigua, ahora se hace por archivo de entrada)
     //double salesObjective = 10000; // Ejemplo de objetivo de ventas
     //double tolerance = 300; // Desviación aceptable del objetivo
-    
+
     // Ejecutar simulaciones
     simulationEngine.runSimulations(numberOfIterations, calculateSale, salesObjective, tolerance);
 
