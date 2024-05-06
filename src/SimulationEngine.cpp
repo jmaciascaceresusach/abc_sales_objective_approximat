@@ -36,8 +36,9 @@ void SimulationEngine::runSimulations(int numberOfIterations,
     std::cout << "\n";
     std::cout << "***Start Simulation***\n";
 
+    double saleValue;
     for (int i = 0; i < numberOfIterations; ++i) {
-        double saleValue = calculateSale(this->parameters);    
+        saleValue = calculateSale(this->parameters);    
         std::cout << "Iteration: " << i << std::endl;    
         std::cout << "saleValue: " << saleValue << std::endl;
         outcomes.push_back({saleValue, this->parameters});
@@ -48,7 +49,7 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         std::cout << "\n";
     }
 
-    std::cout << "Parameter: saleValue (before), Probability: " << bestOutcome->saleValue << std::endl;
+    std::cout << "Parameter: saleValue (before), Probability: " << saleValue << std::endl;
 
     std::cout << "***End Simulation***\n";
 
