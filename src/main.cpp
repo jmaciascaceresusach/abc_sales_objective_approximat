@@ -182,6 +182,7 @@ int main(int argc, char* argv[]) {
     for (const auto& param : simulationEngine.parameters) {
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
+    std::cout << "\n";
 
     return 0;
 }

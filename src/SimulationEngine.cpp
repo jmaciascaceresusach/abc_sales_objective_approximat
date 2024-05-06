@@ -51,8 +51,10 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         // Actualizar parámetros con el mejor resultado encontrado
         this->parameters = bestOutcome->parameters;
         std::cout << "Parámetros óptimos encontrados dentro de la tolerancia..\n";
+        std::cout << "\n";
     } else {
         std::cout << "No se encontraron parámetros óptimos dentro de la tolerancia.\n";
+        std::cout << "\n";
     }
 }
 
