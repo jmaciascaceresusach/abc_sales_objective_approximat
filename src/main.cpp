@@ -20,6 +20,8 @@ que se alcanzaron a realizar
 #include <cstdlib> // para std::atoi and std::atof
 #include <fstream>
 #include <sstream>
+#include <chrono>
+#include <thread>
 
 // Función para calcular ventas simuladas en función de parámetros.
 double calculateSale(const std::vector<Parameter>& parameters) {
