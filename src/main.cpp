@@ -201,7 +201,8 @@ int main(int argc, char* argv[]) {
     // Calcula la duración en milisegundos
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-    std::cout << "Duración: " << duration.count() << " milisegundos" << std::endl;
+    std::cout << "***Duration***" << std::endl;
+    std::cout << "Time: " << duration.count() << " milliseconds" << std::endl;
     std::cout << "\n";
     
     // Cambio (06052024) 
