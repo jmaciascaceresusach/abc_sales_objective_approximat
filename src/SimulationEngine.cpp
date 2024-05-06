@@ -47,9 +47,8 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         this->adjustParameters(saleValue, salesObjective); // Llamada recién agregada para ajustar parámetros
         std::cout << "saleValue (adjust): " << saleValue << std::endl; 
         std::cout << "\n";
+        std::cout << "Parameter: saleValue (before), Probability: " << saleValue << std::endl;
     }
-
-    std::cout << "Parameter: saleValue (before), Probability: " << saleValue << std::endl;
 
     std::cout << "***End Simulation***\n";
 
