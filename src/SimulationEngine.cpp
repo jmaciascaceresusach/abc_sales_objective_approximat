@@ -62,6 +62,7 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         std::cout << "\n";
         std::cout << "***Result***\n";
         std::cout << "Optimal parameters found within tolerance.\n";
+        td::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
         std::cout << "\n";
     } else {
         std::cout << "\n";
