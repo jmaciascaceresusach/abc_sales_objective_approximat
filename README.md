@@ -28,6 +28,12 @@ Now, to test the project, you would have to use the following statements:
 
 The simulation_config.txt file, can be modified according to:
 
-numberOfIterations=**10000**
-salesObjective=**1000**
-tolerance=**300**
+- numberOfIterations=10000
+- salesObjective=1000.5
+- tolerance=900.12
+- customerType=0.4
+- typeOfSeller=0.2
+- numberOfProductsSold=0.3
+- saleDate=0.1
+- products=0.2
+- totalSaleValue=0.2
