@@ -48,6 +48,8 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         std::cout << "\n";
     }
 
+    std::cout << "Parameter: saleValue (before), Probability: " << bestOutcome->saleValue << std::endl;
+
     std::cout << "***End Simulation***\n";
 
     // Analizar los resultados para encontrar el conjunto de parámetros más cercano al objetivo de ventas.
@@ -55,8 +57,6 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         [salesObjective](const SimulationOutcome& a, const SimulationOutcome& b) {
             return std::abs(a.saleValue - salesObjective) < std::abs(b.saleValue - salesObjective);
         });
-
-    std::cout << "Parameter: saleValue (before), Probability: " << bestOutcome->saleValue << std::endl;
 
     if (bestOutcome != outcomes.end() && std::abs(bestOutcome->saleValue - salesObjective) <= tolerance) {
         // Actualizar parámetros con el mejor resultado encontrado
