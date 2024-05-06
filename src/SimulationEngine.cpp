@@ -75,8 +75,7 @@ void SimulationEngine::adjustParameters(double saleValue, double salesObjective)
     double adjustmentFactor = (saleValue < salesObjective) ? 1.01 : 0.99; // Ajustar en un 1%
     for (auto& param : this->parameters) {
         param.probability *= adjustmentFactor; // Se asegura que la "probabilidad" sea el campo a ajustar
-        std::cout << "param.name: " << param.name;
-        std::cout << ", param.probability: " << param.probability << std::endl; 
+        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
         // Determinado por el valor de probabilidad en el rango [0, 1]
         param.probability = std::max(0.0, std::min(param.probability, 1.0));
     }
