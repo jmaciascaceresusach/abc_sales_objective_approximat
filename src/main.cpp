@@ -132,6 +132,11 @@ int main(int argc, char* argv[]) {
                     sim_products,
                     sim_totalSaleValue);
 
+    std::cout << "Configurations (pre proce): " << std::endl;
+    std::cout << "numberOfIterations: " << sim_numberOfIterations << std::endl;
+    std::cout << "salesObjective: " << sim_salesObjective <<  std::endl;
+    std::cout << "tolerance: " << sim_tolerance <<  std::endl;
+
     // Inicializar el motor de simulación
     SimulationEngine simulationEngine;
 
