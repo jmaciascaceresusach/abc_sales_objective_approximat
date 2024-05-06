@@ -56,6 +56,8 @@ void SimulationEngine::runSimulations(int numberOfIterations,
             return std::abs(a.saleValue - salesObjective) < std::abs(b.saleValue - salesObjective);
         });
 
+    std::cout << "Parameter: saleValue (before), Probability: " << bestOutcome->saleValue << std::endl;
+
     if (bestOutcome != outcomes.end() && std::abs(bestOutcome->saleValue - salesObjective) <= tolerance) {
         // Actualizar parámetros con el mejor resultado encontrado
         this->parameters = bestOutcome->parameters;
