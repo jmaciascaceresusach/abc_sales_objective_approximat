@@ -79,7 +79,7 @@ void readConfigFor8(const std::string& configFilePath,
             if (getline(iss, key, '=')) {
                 std::string value;
                 if (getline(iss, value)) {
-                    std::cout << "Key: " << key << ", Value: " << value << std::endl;  // Debug output
+                    //std::cout << "Key: " << key << ", Value: " << value << std::endl;  // Debug output
                     if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
                     else if (key == "salesObjective") salesObjective = std::stod(value);
                     else if (key == "tolerance") tolerance = std::stod(value);
@@ -166,6 +166,7 @@ int main(int argc, char* argv[]) {
     std::cout << "numberOfIterations: " << numberOfIterations << std::endl;
     std::cout << "salesObjective: " << salesObjective << std::endl;
     std::cout << "tolerance: " << tolerance << std::endl;
+    std::cout << "\n";
 
     std::cout << "Initial Parameters: " << std::endl;
     std::cout << "customer type: " << customerType << std::endl;
@@ -174,6 +175,7 @@ int main(int argc, char* argv[]) {
     std::cout << "sale date: " << saleDate << std::endl;
     std::cout << "products: " << products << std::endl;
     std::cout << "total sale value: " << totalSaleValue << std::endl;
+    std::cout << "\n";
 
     // Parámetros refinados de salida
     std::cout << "Refined Parameters:" << std::endl;
