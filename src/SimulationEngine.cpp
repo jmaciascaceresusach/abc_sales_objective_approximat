@@ -35,6 +35,7 @@ void SimulationEngine::runSimulations(int numberOfIterations,
 
     std::cout << "\n";
     std::cout << "***Start Simulation***\n";
+    std::cout << "\n";
 
     double refinedSaleValue;
     for (int i = 0; i < numberOfIterations; ++i) {
@@ -47,6 +48,7 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         this->adjustParameters(saleValue, salesObjective); // Llamada recién agregada para ajustar parámetros
         std::cout << "saleValue (adjust): " << saleValue << std::endl; 
         std::cout << "\n";
+        std::cout << "Parameter: saleValue, Probability (asdsad): " << saleValue << std::endl;
         refinedSaleValue = saleValue;
     }
 
