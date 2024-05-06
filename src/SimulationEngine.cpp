@@ -59,8 +59,8 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         });
 
     if (bestOutcome != outcomes.end()){
-        std::cout << "Parameter: saleValue, Probability (latest best value): " << bestOutcome << std::endl;
-        refinedSaleValue = bestOutcome;
+        std::cout << "Parameter: saleValue, Probability (latest best value): " << bestOutcome->saleValue << std::endl;
+        refinedSaleValue = bestOutcome->saleValue;
     }
 
     if (bestOutcome != outcomes.end() && std::abs(bestOutcome->saleValue - salesObjective) <= tolerance) {
