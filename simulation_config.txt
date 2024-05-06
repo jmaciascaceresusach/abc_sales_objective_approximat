@@ -1,6 +1,6 @@
 numberOfIterations=10000
 salesObjective=1000.5
-tolerance=300.12
+tolerance=900.12
 customerType=0.4
 typeOfSeller=0.2
 numberOfProductsSold=0.3
