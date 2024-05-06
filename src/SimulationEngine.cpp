@@ -60,6 +60,7 @@ void SimulationEngine::runSimulations(int numberOfIterations,
 
     if (bestOutcome != outcomes.end()){
         std::cout << "Parameter: saleValue, Probability (latest best value): " << bestOutcome->saleValue << std::endl;
+        std::cout << "Parameter: saleValue, Probability (lthe second to last best value): " << outcomes.end() << std::endl;
         refinedSaleValue = bestOutcome->saleValue;
     }
 
