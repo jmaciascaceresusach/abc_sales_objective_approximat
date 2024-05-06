@@ -162,13 +162,13 @@ int main(int argc, char* argv[]) {
     // Ejecutar simulaciones
     simulationEngine.runSimulations(numberOfIterations, calculateSale, salesObjective, tolerance);
 
-    std::cout << "Configurations: " << std::endl;
+    std::cout << "***Configurations***" << std::endl;
     std::cout << "numberOfIterations: " << numberOfIterations << std::endl;
     std::cout << "salesObjective: " << salesObjective << std::endl;
     std::cout << "tolerance: " << tolerance << std::endl;
     std::cout << "\n";
 
-    std::cout << "Startup Parameters: " << std::endl;
+    std::cout << "***Startup Parameters***" << std::endl;
     std::cout << "customer type: " << customerType << std::endl;
     std::cout << "type of seller: " << typeOfSeller << std::endl;
     std::cout << "number of products sold: " << numberOfProductsSold << std::endl;
@@ -178,7 +178,7 @@ int main(int argc, char* argv[]) {
     std::cout << "\n";
 
     // Parámetros refinados de salida
-    std::cout << "Refined Parameters:" << std::endl;
+    std::cout << "***Refined Parameters***" << std::endl;
     for (const auto& param : simulationEngine.parameters) {
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }

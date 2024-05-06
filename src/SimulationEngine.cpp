@@ -33,7 +33,7 @@ void SimulationEngine::runSimulations(int numberOfIterations,
                                       double tolerance) {
     std::vector<SimulationOutcome> outcomes;
 
-    std::cout << "Start Simulation: \n";
+    std::cout << "***Start Simulation***\n";
 
     for (int i = 0; i < numberOfIterations; ++i) {
         double saleValue = calculateSale(this->parameters);    
@@ -44,9 +44,10 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         // Ajustar los parámetros según los resultados.
         this->adjustParameters(saleValue, salesObjective); // Llamada recién agregada para ajustar parámetros
         std::cout << "saleValue (adjust): " << saleValue << std::endl; 
+        std::cout << "\n";
     }
 
-    std::cout << "End Simulation: \n";
+    std::cout << "***End Simulation***\n";
 
     // Analizar los resultados para encontrar el conjunto de parámetros más cercano al objetivo de ventas.
     auto bestOutcome = std::min_element(outcomes.begin(), outcomes.end(), 
@@ -57,10 +58,12 @@ void SimulationEngine::runSimulations(int numberOfIterations,
     if (bestOutcome != outcomes.end() && std::abs(bestOutcome->saleValue - salesObjective) <= tolerance) {
         // Actualizar parámetros con el mejor resultado encontrado
         this->parameters = bestOutcome->parameters;
-        std::cout << "Resultado: Parámetros óptimos encontrados dentro de la tolerancia..\n";
+        std::cout << "***Result***\n";
+        std::cout << "Optimal parameters found within tolerance.\n";
         std::cout << "\n";
     } else {
-        std::cout << "Resultado: No se encontraron parámetros óptimos dentro de la tolerancia.\n";
+        std::cout << "***Result***\n";
+        std::cout << "No optimal parameters were found within tolerance.\n";
         std::cout << "\n";
     }
 }
@@ -70,7 +73,8 @@ void SimulationEngine::adjustParameters(double saleValue, double salesObjective)
     double adjustmentFactor = (saleValue < salesObjective) ? 1.01 : 0.99; // Ajustar en un 1%
     for (auto& param : this->parameters) {
         param.probability *= adjustmentFactor; // Se asegura que la "probabilidad" sea el campo a ajustar
-        std::cout << "param.probability: " << param.probability << std::endl; 
+        std::cout << "param.name: " << param.name;
+        std::cout << ", param.probability: " << param.probability << std::endl; 
         // Determinado por el valor de probabilidad en el rango [0, 1]
         param.probability = std::max(0.0, std::min(param.probability, 1.0));
     }
