@@ -36,9 +36,9 @@ void SimulationEngine::runSimulations(int numberOfIterations,
     std::cout << "\n";
     std::cout << "***Start Simulation***\n";
 
-    double saleValue;
+    double refinedSaleValue;
     for (int i = 0; i < numberOfIterations; ++i) {
-        saleValue = calculateSale(this->parameters);    
+        double saleValue = calculateSale(this->parameters);    
         std::cout << "Iteration: " << i << std::endl;    
         std::cout << "saleValue: " << saleValue << std::endl;
         outcomes.push_back({saleValue, this->parameters});
@@ -47,7 +47,7 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         this->adjustParameters(saleValue, salesObjective); // Llamada recién agregada para ajustar parámetros
         std::cout << "saleValue (adjust): " << saleValue << std::endl; 
         std::cout << "\n";
-        std::cout << "Parameter: saleValue (before), Probability: " << saleValue << std::endl;
+        refinedSaleValue = saleValue;
     }
 
     std::cout << "***End Simulation***\n";
@@ -64,7 +64,7 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         std::cout << "\n";
         std::cout << "***Refined Parameters - Result***\n";
         std::cout << "Optimal parameters found within tolerance.\n";
-        std::cout << "Parameter: saleValue, Probability: " << bestOutcome->saleValue << std::endl;
+        std::cout << "Parameter: saleValue, Probability (the best value): " << refinedSaleValue << std::endl;
         for (auto& param : this->parameters) {
             std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
         }
