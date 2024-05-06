@@ -19,6 +19,13 @@ From your virtual machine, run the following:
 4. cmake .. (Important: there is a blank space between the cmake and the two points)
 5. make
 
+Now, if you only need to download the latest version, having already initialized the project, you only have to do the following:
+
+1. git pull **https://github.com/jmaciascaceresusach/abc_sales_objective_approximat.git**
+2. cd abc_sales_objective_approximat/build
+3. cmake .. (Important: there is a blank space between the cmake and the two points)
+4. make
+
 After this, verify the compilation that was carried out correctly and was also executed.
 
 Now, to test the project, you would have to use the following statements:
@@ -28,9 +35,9 @@ Now, to test the project, you would have to use the following statements:
 
 The simulation_config.txt file, can be modified according to:
 
-- numberOfIterations=10000
-- salesObjective=1000.5
-- tolerance=900.12
+- numberOfIterations=20
+- salesObjective=32.005
+- tolerance=30.120
 - customerType=0.4
 - typeOfSeller=0.2
 - numberOfProductsSold=0.3

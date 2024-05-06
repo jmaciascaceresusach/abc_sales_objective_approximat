@@ -104,9 +104,11 @@ int main(int argc, char* argv[]) {
     // Obtiene el tiempo de inicio
     auto start = std::chrono::high_resolution_clock::now();
 
-    std::ofstream out("simulation_output.txt");
-    std::streambuf* coutbuf = std::cout.rdbuf(); // Guarda el buffer viejo
-    std::cout.rdbuf(out.rdbuf()); // Redirecciona std::cout al archivo output.txt
+    // Cambio (06052024) 
+    // Guardar log en archivo externo (depurar)
+    // std::ofstream out("simulation_output.txt");
+    // std::streambuf* coutbuf = std::cout.rdbuf(); // Guarda el buffer viejo
+    // std::cout.rdbuf(out.rdbuf()); // Redirecciona std::cout al archivo output.txt
     
     // Etapa 1
     /*if (argc < 4) {
@@ -200,10 +202,12 @@ int main(int argc, char* argv[]) {
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
     std::cout << "Duración: " << duration.count() << " milisegundos" << std::endl;
-
+    
+    // Cambio (06052024) 
+    // Guardar log en archivo externo (depurar)
     // Restaura el buffer original para que std::cout escriba a la consola de nuevo
-    std::cout.rdbuf(coutbuf);
-    out.close();
+    // std::cout.rdbuf(coutbuf);
+    // out.close();
 
     return 0;
 }
