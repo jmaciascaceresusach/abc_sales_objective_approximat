@@ -189,11 +189,11 @@ int main(int argc, char* argv[]) {
     std::cout << "\n";
 
     // Parámetros refinados de salida
-    std::cout << "***Refined Parameters***" << std::endl;
-    for (const auto& param : simulationEngine.parameters) {
-        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
-    }
-    std::cout << "\n";
+    // std::cout << "***Refined Parameters***" << std::endl;
+    // for (const auto& param : simulationEngine.parameters) {
+    //     std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
+    // }
+    // std::cout << "\n";
 
     // Obtiene el tiempo de finalización
     auto end = std::chrono::high_resolution_clock::now();

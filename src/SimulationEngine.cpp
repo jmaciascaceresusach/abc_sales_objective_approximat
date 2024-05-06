@@ -60,8 +60,9 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         // Actualizar parámetros con el mejor resultado encontrado
         this->parameters = bestOutcome->parameters;
         std::cout << "\n";
-        std::cout << "***Result***\n";
+        std::cout << "***Refined Parameters - Result***\n";
         std::cout << "Optimal parameters found within tolerance.\n";
+        std::cout << "Parameter: saleValue, Probability: " << saleValue << std::endl;
         for (auto& param : this->parameters) {
             std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
         }
