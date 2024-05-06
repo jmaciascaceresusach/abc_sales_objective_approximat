@@ -98,6 +98,13 @@ void readConfigFor8(const std::string& configFilePath,
 }
 
 int main(int argc, char* argv[]) {
+
+    // Obtiene el tiempo de inicio
+    auto start = std::chrono::high_resolution_clock::now();
+
+    std::ofstream out("simulation_output.txt");
+    std::streambuf* coutbuf = std::cout.rdbuf(); // Guarda el buffer viejo
+    std::cout.rdbuf(out.rdbuf()); // Redirecciona std::cout al archivo output.txt
     
     // Etapa 1
     /*if (argc < 4) {
@@ -183,6 +190,18 @@ int main(int argc, char* argv[]) {
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
     std::cout << "\n";
+
+    // Obtiene el tiempo de finalización
+    auto end = std::chrono::high_resolution_clock::now();
+
+    // Calcula la duración en milisegundos
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
+    std::cout << "Duración: " << duration.count() << " milisegundos" << std::endl;
+
+    // Restaura el buffer original para que std::cout escriba a la consola de nuevo
+    std::cout.rdbuf(coutbuf);
+    out.close();
 
     return 0;
 }
