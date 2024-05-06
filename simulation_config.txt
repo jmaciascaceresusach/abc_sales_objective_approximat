@@ -1,5 +1,5 @@
 numberOfIterations=10
-salesObjective=100.42
+salesObjective=31
 tolerance=30.12
 customerType=0.4
 typeOfSeller=0.2
