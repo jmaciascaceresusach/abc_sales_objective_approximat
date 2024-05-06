@@ -61,8 +61,8 @@ void readConfig(const std::string& configFilePath, int& numberOfIterations, doub
 // Parte 2: customer type, type of seller, number of products sold, sale date, products y total sale value
 void readConfigFor8(const std::string& configFilePath, 
                     int& numberOfIterations, 
-                    double& salesObjective, 
-                    double& tolerance,
+                    int& salesObjective, 
+                    int& tolerance,
                     double& customerType,
                     double& typeOfSeller,
                     double& numberOfProductsSold,
