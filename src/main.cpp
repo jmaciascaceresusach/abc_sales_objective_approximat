@@ -164,12 +164,12 @@ int main(int argc, char* argv[]) {
     std::cout << "tolerance: " << tolerance <<  std::endl;
 
     std::cout << "Initial Parameters: " << std::endl;
-    std::cout << "customer type: " << Param_customerType <<  std::endl;
-    std::cout << "type of seller: " << Param_typeOfSeller <<  std::endl;
-    std::cout << "number of products sold: " << Param_numberOfProductsSold <<  std::endl;
-    std::cout << "sale date: " << Param_saleDate <<  std::endl;
-    std::cout << "products: " << Param_products <<  std::endl;
-    std::cout << "total sale value: " << Param_totalSaleValue <<  std::endl;
+    std::cout << "customer type: " << customerType <<  std::endl;
+    std::cout << "type of seller: " << typeOfSeller <<  std::endl;
+    std::cout << "number of products sold: " << numberOfProductsSold <<  std::endl;
+    std::cout << "sale date: " << saleDate <<  std::endl;
+    std::cout << "products: " << products <<  std::endl;
+    std::cout << "total sale value: " << totalSaleValue <<  std::endl;
 
     // Parámetros refinados de salida
     std::cout << "Refined Parameters:" << std::endl;
