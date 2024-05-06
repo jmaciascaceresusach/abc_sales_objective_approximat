@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
     SimulationEngine simulationEngine;
 
     // Definir y agregar parámetros
-    Parameter customerType("customer type", 0.3);
+    Parameter customerType("customer type", 0.7);
     Parameter typeOfSeller("type of seller", 0.2);
     Parameter numberOfProductsSold("number of products sold", 0.3);
     Parameter saleDate("sale date", 0.1);
