@@ -79,6 +79,7 @@ void readConfigFor8(const std::string& configFilePath,
             if (getline(iss, key, '=')) {
                 std::string value;
                 if (getline(iss, value)) {
+                    std::cout << "Key: " << key << ", Value: " << value << std::endl;  // Debug output
                     if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
                     else if (key == "salesObjective") salesObjective = std::stod(value);
                     else if (key == "tolerance") tolerance = std::stod(value);
@@ -91,6 +92,8 @@ void readConfigFor8(const std::string& configFilePath,
                 }
             }
         }
+    }else {
+        std::cerr << "Failed to open config file: " << configFilePath << std::endl;
     }
 }
 
@@ -110,9 +113,11 @@ int main(int argc, char* argv[]) {
     // double salesObjective, tolerance;
 
     // Cambio (06052024)
-    int numberOfIterations;
-    double salesObjective, tolerance;
-    double customerType, typeOfSeller, numberOfProductsSold, saleDate, products, totalSaleValue;
+    int numberOfIterations = 0;
+    double salesObjective = 0.0, tolerance = 0.0;
+    double customerType = 0.0, typeOfSeller = 0.0, numberOfProductsSold = 0.0;
+    double saleDate = 0.0, products = 0.0, totalSaleValue = 0.0;
+
 
     // Para 3 parámetros: 
     // Parte 1: numberOfIterations, salesObjective y tolerance
@@ -144,7 +149,7 @@ int main(int argc, char* argv[]) {
     Parameter productsParameter("products", products);
     Parameter totalSaleValueParameter("total sale value", totalSaleValue);
 
-    std::cout << "customerTypeParameter: " << std::endl;
+    std::cout << "customerType: " << customerType << std::endl;
 
     // Agregar parámetros
     simulationEngine.addParameter(customerTypeParameter);
