@@ -41,10 +41,12 @@ void SimulationEngine::runSimulations(int numberOfIterations,
     for (int i = 0; i < numberOfIterations; ++i) {
         double saleValue = calculateSale(this->parameters);    
         std::cout << "Iteration: " << i << " - saleValue: " << saleValue << std::endl;
+        
+        // Almacenar el resultado antes de cualquier ajuste
         outcomes.push_back({saleValue, this->parameters});
 
         // Ajustar los parámetros según los resultados.
-        this->adjustParameters(saleValue, salesObjective); // Llamada recién agregada para ajustar parámetros
+        this->adjustParameters(saleValue, salesObjective);
         std::cout << "\n";
     }
 
@@ -56,7 +58,27 @@ void SimulationEngine::runSimulations(int numberOfIterations,
             return std::abs(a.saleValue - salesObjective) < std::abs(b.saleValue - salesObjective);
         });
 
-    if (bestOutcome != outcomes.end() && std::abs(bestOutcome->saleValue - salesObjective) <= tolerance) {
+    if (bestOutcome != outcomes.end()) {
+        std::cout << "\n";
+        std::cout << "***Refined Parameters - Result***\n";
+        if (std::abs(bestOutcome->saleValue - salesObjective) <= tolerance) {
+            // Actualizar parámetros con el mejor resultado encontrado
+            this->parameters = bestOutcome->parameters;
+            std::cout << "Optimal parameters found within tolerance.\n";
+            std::cout << "Best saleValue: " << bestOutcome->saleValue << std::endl;  // Mostrar el mejor saleValue correctamente
+            for (const auto& param : this->parameters) {
+                std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
+            }
+            std::cout << "\n";
+        } else {
+            std::cout << "\n";
+            std::cout << "***Result***\n";
+            std::cout << "No optimal parameters were found within tolerance.\n";
+            std::cout << "\n";
+        }
+    }
+
+    /*if (bestOutcome != outcomes.end() && std::abs(bestOutcome->saleValue - salesObjective) <= tolerance) {
         // Actualizar parámetros con el mejor resultado encontrado
         this->parameters = bestOutcome->parameters;
         std::cout << "\n";
@@ -72,7 +94,7 @@ void SimulationEngine::runSimulations(int numberOfIterations,
         std::cout << "***Result***\n";
         std::cout << "No optimal parameters were found within tolerance.\n";
         std::cout << "\n";
-    }
+    }*/
 }
 
 void SimulationEngine::adjustParameters(double saleValue, double salesObjective) {
