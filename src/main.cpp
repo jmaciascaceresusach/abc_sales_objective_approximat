@@ -111,7 +111,8 @@ int main(int argc, char* argv[]) {
 
     // Cambio (06052024)
     int numberOfIterations;
-    double salesObjective, tolerance, customerType, typeOfSeller, numberOfProductsSold, saleDate, products, totalSaleValue;
+    double salesObjective, tolerance;
+    double customerType, typeOfSeller, numberOfProductsSold, saleDate, products, totalSaleValue;
 
     // Para 3 parámetros: 
     // Parte 1: numberOfIterations, salesObjective y tolerance
@@ -136,20 +137,20 @@ int main(int argc, char* argv[]) {
     SimulationEngine simulationEngine;
 
     // Definir y agregar parámetros
-    Parameter Param_customerType("customer type", customerType);
-    Parameter Param_typeOfSeller("type of seller", typeOfSeller);
-    Parameter Param_numberOfProductsSold("number of products sold", numberOfProductsSold);
-    Parameter Param_saleDate("sale date", saleDate);
-    Parameter Param_products("products", products);
-    Parameter Param_totalSaleValue("total sale value", totalSaleValue);
+    //Parameter customerType("customer type", customerType);
+    //Parameter typeOfSeller("type of seller", typeOfSeller);
+    //Parameter numberOfProductsSold("number of products sold", numberOfProductsSold);
+    //Parameter saleDate("sale date", saleDate);
+    //Parameter products("products", products);
+    //Parameter totalSaleValue("total sale value", totalSaleValue);
 
     // Agregar parámetros
-    simulationEngine.addParameter(Param_customerType);
-    simulationEngine.addParameter(Param_typeOfSeller);
-    simulationEngine.addParameter(Param_numberOfProductsSold);
-    simulationEngine.addParameter(Param_saleDate);
-    simulationEngine.addParameter(Param_products);
-    simulationEngine.addParameter(Param_totalSaleValue);
+    simulationEngine.addParameter(customerType);
+    simulationEngine.addParameter(typeOfSeller);
+    simulationEngine.addParameter(numberOfProductsSold);
+    simulationEngine.addParameter(saleDate);
+    simulationEngine.addParameter(products);
+    simulationEngine.addParameter(totalSaleValue);
 
     // Objetivo de ventas y tolerancia (antigua, ahora se hace por archivo de entrada)
     //double salesObjective = 10000; // Ejemplo de objetivo de ventas
