@@ -1,0 +1,3 @@
+numberOfIterations=10000
+salesObjective=1000
+tolerance=300
