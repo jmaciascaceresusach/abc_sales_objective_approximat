@@ -50,10 +50,10 @@ void SimulationEngine::runSimulations(int numberOfIterations,
     if (bestOutcome != outcomes.end() && std::abs(bestOutcome->saleValue - salesObjective) <= tolerance) {
         // Actualizar parámetros con el mejor resultado encontrado
         this->parameters = bestOutcome->parameters;
-        std::cout << "Parámetros óptimos encontrados dentro de la tolerancia..\n";
+        std::cout << "Resultado: Parámetros óptimos encontrados dentro de la tolerancia..\n";
         std::cout << "\n";
     } else {
-        std::cout << "No se encontraron parámetros óptimos dentro de la tolerancia.\n";
+        std::cout << "Resultado: No se encontraron parámetros óptimos dentro de la tolerancia.\n";
         std::cout << "\n";
     }
 }
