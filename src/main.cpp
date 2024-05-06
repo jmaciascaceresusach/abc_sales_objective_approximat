@@ -113,11 +113,9 @@ int main(int argc, char* argv[]) {
     // double salesObjective, tolerance;
 
     // Cambio (06052024)
-    int numberOfIterations = 0;
-    double salesObjective = 0.0, tolerance = 0.0;
-    double customerType = 0.0, typeOfSeller = 0.0, numberOfProductsSold = 0.0;
-    double saleDate = 0.0, products = 0.0, totalSaleValue = 0.0;
-
+    int numberOfIterations;
+    double salesObjective, tolerance;
+    double customerType, typeOfSeller, numberOfProductsSold, saleDate, products, totalSaleValue;
 
     // Para 3 parámetros: 
     // Parte 1: numberOfIterations, salesObjective y tolerance
@@ -127,7 +125,7 @@ int main(int argc, char* argv[]) {
     // Para 8 parámetros: 
     // Parte 1: numberOfIterations, salesObjective, tolerance; y
     // Parte 2: customer type, type of seller, number of products sold, sale date, products y total sale value
-    readConfigFor8("simulation_config.txt", 
+    readConfigFor8("../simulation_config.txt", 
                     numberOfIterations, 
                     salesObjective, 
                     tolerance,
@@ -148,8 +146,6 @@ int main(int argc, char* argv[]) {
     Parameter saleDateParameter("sale date", saleDate);
     Parameter productsParameter("products", products);
     Parameter totalSaleValueParameter("total sale value", totalSaleValue);
-
-    std::cout << "customerType: " << customerType << std::endl;
 
     // Agregar parámetros
     simulationEngine.addParameter(customerTypeParameter);
