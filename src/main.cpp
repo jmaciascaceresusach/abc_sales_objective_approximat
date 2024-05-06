@@ -168,7 +168,7 @@ int main(int argc, char* argv[]) {
     std::cout << "tolerance: " << tolerance << std::endl;
     std::cout << "\n";
 
-    std::cout << "Initial Parameters: " << std::endl;
+    std::cout << "Startup Parameters: " << std::endl;
     std::cout << "customer type: " << customerType << std::endl;
     std::cout << "type of seller: " << typeOfSeller << std::endl;
     std::cout << "number of products sold: " << numberOfProductsSold << std::endl;

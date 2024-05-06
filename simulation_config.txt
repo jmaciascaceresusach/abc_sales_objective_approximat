@@ -1,4 +1,4 @@
-numberOfIterations=10000
+numberOfIterations=10
 salesObjective=1000.5
 tolerance=900.12
 customerType=0.4
