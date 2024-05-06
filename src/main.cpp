@@ -154,7 +154,7 @@ int main(int argc, char* argv[]) {
     // Objetivo de ventas y tolerancia (antigua, ahora se hace por archivo de entrada)
     //double salesObjective = 10000; // Ejemplo de objetivo de ventas
     //double tolerance = 300; // Desviación aceptable del objetivo
-
+    
     // Ejecutar simulaciones
     simulationEngine.runSimulations(numberOfIterations, calculateSale, salesObjective, tolerance);
 
