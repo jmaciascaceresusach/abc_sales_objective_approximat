@@ -33,6 +33,7 @@ void SimulationEngine::runSimulations(int numberOfIterations,
                                       double tolerance) {
     std::vector<SimulationOutcome> outcomes;
 
+    std::cout << "\n";
     std::cout << "***Start Simulation***\n";
 
     for (int i = 0; i < numberOfIterations; ++i) {

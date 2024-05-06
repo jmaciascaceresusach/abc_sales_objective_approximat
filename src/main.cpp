@@ -202,6 +202,7 @@ int main(int argc, char* argv[]) {
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
     std::cout << "Duración: " << duration.count() << " milisegundos" << std::endl;
+    std::cout << "\n";
     
     // Cambio (06052024) 
     // Guardar log en archivo externo (depurar)
