@@ -24,7 +24,7 @@ que se alcanzaron a realizar
 #include <thread>
 
 // Función para calcular ventas simuladas en función de parámetros.
-double calculateSale(const std::vector<Parameter>& parameters) {
+/*double calculateSale(const std::vector<Parameter>& parameters) {
     double totalSaleValue = 0.0;
     // Simular cálculo de venta. Este es un marcador de posición para la lógica real,
     // lo que normalmente implicaría el uso de parámetros para determinar el valor de venta,
@@ -34,6 +34,56 @@ double calculateSale(const std::vector<Parameter>& parameters) {
         }
         // Pendiente la implementación de los otros parámetros involucrados
     }
+    return totalSaleValue;
+}*/
+
+// Implementación nueva (07052024)
+double calculateSale(const std::vector<Parameter>& parameters) {
+    double totalSaleValue = 0.0;
+    double weightSum = 0.0;
+
+    // Sumar el valor de ventas ponderado por la probabilidad de cada parámetro.
+    for (const auto& param : parameters) {
+        double value = 0;
+        if (param.name == "customerType") {
+            value = param.probability * 80; 
+        } else if (param.name == "typeOfSeller") {
+            value = param.probability * 50; 
+        } else if (param.name == "numberOfProductsSold") {
+            value = param.probability * 90;
+        } else if (param.name == "saleDate") {
+            value = param.probability * 20;
+        } else if (param.name == "products") {
+            value = param.probability * 10;
+        } else if (param.name == "totalSaleValue") {
+            value = param.probability * 11;
+        } else if (param.name == "priceDiscounts") {
+            value = param.probability * 21;
+        } else if (param.name == "deliveryTime") {
+            value = param.probability * 34;
+        } else if (param.name == "productType") {
+            value = param.probability * 24;
+        } else if (param.name == "productList") {
+            value = param.probability * 65;
+        } else if (param.name == "inventoryLevel") {
+            value = param.probability * 79;
+        } else if (param.name == "perceptionOfRelationshipValue") {
+            value = param.probability * 12;
+        } else if (param.name == "marketParticipation") {
+            value = param.probability * 45;
+        } else if (param.name == "otherFactors") {
+            value = param.probability * 72;
+        }
+
+        totalSaleValue += value;
+        weightSum += param.probability;
+    }
+
+    // Normalizar si la suma de las ponderaciones excede de 1.
+    if (weightSum > 1.0) {
+        totalSaleValue /= weightSum;
+    }
+
     return totalSaleValue;
 }
 
