@@ -32,6 +32,7 @@ double calculateSale(const std::vector<Parameter>& parameters) {
         if (param.name == "numberOfProductsSold") {
             totalSaleValue += param.probability * 100; // Lógica de ejemplo
         }
+        // Pendiente la implementación de los otros parámetros involucrados
     }
     return totalSaleValue;
 }
