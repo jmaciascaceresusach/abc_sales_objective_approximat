@@ -38,7 +38,10 @@ double calculateSale(const std::vector<Parameter>& parameters) {
 
 // Para 3 parámetros: 
 // Parte 1: numberOfIterations, salesObjective y tolerance
-void readConfig(const std::string& configFilePath, int& numberOfIterations, double& salesObjective, double& tolerance) {
+void readConfig(const std::string& configFilePath, 
+                int& numberOfIterations, 
+                double& salesObjective, 
+                double& tolerance) {
     std::ifstream configFile(configFilePath);
     std::string line;
 
@@ -58,9 +61,17 @@ void readConfig(const std::string& configFilePath, int& numberOfIterations, doub
     }
 }
 
-// Para 8 parámetros: 
-// Parte 1: numberOfIterations, salesObjective, tolerance; y
-// Parte 2: customer type, type of seller, number of products sold, sale date, products y total sale value
+/* Cambio (06052024) 
+Para 8 parámetros: numberOfIterations, 
+                   salesObjective, 
+                   tolerance,
+                   customerType, 
+                   typeOfSeller, 
+                   numberOfProductsSold, 
+                   saleDate, 
+                   products,
+                   totalSaleValue
+*/
 void readConfigFor8(const std::string& configFilePath, 
                     int& numberOfIterations, 
                     double& salesObjective, 
@@ -99,6 +110,79 @@ void readConfigFor8(const std::string& configFilePath,
     }
 }
 
+/* Cambio (07052024) 
+Para 17 parámetros: numberOfIterations, 
+                    salesObjective, 
+                    tolerance, 
+                    customerType, 
+                    typeOfSeller, 
+                    numberOfProductsSold, 
+                    saleDate, 
+                    products,
+                    totalSaleValue,
+                    priceDiscounts,
+                    deliveryTime,
+                    productType,
+                    productList,
+                    inventoryLevel,
+                    perceptionOfRelationshipValue,
+                    marketParticipation,
+                    otherFactors
+*/
+void readConfigFor17(const std::string& configFilePath, 
+                    int& numberOfIterations, 
+                    double& salesObjective, 
+                    double& tolerance,
+                    double& customerType,
+                    double& typeOfSeller,
+                    double& numberOfProductsSold,
+                    double& saleDate,
+                    double& products,
+                    double& totalSaleValue,
+                    double& priceDiscounts,
+                    double& deliveryTime,
+                    double& productType,
+                    double& productList,
+                    double& inventoryLevel,
+                    double& perceptionOfRelationshipValue,
+                    double& marketParticipation,
+                    double& otherFactors) {
+    std::ifstream configFile(configFilePath);
+    std::string line;
+
+    if (configFile.is_open()) {
+        while (getline(configFile, line)) {
+            std::istringstream iss(line);
+            std::string key;
+            if (getline(iss, key, '=')) {
+                std::string value;
+                if (getline(iss, value)) {
+                    //std::cout << "Key: " << key << ", Value: " << value << std::endl;  // Debug output
+                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
+                    else if (key == "salesObjective") salesObjective = std::stod(value);
+                    else if (key == "tolerance") tolerance = std::stod(value);
+                    else if (key == "customerType") customerType = std::stod(value);
+                    else if (key == "typeOfSeller") typeOfSeller = std::stod(value);
+                    else if (key == "numberOfProductsSold") numberOfProductsSold = std::stod(value);
+                    else if (key == "saleDate") saleDate = std::stod(value);
+                    else if (key == "products") products = std::stod(value);
+                    else if (key == "totalSaleValue") totalSaleValue = std::stod(value);
+                    else if (key == "priceDiscounts") priceDiscounts = std::stod(value);
+                    else if (key == "deliveryTime") deliveryTime = std::stod(value);
+                    else if (key == "productType") productType = std::stod(value);
+                    else if (key == "productList") productList = std::stod(value);
+                    else if (key == "inventoryLevel") inventoryLevel = std::stod(value);
+                    else if (key == "perceptionOfRelationshipValue") perceptionOfRelationshipValue = std::stod(value);
+                    else if (key == "marketParticipation") marketParticipation = std::stod(value);
+                    else if (key == "otherFactors") otherFactors = std::stod(value);
+                }
+            }
+        }
+    }else {
+        std::cerr << "Failed to open config file: " << configFilePath << std::endl;
+    }
+}
+
 int main(int argc, char* argv[]) {
 
     // Obtiene el tiempo de inicio
@@ -123,19 +207,34 @@ int main(int argc, char* argv[]) {
     // int numberOfIterations;
     // double salesObjective, tolerance;
 
-    // Cambio (06052024)
+    /* Cambio (06052024)
     int numberOfIterations;
     double salesObjective, tolerance;
     double customerType, typeOfSeller, numberOfProductsSold, saleDate, products, totalSaleValue;
+    */
+
+    // Cambio (07052024)
+    int numberOfIterations;
+    double salesObjective, tolerance;
+    double customerType, typeOfSeller, numberOfProductsSold, saleDate, products, totalSaleValue;
+    double priceDiscounts, deliveryTime, productType, productList, inventoryLevel, perceptionOfRelationshipValue;
+    double marketParticipation, otherFactors;
 
     // Para 3 parámetros: 
     // Parte 1: numberOfIterations, salesObjective y tolerance
     // readConfig("simulation_config.txt", numberOfIterations, salesObjective, tolerance);
 
-    // Cambio (06052024)
-    // Para 8 parámetros: 
-    // Parte 1: numberOfIterations, salesObjective, tolerance; y
-    // Parte 2: customer type, type of seller, number of products sold, sale date, products y total sale value
+    /* Cambio (06052024) 
+    Para 8 parámetros: numberOfIterations, 
+                    salesObjective, 
+                    tolerance,
+                    customerType, 
+                    typeOfSeller, 
+                    numberOfProductsSold, 
+                    saleDate, 
+                    products,
+                    totalSaleValue
+    
     readConfigFor8("../simulation_config.txt", 
                     numberOfIterations, 
                     salesObjective, 
@@ -146,17 +245,66 @@ int main(int argc, char* argv[]) {
                     saleDate,
                     products,
                     totalSaleValue);
+    */
+
+    /* Cambio (07052024) 
+    Para 17 parámetros: numberOfIterations, 
+                        salesObjective, 
+                        tolerance, 
+                        customerType, 
+                        typeOfSeller, 
+                        numberOfProductsSold, 
+                        saleDate, 
+                        products,
+                        totalSaleValue,
+                        priceDiscounts,
+                        deliveryTime,
+                        productType,
+                        productList,
+                        inventoryLevel,
+                        perceptionOfRelationshipValue,
+                        marketParticipation,
+                        otherFactors
+    */
+    readConfigFor17("../simulation_config.txt", 
+                    numberOfIterations, 
+                    salesObjective, 
+                    tolerance,
+                    customerType,
+                    typeOfSeller,
+                    numberOfProductsSold,
+                    saleDate,
+                    products,
+                    totalSaleValue,
+                    priceDiscounts,
+                    deliveryTime,
+                    productType,
+                    productList,
+                    inventoryLevel,
+                    perceptionOfRelationshipValue,
+                    marketParticipation,
+                    otherFactors);
 
     // Inicializar el motor de simulación
     SimulationEngine simulationEngine;
 
     // Definir y agregar parámetros
-    Parameter customerTypeParameter("customer type", customerType);
-    Parameter typeOfSellerParameter("type of seller", typeOfSeller);
-    Parameter numberOfProductsSoldParameter("number of products sold", numberOfProductsSold);
-    Parameter saleDateParameter("sale date", saleDate);
+    Parameter customerTypeParameter("customerType", customerType);
+    Parameter typeOfSellerParameter("typeOfSeller", typeOfSeller);
+    Parameter numberOfProductsSoldParameter("numberOfProductsSold", numberOfProductsSold);
+    Parameter saleDateParameter("saleDate", saleDate);
     Parameter productsParameter("products", products);
-    Parameter totalSaleValueParameter("total sale value", totalSaleValue);
+    Parameter totalSaleValueParameter("totalSaleValue", totalSaleValue);
+
+    // Cambio (07052024) 
+    Parameter priceDiscountsParameter("priceDiscounts", priceDiscounts);
+    Parameter deliveryTimeParameter("deliveryTime", deliveryTime);
+    Parameter productTypeParameter("productType", productType);
+    Parameter productListParameter("productList", productList);
+    Parameter inventoryLevelParameter("inventoryLevel", inventoryLevel);
+    Parameter perceptionOfRelationshipValueParameter("perceptionOfRelationshipValue", perceptionOfRelationshipValue);
+    Parameter marketParticipationParameter("marketParticipation", marketParticipation);
+    Parameter otherFactorsParameter("otherFactors", otherFactors);
 
     // Agregar parámetros
     simulationEngine.addParameter(customerTypeParameter);
@@ -165,6 +313,16 @@ int main(int argc, char* argv[]) {
     simulationEngine.addParameter(saleDateParameter);
     simulationEngine.addParameter(productsParameter);
     simulationEngine.addParameter(totalSaleValueParameter);
+
+    // Cambio (07052024) 
+    simulationEngine.addParameter(priceDiscountsParameter);
+    simulationEngine.addParameter(deliveryTimeParameter);
+    simulationEngine.addParameter(productTypeParameter);
+    simulationEngine.addParameter(productListParameter);
+    simulationEngine.addParameter(inventoryLevelParameter);
+    simulationEngine.addParameter(perceptionOfRelationshipValueParameter);
+    simulationEngine.addParameter(marketParticipationParameter);
+    simulationEngine.addParameter(otherFactorsParameter);
 
     // Objetivo de ventas y tolerancia (antigua, ahora se hace por archivo de entrada)
     //double salesObjective = 10000; // Ejemplo de objetivo de ventas
@@ -180,12 +338,22 @@ int main(int argc, char* argv[]) {
     std::cout << "\n";
 
     std::cout << "***Startup Parameters***" << std::endl;
-    std::cout << "customer type: " << customerType << std::endl;
-    std::cout << "type of seller: " << typeOfSeller << std::endl;
-    std::cout << "number of products sold: " << numberOfProductsSold << std::endl;
-    std::cout << "sale date: " << saleDate << std::endl;
+    std::cout << "customerType: " << customerType << std::endl;
+    std::cout << "typeOfSeller: " << typeOfSeller << std::endl;
+    std::cout << "numberOfProductsSold: " << numberOfProductsSold << std::endl;
+    std::cout << "saleDate: " << saleDate << std::endl;
     std::cout << "products: " << products << std::endl;
-    std::cout << "total sale value: " << totalSaleValue << std::endl;
+    std::cout << "totalSaleValue: " << totalSaleValue << std::endl;
+
+    // Cambio (07052024) 
+    std::cout << "priceDiscounts: " << priceDiscounts << std::endl;
+    std::cout << "deliveryTime: " << deliveryTime << std::endl;
+    std::cout << "productType: " << productType << std::endl;
+    std::cout << "productList: " << productList << std::endl;
+    std::cout << "inventoryLevel: " << inventoryLevel << std::endl;
+    std::cout << "perceptionOfRelationshipValue: " << perceptionOfRelationshipValue << std::endl;    
+    std::cout << "marketParticipation: " << marketParticipation << std::endl;    
+    std::cout << "otherFactors: " << otherFactors << std::endl;
     std::cout << "\n";
 
     // Parámetros refinados de salida
