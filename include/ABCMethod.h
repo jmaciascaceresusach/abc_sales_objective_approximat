@@ -13,6 +13,7 @@ entre los valores de ventas simulados y el objetivo de ventas.
 #include <functional>
 #include <fstream>
 #include <sstream>
+#include <cstdlib> // para std::atoi and std::atof
 
 class ABCMethod {
 public:
