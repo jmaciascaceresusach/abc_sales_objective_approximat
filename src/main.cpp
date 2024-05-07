@@ -29,7 +29,7 @@ double calculateSale(const std::vector<Parameter>& parameters) {
     // Simular cálculo de venta. Este es un marcador de posición para la lógica real,
     // lo que normalmente implicaría el uso de parámetros para determinar el valor de venta,
     for (const auto& param : parameters) {
-        if (param.name == "number of products sold") {
+        if (param.name == "numberOfProductsSold") {
             totalSaleValue += param.probability * 100; // Lógica de ejemplo
         }
     }
