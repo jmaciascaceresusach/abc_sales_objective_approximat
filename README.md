@@ -35,12 +35,20 @@ Now, to test the project, you would have to use the following statements:
 
 The simulation_config.txt file, can be modified according to:
 
-- numberOfIterations=20
-- salesObjective=32.005
-- tolerance=30.120
-- customerType=0.4
-- typeOfSeller=0.2
-- numberOfProductsSold=0.3
-- saleDate=0.1
-- products=0.2
-- totalSaleValue=0.2
+- numberOfIterations=50
+- salesObjective=46.005
+- tolerance=2.120
+- customerType=0.00314591338431157
+- typeOfSeller=0.102829848201114
+- numberOfProductsSold=0.122376749687935
+- saleDate=0.0112380619822541
+- products=0.0259187661818709
+- totalSaleValue=0.0470569157186043
+- priceDiscounts=0.0207999784257691
+- deliveryTime=0.110643138673347
+- productType=0.16256338556168
+- productList=0.153456118173069
+- inventoryLevel=0.00422676784987325
+- perceptionOfRelationshipValue=0.0655840981931411
+- marketParticipation=0.156170822929046
+- otherFactors=0.0139894350379837
