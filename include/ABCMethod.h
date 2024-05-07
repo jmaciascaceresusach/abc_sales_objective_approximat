@@ -46,4 +46,119 @@ void readConfigSimple(const std::string& configFilePath, int& numberOfIterations
     }
 }
 
+void readConfig(const std::string& configFilePath, 
+                int& numberOfIterations, 
+                double& salesObjective, 
+                double& tolerance) {
+    std::ifstream configFile(configFilePath);
+    std::string line;
+
+    if (configFile.is_open()) {
+        while (getline(configFile, line)) {
+            std::istringstream iss(line);
+            std::string key;
+            if (getline(iss, key, '=')) {
+                std::string value;
+                if (getline(iss, value)) {
+                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
+                    else if (key == "salesObjective") salesObjective = std::stod(value);
+                    else if (key == "tolerance") tolerance = std::stod(value);
+                }
+            }
+        }
+    }
+}
+
+void readConfigFor8(const std::string& configFilePath, 
+                    int& numberOfIterations, 
+                    double& salesObjective, 
+                    double& tolerance,
+                    double& customerType,
+                    double& typeOfSeller,
+                    double& numberOfProductsSold,
+                    double& saleDate,
+                    double& products,
+                    double& totalSaleValue) {
+    std::ifstream configFile(configFilePath);
+    std::string line;
+
+    if (configFile.is_open()) {
+        while (getline(configFile, line)) {
+            std::istringstream iss(line);
+            std::string key;
+            if (getline(iss, key, '=')) {
+                std::string value;
+                if (getline(iss, value)) {
+                    //std::cout << "Key: " << key << ", Value: " << value << std::endl;  // Debug output
+                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
+                    else if (key == "salesObjective") salesObjective = std::stod(value);
+                    else if (key == "tolerance") tolerance = std::stod(value);
+                    else if (key == "customerType") customerType = std::stod(value);
+                    else if (key == "typeOfSeller") typeOfSeller = std::stod(value);
+                    else if (key == "numberOfProductsSold") numberOfProductsSold = std::stod(value);
+                    else if (key == "saleDate") saleDate = std::stod(value);
+                    else if (key == "products") products = std::stod(value);
+                    else if (key == "totalSaleValue") totalSaleValue = std::stod(value);
+                }
+            }
+        }
+    }else {
+        std::cerr << "Failed to open config file: " << configFilePath << std::endl;
+    }
+}
+
+void readConfigFor17(const std::string& configFilePath, 
+                    int& numberOfIterations, 
+                    double& salesObjective, 
+                    double& tolerance,
+                    double& customerType,
+                    double& typeOfSeller,
+                    double& numberOfProductsSold,
+                    double& saleDate,
+                    double& products,
+                    double& totalSaleValue,
+                    double& priceDiscounts,
+                    double& deliveryTime,
+                    double& productType,
+                    double& productList,
+                    double& inventoryLevel,
+                    double& perceptionOfRelationshipValue,
+                    double& marketParticipation,
+                    double& otherFactors) {
+    std::ifstream configFile(configFilePath);
+    std::string line;
+
+    if (configFile.is_open()) {
+        while (getline(configFile, line)) {
+            std::istringstream iss(line);
+            std::string key;
+            if (getline(iss, key, '=')) {
+                std::string value;
+                if (getline(iss, value)) {
+                    //std::cout << "Key: " << key << ", Value: " << value << std::endl;  // Debug output
+                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
+                    else if (key == "salesObjective") salesObjective = std::stod(value);
+                    else if (key == "tolerance") tolerance = std::stod(value);
+                    else if (key == "customerType") customerType = std::stod(value);
+                    else if (key == "typeOfSeller") typeOfSeller = std::stod(value);
+                    else if (key == "numberOfProductsSold") numberOfProductsSold = std::stod(value);
+                    else if (key == "saleDate") saleDate = std::stod(value);
+                    else if (key == "products") products = std::stod(value);
+                    else if (key == "totalSaleValue") totalSaleValue = std::stod(value);
+                    else if (key == "priceDiscounts") priceDiscounts = std::stod(value);
+                    else if (key == "deliveryTime") deliveryTime = std::stod(value);
+                    else if (key == "productType") productType = std::stod(value);
+                    else if (key == "productList") productList = std::stod(value);
+                    else if (key == "inventoryLevel") inventoryLevel = std::stod(value);
+                    else if (key == "perceptionOfRelationshipValue") perceptionOfRelationshipValue = std::stod(value);
+                    else if (key == "marketParticipation") marketParticipation = std::stod(value);
+                    else if (key == "otherFactors") otherFactors = std::stod(value);
+                }
+            }
+        }
+    }else {
+        std::cerr << "Failed to open config file: " << configFilePath << std::endl;
+    }
+}
+
 #endif // ABCMETHOD_H
