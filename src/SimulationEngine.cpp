@@ -13,6 +13,11 @@ el objetivo de ventas dentro de la tolerancia específicada.
 #include "../include/SimulationEngine.h"
 #include <iostream>
 #include <algorithm> // para std::min_element
+#include <cstdlib> // para std::atoi and std::atof
+#include <fstream>  
+#include <sstream>
+#include <chrono>
+#include <thread>
 
 // Implementación del constructor
 SimulationEngine::SimulationEngine() {}
