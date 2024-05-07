@@ -44,6 +44,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
 
     double closestDistance = std::numeric_limits<double>::max();
     std::vector<Parameter> bestParameters = parameters;
+    double maxSaleValue = 0;
+    int maxSaleValueIteration = 0;
 
     std::cout << "\n";
     std::cout << "***Start Simulation***\n";
@@ -52,13 +54,22 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     for (int i = 0; i < numberOfIterations; ++i) {
         double saleValue = calculateSale(parameters);
         double distance = std::abs(saleValue - salesObjective);
+        std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;  
 
+        // Registro de datos en archivo
         statsFile << i << "," << saleValue << "," << distance << "," << salesObjective << "," << tolerance;
         for (const auto& param : parameters) {
             statsFile << "," << param.probability;
         }
         statsFile << "\n";
 
+        // Rastrear el máximo saleValue y su iteración
+        if (saleValue > maxSaleValue) {
+            maxSaleValue = saleValue;
+            maxSaleValueIteration = i;
+        }
+
+        // Actualizar los mejores parámetros si se encuentra una nueva distancia más cercana
         if (distance < closestDistance) {
             closestDistance = distance;
             bestParameters = parameters;
@@ -66,14 +77,18 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
         }
 
         // Ajustar dinámicamente los parámetros para la próxima iteración.
-        // adjustParameters(parameters, saleValue, salesObjective);
         adjustParameters(saleValue, salesObjective);
+        std::cout << "\n";
     }
 
+    statsFile.close();
     std::cout << "***End Simulation***\n";
 
-    statsFile.close();
-    parameters = bestParameters; // Usar el mejor conjunto de parámetros encontrado.
+    // Mostrar detalles de los mejores parámetros
+    std::cout << "Best parameters found at iteration " << maxSaleValueIteration << " with sale value " << maxSaleValue << std::endl;
+    for (const auto& param : bestParameters) {
+        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
+    }
 }
 
 /*void SimulationEngine::runSimulations(int numberOfIterations, 
