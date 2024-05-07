@@ -276,6 +276,7 @@ int main(int argc, char* argv[]) {
     // Ejecutar simulaciones
     simulationEngine.runSimulations(numberOfIterations, calculateSale, salesObjective, tolerance);
 
+    std::cout << "\n";
     std::cout << "***Configurations***" << std::endl;
     std::cout << "numberOfIterations: " << numberOfIterations << std::endl;
     std::cout << "salesObjective: " << salesObjective << std::endl;

@@ -83,9 +83,14 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
 
     statsFile.close();
     std::cout << "***End Simulation***\n";
+    std::cout << "\n";
 
     // Mostrar detalles de los mejores parámetros
+    std::cout << "***Results***\n";
     std::cout << "Best parameters found at iteration " << maxSaleValueIteration << " with sale value " << maxSaleValue << std::endl;
+    std::cout << "\n";
+
+    std::cout << "***Best parameters***\n";
     for (const auto& param : bestParameters) {
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
