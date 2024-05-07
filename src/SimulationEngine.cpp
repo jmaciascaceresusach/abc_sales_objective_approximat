@@ -66,7 +66,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
         }
 
         // Ajustar dinámicamente los parámetros para la próxima iteración.
-        adjustParameters(parameters, saleValue, salesObjective);
+        // adjustParameters(parameters, saleValue, salesObjective);
+        adjustParameters(saleValue, salesObjective);
     }
 
     std::cout << "***End Simulation***\n";
@@ -133,7 +134,7 @@ void SimulationEngine::adjustParameters(double saleValue, double salesObjective)
     double error = saleValue - salesObjective;
     double learningRate = 0.01; // Tasa de aprendizaje para ajustes
 
-    for (auto& param : this->parameters) {
+    for (auto& param : this->parameters) {  // Aquí 'parameters' se usa directamente.
         // Ajuste proporcional al error y a la contribución del parámetro
         double adjustment = (error > 0 ? -1 : 1) * learningRate * std::abs(param.probability);
         param.probability += adjustment;
