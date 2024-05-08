@@ -27,15 +27,16 @@ void SimulationEngine::addParameter(const Parameter& parameter) {
     this->parameters.push_back(parameter);
 }
 
+/* Versión antigua 05052024
 struct SimulationOutcome {
     double saleValue;
     std::vector<Parameter> parameters;
 };
+*/
 
-// Implementación nueva (07052024)
+// Implementación (08052024)
 void SimulationEngine::runSimulations(int numberOfIterations, std::function<double(const std::vector<Parameter>&)> calculateSale, double salesObjective, double tolerance) {
     std::ofstream statsFile("statistics_simulations.txt");
-    // Escribir cabecera del archivo
     statsFile << "Iteration,SaleValue,Distance,Objective,Tolerance";
     for (const auto& param : parameters) {
         statsFile << "," << param.name;
@@ -44,53 +45,44 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
 
     double closestDistance = std::numeric_limits<double>::max();
     std::vector<Parameter> bestParameters = parameters;
-    double maxSaleValue = 0;
-    int maxSaleValueIteration = 0;
+    double bestSaleValue = 0;
+    int bestIteration = -1;
 
-    std::cout << "\n";
-    std::cout << "***Start Simulation***\n";
+    std::cout << "\n**Start Simulation***\n";
     std::cout << "\n";
 
     for (int i = 0; i < numberOfIterations; ++i) {
         double saleValue = calculateSale(parameters);
         double distance = std::abs(saleValue - salesObjective);
-        std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;  
 
-        // Registro de datos en archivo
+        std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
+
         statsFile << i << "," << saleValue << "," << distance << "," << salesObjective << "," << tolerance;
         for (const auto& param : parameters) {
             statsFile << "," << param.probability;
         }
         statsFile << "\n";
 
-        // Rastrear el máximo saleValue y su iteración
-        if (saleValue > maxSaleValue) {
-            maxSaleValue = saleValue;
-            maxSaleValueIteration = i;
-        }
-
-        // Actualizar los mejores parámetros si se encuentra una nueva distancia más cercana
         if (distance < closestDistance) {
             closestDistance = distance;
             bestParameters = parameters;
-            if (distance <= tolerance) break; // Detener si se alcanza un resultado dentro de la tolerancia.
+            bestSaleValue = saleValue;
+            bestIteration = i;
+
+            if (distance <= tolerance) break;
         }
 
-        // Ajustar dinámicamente los parámetros para la próxima iteración.
         adjustParameters(saleValue, salesObjective);
-        std::cout << "\n";
     }
 
     statsFile.close();
-    std::cout << "***End Simulation***\n";
-    std::cout << "\n";
+
+    std::cout << "\n***End Simulation***\n";
 
     // Mostrar detalles de los mejores parámetros
-    std::cout << "***Results***\n";
-    std::cout << "Best parameters found at iteration " << maxSaleValueIteration << " with sale value " << maxSaleValue << std::endl;
-    std::cout << "\n";
-
-    std::cout << "***Best parameters***\n";
+    std::cout << "\n***Results***\n";
+    std::cout << "Best parameters found at iteration " << bestIteration << " with sale value " << bestSaleValue << std::endl;
+    std::cout << "\n***Best Parameters***\n";
     for (const auto& param : bestParameters) {
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
@@ -149,7 +141,22 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     }
 }*/
 
-// Implementación nueva (07052024)
+// Implementación (08052024)
+void SimulationEngine::adjustParameters(double saleValue, double salesObjective) {
+    double error = saleValue - salesObjective;
+    double learningRate = 0.01;
+
+    for (auto& param : parameters) {
+        double adjustment = (error > 0 ? -1 : 1) * learningRate * std::abs(param.probability);
+        param.adjustProbability(adjustment);
+
+        param.probability = std::max(0.0, std::min(param.probability, 1.0));
+        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
+    }
+}
+
+
+/* Implementación antigua 05052024
 void SimulationEngine::adjustParameters(double saleValue, double salesObjective) {
     double error = saleValue - salesObjective;
     double learningRate = 0.01; // Tasa de aprendizaje para ajustes
@@ -164,7 +171,7 @@ void SimulationEngine::adjustParameters(double saleValue, double salesObjective)
 
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
-}
+}*/
 
 /*void SimulationEngine::adjustParameters(double saleValue, double salesObjective) {
     // Ajuste simple: se aumentaron los parámetros si "saleValue" está por debajo del objetivo, disminuirá si está por encima

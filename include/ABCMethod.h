@@ -27,6 +27,7 @@ public:
 private:
     // Método auxiliar para calcular la distancia entre las ventas simuladas y el objetivo de ventas.
     double calculateDistance(double saleValue, double salesObjective);
+    void normalizeParameters(std::vector<Parameter>& parameters); // Implementación 08052024
 };
 
 void readConfigSimple(const std::string& configFilePath, int& numberOfIterations) {

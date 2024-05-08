@@ -26,19 +26,18 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
                                  double salesObjective, 
                                  double tolerance) {
     std::default_random_engine generator(std::random_device{}());
-    std::normal_distribution<double> distribution(0.0, 1.0);
+    std::normal_distribution<double> distribution(0.0, 0.01); // Ajuste pequeño
 
     for (auto& param : parameters) {
-        double adjustment = distribution(generator) * 0.05;
+        double adjustment = distribution(generator);
         param.adjustProbability(adjustment);
-        if (param.probability < 0) param.probability = 0;
-        if (param.probability > 1) param.probability = 1;
     }
+
+    normalizeParameters(parameters);
 
     double closestDistance = std::numeric_limits<double>::max();
     std::vector<Parameter> bestParameters = parameters;
 
-    // Obtención del valor del número de iteraciones desde el archivo simulation_config.txt
     int numberOfIterations;
     readConfigSimple("simulation_config.txt", numberOfIterations);
 
@@ -46,18 +45,20 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
         double saleValue = calculateSale(parameters);
         double distance = calculateDistance(saleValue, salesObjective);
 
-        if (distance < closestDistance && distance <= tolerance) {
+        if (distance < closestDistance) {
             closestDistance = distance;
             bestParameters = parameters;
-            dynamicAdjustParameters(parameters, saleValue, salesObjective);
         }
+
+        if (distance <= tolerance) {
+            break;
+        }
+
+        dynamicAdjustParameters(parameters, saleValue, salesObjective);
+        normalizeParameters(parameters);
     }
 
     parameters = bestParameters;
-}
-
-double ABCMethod::calculateDistance(double saleValue, double salesObjective) {
-    return std::abs(saleValue - salesObjective);
 }
 
 // Ajuste dinámicamente los parámetros según los resultados de la simulación.
@@ -66,5 +67,22 @@ void ABCMethod::dynamicAdjustParameters(std::vector<Parameter>& parameters, doub
     for (auto& param : parameters) {
         double adjustment = (saleValue < salesObjective) ? 0.01 : -0.01;
         param.adjustProbability(adjustment * errorMargin);
+    }
+}
+
+double ABCMethod::calculateDistance(double saleValue, double salesObjective) {
+    return std::abs(saleValue - salesObjective);
+}
+
+void ABCMethod::normalizeParameters(std::vector<Parameter>& parameters) {
+    double totalProbability = 0.0;
+    for (const auto& param : parameters) {
+        totalProbability += param.probability;
+    }
+
+    if (totalProbability > 1.0) {
+        for (auto& param : parameters) {
+            param.probability /= totalProbability;
+        }
     }
 }

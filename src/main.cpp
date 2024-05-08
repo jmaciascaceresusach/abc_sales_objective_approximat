@@ -37,53 +37,40 @@ que se alcanzaron a realizar
     return totalSaleValue;
 }*/
 
-// Implementación nueva (07052024)
+// Implementación corregida de `calculateSale` (08052024)
 double calculateSale(const std::vector<Parameter>& parameters) {
     double totalSaleValue = 0.0;
-    double weightSum = 0.0;
-
-    // Sumar el valor de ventas ponderado por la probabilidad de cada parámetro.
     for (const auto& param : parameters) {
-        double value = 0;
         if (param.name == "customerType") {
-            value = param.probability * 80; 
+            totalSaleValue += param.probability * 80;
         } else if (param.name == "typeOfSeller") {
-            value = param.probability * 50; 
+            totalSaleValue += param.probability * 50;
         } else if (param.name == "numberOfProductsSold") {
-            value = param.probability * 90;
+            totalSaleValue += param.probability * 90;
         } else if (param.name == "saleDate") {
-            value = param.probability * 20;
+            totalSaleValue += param.probability * 20;
         } else if (param.name == "products") {
-            value = param.probability * 10;
+            totalSaleValue += param.probability * 10;
         } else if (param.name == "totalSaleValue") {
-            value = param.probability * 11;
+            totalSaleValue += param.probability * 11;
         } else if (param.name == "priceDiscounts") {
-            value = param.probability * 21;
+            totalSaleValue += param.probability * 21;
         } else if (param.name == "deliveryTime") {
-            value = param.probability * 34;
+            totalSaleValue += param.probability * 34;
         } else if (param.name == "productType") {
-            value = param.probability * 24;
+            totalSaleValue += param.probability * 24;
         } else if (param.name == "productList") {
-            value = param.probability * 65;
+            totalSaleValue += param.probability * 65;
         } else if (param.name == "inventoryLevel") {
-            value = param.probability * 79;
+            totalSaleValue += param.probability * 79;
         } else if (param.name == "perceptionOfRelationshipValue") {
-            value = param.probability * 12;
+            totalSaleValue += param.probability * 12;
         } else if (param.name == "marketParticipation") {
-            value = param.probability * 45;
+            totalSaleValue += param.probability * 45;
         } else if (param.name == "otherFactors") {
-            value = param.probability * 72;
+            totalSaleValue += param.probability * 72;
         }
-
-        totalSaleValue += value;
-        weightSum += param.probability;
     }
-
-    // Normalizar si la suma de las ponderaciones excede de 1.
-    if (weightSum > 1.0) {
-        totalSaleValue /= weightSum;
-    }
-
     return totalSaleValue;
 }
 
