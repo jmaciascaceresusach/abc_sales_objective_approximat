@@ -13,7 +13,8 @@ el objetivo de ventas dentro de la tolerancia específicada.
 #include "../include/SimulationEngine.h"
 #include <iostream>
 #include <algorithm> // para std::min_element
-#include <limits>
+#include <chrono>
+#include <iomanip> // para std::put_time
 
 // Implementación del constructor
 SimulationEngine::SimulationEngine() {}
@@ -24,7 +25,12 @@ void SimulationEngine::addParameter(const Parameter& parameter) {
 }
 
 void SimulationEngine::runSimulations(int numberOfIterations, std::function<double(const std::vector<Parameter>&)> calculateSale, double salesObjective, double tolerance) {
+    auto now = std::chrono::system_clock::now();
+    std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+    std::tm now_tm = *std::localtime(&now_time);
+
     std::ofstream statsFile("statistics_simulations.txt");
+    statsFile << "Creation Date and Time: " << std::put_time(&now_tm, "%Y-%m-%d %H:%M:%S") << "\n";
     statsFile << "Iteration,SaleValue,Distance,Objective,Tolerance";
     for (const auto& param : parameters) {
         statsFile << "," << param.name;
