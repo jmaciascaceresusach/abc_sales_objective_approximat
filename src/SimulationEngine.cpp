@@ -56,7 +56,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
         double distance = std::abs(saleValue - salesObjective);
 
         std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
-
+        std::cout << "\n";
+        
         statsFile << i << "," << saleValue << "," << distance << "," << salesObjective << "," << tolerance;
         for (const auto& param : parameters) {
             statsFile << "," << param.probability;
