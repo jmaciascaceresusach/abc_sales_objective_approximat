@@ -21,23 +21,8 @@ que se alcanzaron a realizar
 #include <fstream>  
 #include <sstream>
 #include <chrono>
-#include <thread>
 
 // Función para calcular ventas simuladas en función de parámetros.
-/*double calculateSale(const std::vector<Parameter>& parameters) {
-    double totalSaleValue = 0.0;
-    // Simular cálculo de venta. Este es un marcador de posición para la lógica real,
-    // lo que normalmente implicaría el uso de parámetros para determinar el valor de venta,
-    for (const auto& param : parameters) {
-        if (param.name == "numberOfProductsSold") {
-            totalSaleValue += param.probability * 100; // Lógica de ejemplo
-        }
-        // Pendiente la implementación de los otros parámetros involucrados
-    }
-    return totalSaleValue;
-}*/
-
-// Implementación corregida de `calculateSale` (08052024)
 double calculateSale(const std::vector<Parameter>& parameters) {
     double totalSaleValue = 0.0;
     for (const auto& param : parameters) {

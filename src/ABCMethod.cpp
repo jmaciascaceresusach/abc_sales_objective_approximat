@@ -55,7 +55,7 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
             break;
         }
 
-        dynamicAdjustParametersGradient(parameters, saleValue, salesObjective);
+        dynamicAdjustParametersGenetic(parameters, calculateSale, saleValue, salesObjective);
         normalizeParameters(parameters);
     }
 
@@ -109,7 +109,7 @@ void ABCMethod::dynamicAdjustParametersSlidingAverage(std::vector<Parameter>& pa
 /*
 Optimización Basada en Algoritmos Evolutivos (Genéticos)
 */
-/*void ABCMethod::dynamicAdjustParametersGenetic(std::vector<Parameter>& parameters, double saleValue, double salesObjective) {
+void ABCMethod::dynamicAdjustParametersGenetic(std::vector<Parameter>& parameters, std::function<double(const std::vector<Parameter>&)> calculateSale, double saleValue, double salesObjective) {
     std::default_random_engine generator(std::random_device{}());
     std::uniform_real_distribution<double> distribution(-0.05, 0.05);
 
@@ -126,13 +126,15 @@ Optimización Basada en Algoritmos Evolutivos (Genéticos)
     if (newDistance < currentDistance) {
         parameters = newGeneration;
     }
-}*/
+
+    normalizeParameters(parameters);
+}
 
 /*
 Optimización por Recocido Simulado:
 Usa recocido simulado para escapar de mínimos locales y mejorar la solución.
 */
-/*void ABCMethod::dynamicAdjustParametersSimulatedAnnealing(std::vector<Parameter>& parameters, double saleValue, double salesObjective) {
+void ABCMethod::dynamicAdjustParametersSimulatedAnnealing(std::vector<Parameter>& parameters, std::function<double(const std::vector<Parameter>&)> calculateSale, double saleValue, double salesObjective) {
     std::default_random_engine generator(std::random_device{}());
     std::normal_distribution<double> distribution(0.0, 0.05);
     double temperature = 1.0;
@@ -152,7 +154,9 @@ Usa recocido simulado para escapar de mínimos locales y mejorar la solución.
     }
 
     temperature *= 0.9; // Reducción gradual de la temperatura
-}*/
+
+    normalizeParameters(parameters);
+}
 
 /*
 Optimización Basada en Cuadrados Mínimos (Levenberg-Marquardt):
@@ -167,6 +171,8 @@ void ABCMethod::dynamicAdjustParametersLM(std::vector<Parameter>& parameters, do
         double adjustment = (gradient / (1 + lambda * gradient)) * 0.01;
         param.adjustProbability(adjustment);
     }
+
+    normalizeParameters(parameters);
 }
 
 double ABCMethod::calculateDistance(double saleValue, double salesObjective) {
@@ -185,3 +191,22 @@ void ABCMethod::normalizeParameters(std::vector<Parameter>& parameters) {
         }
     }
 }
+
+void readConfigSimple(const std::string& configFilePath, int& numberOfIterations) {
+    std::ifstream configFile(configFilePath);
+    std::string line;
+
+    if (configFile.is_open()) {
+        while (getline(configFile, line)) {
+            std::istringstream iss(line);
+            std::string key;
+            if (getline(iss, key, '=')) {
+                std::string value;
+                if (getline(iss, value)) {
+                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
+                }
+            }
+        }
+    }
+}
+

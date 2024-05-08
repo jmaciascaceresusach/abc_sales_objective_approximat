@@ -8,6 +8,7 @@ los parámetros utilizando un objeto "ABCMethod".
 #define SIMULATIONENGINE_H
 
 #include "Parameter.h"
+#include "ABCMethod.h"
 #include <vector>
 #include <functional>
 
@@ -27,6 +28,9 @@ public:
 
     // Método para ajustar parámetros en función de los resultados de la simulación.
     void adjustParameters(double saleValue, double salesObjective);
+    
+private:
+    ABCMethod abcMethod;
 };
 
 #endif // SIMULATIONENGINE_H
