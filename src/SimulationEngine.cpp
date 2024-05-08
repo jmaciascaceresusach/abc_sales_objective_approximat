@@ -49,15 +49,14 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     int bestIteration = -1;
 
     std::cout << "\n**Start Simulation***\n";
-    std::cout << "\n";
 
     for (int i = 0; i < numberOfIterations; ++i) {
         double saleValue = calculateSale(parameters);
         double distance = std::abs(saleValue - salesObjective);
 
-        std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
         std::cout << "\n";
-        
+        std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
+
         statsFile << i << "," << saleValue << "," << distance << "," << salesObjective << "," << tolerance;
         for (const auto& param : parameters) {
             statsFile << "," << param.probability;
