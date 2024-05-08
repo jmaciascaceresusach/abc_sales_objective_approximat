@@ -1,4 +1,3 @@
-# CMakeLists.txt principal
 cmake_minimum_required(VERSION 3.10)
 
 # Project Name
@@ -20,8 +19,5 @@ file(GLOB SOURCES "${CMAKE_SOURCE_DIR}/src/*.cpp")
 add_executable(ABC_SALES_OBJECTIVE_APPROXIMAT ${SOURCES})
 
 # Link any dependencies
-find_package(LibraryName REQUIRED)
-target_link_libraries(ABC_SALES ${LibraryName})
-
-# CMakeLists.txt principal
-cmake_minimum_required(VERSION 3.10)
+# find_package(LibraryName REQUIRED)
+# target_link_libraries(ABC_SALES ${LibraryName})
