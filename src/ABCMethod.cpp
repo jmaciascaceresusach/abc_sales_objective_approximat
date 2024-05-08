@@ -191,22 +191,3 @@ void ABCMethod::normalizeParameters(std::vector<Parameter>& parameters) {
         }
     }
 }
-
-void readConfigSimple(const std::string& configFilePath, int& numberOfIterations) {
-    std::ifstream configFile(configFilePath);
-    std::string line;
-
-    if (configFile.is_open()) {
-        while (getline(configFile, line)) {
-            std::istringstream iss(line);
-            std::string key;
-            if (getline(iss, key, '=')) {
-                std::string value;
-                if (getline(iss, value)) {
-                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
-                }
-            }
-        }
-    }
-}
-
