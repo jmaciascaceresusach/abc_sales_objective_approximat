@@ -22,6 +22,24 @@ debajo del objetivo.
 
 ABCMethod::ABCMethod() {}
 
+void readConfigSimple(const std::string& configFilePath, int& numberOfIterations) {
+    std::ifstream configFile(configFilePath);
+    std::string line;
+
+    if (configFile.is_open()) {
+        while (getline(configFile, line)) {
+            std::istringstream iss(line);
+            std::string key;
+            if (getline(iss, key, '=')) {
+                std::string value;
+                if (getline(iss, value)) {
+                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
+                }
+            }
+        }
+    }
+}
+
 void ABCMethod::refineParameters(std::vector<Parameter>& parameters, 
                                  std::function<double(const std::vector<Parameter>&)> calculateSale, 
                                  double salesObjective, 
@@ -188,24 +206,6 @@ void ABCMethod::normalizeParameters(std::vector<Parameter>& parameters) {
     if (totalProbability > 1.00000000) {
         for (auto& param : parameters) {
             param.probability /= totalProbability;
-        }
-    }
-}
-
-void readConfigSimple(const std::string& configFilePath, int& numberOfIterations) {
-    std::ifstream configFile(configFilePath);
-    std::string line;
-
-    if (configFile.is_open()) {
-        while (getline(configFile, line)) {
-            std::istringstream iss(line);
-            std::string key;
-            if (getline(iss, key, '=')) {
-                std::string value;
-                if (getline(iss, value)) {
-                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
-                }
-            }
         }
     }
 }
