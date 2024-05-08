@@ -23,6 +23,10 @@ public:
     // Método para refinar parámetros usando el método ABC.
     void refineParameters(std::vector<Parameter>& parameters, std::function<double(const std::vector<Parameter>&)> calculateSale, double salesObjective, double tolerance);
     void dynamicAdjustParameters(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
+    void dynamicAdjustParametersGradient(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
+    void dynamicAdjustParametersSlidingAverage(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
+    void dynamicAdjustParametersGenetic(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
+    void dynamicAdjustParametersSimulatedAnnealing(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
 
 private:
     // Método auxiliar para calcular la distancia entre las ventas simuladas y el objetivo de ventas.
