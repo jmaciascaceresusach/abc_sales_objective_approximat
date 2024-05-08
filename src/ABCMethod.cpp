@@ -80,7 +80,7 @@ void ABCMethod::normalizeParameters(std::vector<Parameter>& parameters) {
         totalProbability += param.probability;
     }
 
-    if (totalProbability > 1.0) {
+    if (totalProbability > 1.00000000) {
         for (auto& param : parameters) {
             param.probability /= totalProbability;
         }
