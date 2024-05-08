@@ -52,3 +52,10 @@ The simulation_config.txt file, can be modified according to:
 - perceptionOfRelationshipValue=0.0655840981931411
 - marketParticipation=0.156170822929046
 - otherFactors=0.0139894350379837
+
+Finally, you have the possibility to perform code unit tests, according to the files in the tests folder. You must then execute the following statements:
+
+1. cd abc_sales_objective_approximat/build
+2. cmake ..
+3. make
+4. ./tests
