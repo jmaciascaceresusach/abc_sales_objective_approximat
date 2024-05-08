@@ -73,7 +73,8 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
             break;
         }
 
-        dynamicAdjustParametersGenetic(parameters, calculateSale, saleValue, salesObjective);
+        // dynamicAdjustParametersGenetic(parameters, calculateSale, saleValue, salesObjective);
+        dynamicAdjustParameters(parameters, calculateSale, saleValue, salesObjective);
         normalizeParameters(parameters);
     }
 
