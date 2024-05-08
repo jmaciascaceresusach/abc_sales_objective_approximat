@@ -25,14 +25,14 @@ public:
     void dynamicAdjustParameters(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
     void dynamicAdjustParametersGradient(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
     void dynamicAdjustParametersSlidingAverage(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
-    void dynamicAdjustParametersGenetic(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
-    void dynamicAdjustParametersSimulatedAnnealing(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
+    // void dynamicAdjustParametersGenetic(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
+    // void dynamicAdjustParametersSimulatedAnnealing(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
     void dynamicAdjustParametersLM(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
 
 private:
     // Método auxiliar para calcular la distancia entre las ventas simuladas y el objetivo de ventas.
     double calculateDistance(double saleValue, double salesObjective);
-    double calculateSale(const std::vector<Parameter>& parameters);
+    // double calculateSale(const std::vector<Parameter>& parameters);
     void normalizeParameters(std::vector<Parameter>& parameters); // Implementación 08052024
 };
 
