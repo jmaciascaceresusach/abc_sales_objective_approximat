@@ -62,43 +62,6 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
     parameters = bestParameters;
 }
 
-// Implementación corregida de `calculateSale` (08052024)
-double calculateSale(const std::vector<Parameter>& parameters) {
-    double totalSaleValue = 0.0;
-    for (const auto& param : parameters) {
-        if (param.name == "customerType") {
-            totalSaleValue += param.probability * 80;
-        } else if (param.name == "typeOfSeller") {
-            totalSaleValue += param.probability * 50;
-        } else if (param.name == "numberOfProductsSold") {
-            totalSaleValue += param.probability * 90;
-        } else if (param.name == "saleDate") {
-            totalSaleValue += param.probability * 20;
-        } else if (param.name == "products") {
-            totalSaleValue += param.probability * 10;
-        } else if (param.name == "totalSaleValue") {
-            totalSaleValue += param.probability * 11;
-        } else if (param.name == "priceDiscounts") {
-            totalSaleValue += param.probability * 21;
-        } else if (param.name == "deliveryTime") {
-            totalSaleValue += param.probability * 34;
-        } else if (param.name == "productType") {
-            totalSaleValue += param.probability * 24;
-        } else if (param.name == "productList") {
-            totalSaleValue += param.probability * 65;
-        } else if (param.name == "inventoryLevel") {
-            totalSaleValue += param.probability * 79;
-        } else if (param.name == "perceptionOfRelationshipValue") {
-            totalSaleValue += param.probability * 12;
-        } else if (param.name == "marketParticipation") {
-            totalSaleValue += param.probability * 45;
-        } else if (param.name == "otherFactors") {
-            totalSaleValue += param.probability * 72;
-        }
-    }
-    return totalSaleValue;
-}
-
 // Ajuste dinámicamente los parámetros según los resultados de la simulación.
 void ABCMethod::dynamicAdjustParameters(std::vector<Parameter>& parameters, double saleValue, double salesObjective) {
     double errorMargin = calculateDistance(saleValue, salesObjective);
@@ -208,6 +171,43 @@ void ABCMethod::dynamicAdjustParametersLM(std::vector<Parameter>& parameters, do
 
 double ABCMethod::calculateDistance(double saleValue, double salesObjective) {
     return std::abs(saleValue - salesObjective);
+}
+
+// Implementación corregida de `calculateSale` (08052024)
+double calculateSale(const std::vector<Parameter>& parameters) {
+    double totalSaleValue = 0.0;
+    for (const auto& param : parameters) {
+        if (param.name == "customerType") {
+            totalSaleValue += param.probability * 80;
+        } else if (param.name == "typeOfSeller") {
+            totalSaleValue += param.probability * 50;
+        } else if (param.name == "numberOfProductsSold") {
+            totalSaleValue += param.probability * 90;
+        } else if (param.name == "saleDate") {
+            totalSaleValue += param.probability * 20;
+        } else if (param.name == "products") {
+            totalSaleValue += param.probability * 10;
+        } else if (param.name == "totalSaleValue") {
+            totalSaleValue += param.probability * 11;
+        } else if (param.name == "priceDiscounts") {
+            totalSaleValue += param.probability * 21;
+        } else if (param.name == "deliveryTime") {
+            totalSaleValue += param.probability * 34;
+        } else if (param.name == "productType") {
+            totalSaleValue += param.probability * 24;
+        } else if (param.name == "productList") {
+            totalSaleValue += param.probability * 65;
+        } else if (param.name == "inventoryLevel") {
+            totalSaleValue += param.probability * 79;
+        } else if (param.name == "perceptionOfRelationshipValue") {
+            totalSaleValue += param.probability * 12;
+        } else if (param.name == "marketParticipation") {
+            totalSaleValue += param.probability * 45;
+        } else if (param.name == "otherFactors") {
+            totalSaleValue += param.probability * 72;
+        }
+    }
+    return totalSaleValue;
 }
 
 void ABCMethod::normalizeParameters(std::vector<Parameter>& parameters) {

@@ -38,7 +38,7 @@ que se alcanzaron a realizar
 }*/
 
 // Implementación corregida de `calculateSale` (08052024)
-/*double calculateSale(const std::vector<Parameter>& parameters) {
+double calculateSale(const std::vector<Parameter>& parameters) {
     double totalSaleValue = 0.0;
     for (const auto& param : parameters) {
         if (param.name == "customerType") {
@@ -72,7 +72,7 @@ que se alcanzaron a realizar
         }
     }
     return totalSaleValue;
-}*/
+}
 
 void readConfig(const std::string& configFilePath, 
                 int& numberOfIterations, 
