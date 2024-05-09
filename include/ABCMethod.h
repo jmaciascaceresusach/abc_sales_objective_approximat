@@ -1,10 +1,3 @@
-/* Funcionalidad general 27032024
-Se encapsula la lógica de parámetros de simulación con el objetivo 
-de alcanzar un objetivo de ventas específico. Se proporciona un método
-"refineParameters" que ajusta los parámetros basándose en la distancia
-entre los valores de ventas simulados y el objetivo de ventas.
-*/
-
 #ifndef ABCMETHOD_H
 #define ABCMETHOD_H
 
@@ -15,23 +8,86 @@ entre los valores de ventas simulados y el objetivo de ventas.
 #include <sstream>
 #include <cstdlib> // para std::atoi and std::atof
 
+/**
+ * Clase que implementa el método ABC para refinar parámetros.
+ */
 class ABCMethod {
 public:
-    // Constructor
+    // Constructor por defecto.
     ABCMethod();
 
-    // Método para refinar parámetros usando el método ABC.
+    /**
+     * Método para refinar parámetros usando el método ABC.
+     * @param parameters Lista de parámetros a refinar.
+     * @param calculateSale Función para calcular las ventas.
+     * @param salesObjective Objetivo de ventas a alcanzar.
+     * @param tolerance Tolerancia aceptable entre las ventas calculadas y el objetivo.
+     */
     void refineParameters(std::vector<Parameter>& parameters, std::function<double(const std::vector<Parameter>&)> calculateSale, double salesObjective, double tolerance);
+
+    /**
+     * Ajusta dinámicamente los parámetros en función de las ventas simuladas.
+     * @param parameters Lista de parámetros a ajustar.
+     * @param saleValue Valor de las ventas simuladas.
+     * @param salesObjective Objetivo de ventas a alcanzar.
+     */
     void dynamicAdjustParameters(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
+
+    /**
+     * Ajuste basado en gradiente.
+     * @param parameters Lista de parámetros a ajustar.
+     * @param saleValue Valor de las ventas simuladas.
+     * @param salesObjective Objetivo de ventas a alcanzar.
+     */
     void dynamicAdjustParametersGradient(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
+
+    /**
+     * Ajuste basado en la media deslizante.
+     * @param parameters Lista de parámetros a ajustar.
+     * @param saleValue Valor de las ventas simuladas.
+     * @param salesObjective Objetivo de ventas a alcanzar.
+     */
     void dynamicAdjustParametersSlidingAverage(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
+
+    /**
+     * Optimización basada en algoritmos evolutivos (genéticos).
+     * @param parameters Lista de parámetros a ajustar.
+     * @param calculateSale Función para calcular las ventas.
+     * @param saleValue Valor de las ventas simuladas.
+     * @param salesObjective Objetivo de ventas a alcanzar.
+     */
     void dynamicAdjustParametersGenetic(std::vector<Parameter>& parameters, std::function<double(const std::vector<Parameter>&)> calculateSale, double saleValue, double salesObjective);
+
+    /**
+     * Optimización por recocido simulado.
+     * @param parameters Lista de parámetros a ajustar.
+     * @param calculateSale Función para calcular las ventas.
+     * @param saleValue Valor de las ventas simuladas.
+     * @param salesObjective Objetivo de ventas a alcanzar.
+     */
     void dynamicAdjustParametersSimulatedAnnealing(std::vector<Parameter>& parameters, std::function<double(const std::vector<Parameter>&)> calculateSale, double saleValue, double salesObjective);
+
+    /**
+     * Optimización basada en cuadrados mínimos (Levenberg-Marquardt).
+     * @param parameters Lista de parámetros a ajustar.
+     * @param saleValue Valor de las ventas simuladas.
+     * @param salesObjective Objetivo de ventas a alcanzar.
+     */
     void dynamicAdjustParametersLM(std::vector<Parameter>& parameters, double saleValue, double salesObjective);
 
 private:
-    // Método auxiliar para calcular la distancia entre las ventas simuladas y el objetivo de ventas.
+    /**
+     * Método auxiliar para calcular la distancia entre las ventas simuladas y el objetivo de ventas.
+     * @param saleValue Valor de las ventas simuladas.
+     * @param salesObjective Objetivo de ventas a alcanzar.
+     * @return Distancia entre las ventas simuladas y el objetivo.
+     */
     double calculateDistance(double saleValue, double salesObjective);
+
+    /**
+     * Normaliza los parámetros para que sus probabilidades sumen 1 o menos.
+     * @param parameters Lista de parámetros a normalizar.
+     */
     void normalizeParameters(std::vector<Parameter>& parameters);
 };
 

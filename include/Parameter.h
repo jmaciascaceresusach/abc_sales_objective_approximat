@@ -1,23 +1,28 @@
-/* Funcionalidad general 27032024
-Representa un parámetro individual en la simulación. Cada parámetro
-tiene un nombre y una probabilidad (o valor) que puede ajustarse.
-*/
-
 #ifndef PARAMETER_H
 #define PARAMETER_H
 
 #include <string>
 #include <map>
 
+/**
+ * Clase que representa un parámetro utilizado en simulaciones.
+ */
 class Parameter {
 public:
-    std::string name;
-    double probability;
+    std::string name; ///< Nombre del parámetro.
+    double probability; ///< Probabilidad asociada al parámetro.
 
-    // Declaración del constructor
+    /**
+     * Constructor del parámetro.
+     * @param name Nombre del parámetro.
+     * @param probability Probabilidad inicial asociada al parámetro.
+     */
     Parameter(std::string name, double probability);
 
-    // Método para ajustar la probabilidad basado en simulaciones.
+    /**
+     * Ajusta la probabilidad basada en simulaciones.
+     * @param adjustment Cantidad de ajuste a realizar en la probabilidad.
+     */
     void adjustProbability(double adjustment);
 };
 

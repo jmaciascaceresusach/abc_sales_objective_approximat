@@ -1,34 +1,35 @@
-/* Funcionalidad general 27032024
-Implementa el "SimulationEngine", incluyendo la lógica para añadir
-parámetros, ejecutar simulaciones, y ajustar parámetros basándose en
-los resultados de la simulación.
-
-Problema encontrado (por solucionar): 
-- Aunque se ajustan los parámetros después de cada simulación basándose 
-en si el valor de venta está por encima o por debajo del objetivo, este 
-ajuste es relativamente simple y puede no ser suficiente para alcanzar 
-el objetivo de ventas dentro de la tolerancia específicada.
-*/
-
 #include "../include/SimulationEngine.h"
 #include <iostream>
 #include <algorithm> // para std::min_element
 #include <chrono>
 #include <iomanip> // para std::put_time
 
-// Implementación del constructor
+/**
+ * Implementación del constructor.
+ */
 SimulationEngine::SimulationEngine() {}
 
-// Agrega un parámetro a la simulación.
+/**
+ * Agrega un parámetro a la simulación.
+ * @param parameter Parámetro a agregar.
+ */
 void SimulationEngine::addParameter(const Parameter& parameter) {
     this->parameters.push_back(parameter);
 }
 
+/**
+ * Ejecuta simulaciones para aproximarse al objetivo de ventas.
+ * @param numberOfIterations Número de iteraciones a ejecutar.
+ * @param calculateSale Función para calcular las ventas.
+ * @param salesObjective Objetivo de ventas a alcanzar.
+ * @param tolerance Tolerancia aceptable entre las ventas calculadas y el objetivo.
+ */
 void SimulationEngine::runSimulations(int numberOfIterations, std::function<double(const std::vector<Parameter>&)> calculateSale, double salesObjective, double tolerance) {
     auto now = std::chrono::system_clock::now();
     std::time_t now_time = std::chrono::system_clock::to_time_t(now);
     std::tm now_tm = *std::localtime(&now_time);
 
+    // Abrir archivo para guardar estadísticas de simulación
     std::ofstream statsFile("statistics_simulations.txt");
     statsFile << "Creation Date and Time: " << std::put_time(&now_tm, "%Y-%m-%d %H:%M:%S") << "\n";
     statsFile << "Iteration,SaleValue,Distance,Objective,Tolerance";
@@ -44,6 +45,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
 
     std::cout << "\n**Start Simulation***\n";
 
+    // Ejecutar iteraciones de simulación
     for (int i = 0; i < numberOfIterations; ++i) {
         double saleValue = calculateSale(parameters);
         double distance = std::abs(saleValue - salesObjective);
@@ -82,6 +84,11 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     abcMethod.refineParameters(parameters, calculateSale, salesObjective, tolerance);
 }
 
+/**
+ * Ajusta parámetros en función de los resultados de la simulación.
+ * @param saleValue Valor de las ventas simuladas.
+ * @param salesObjective Objetivo de ventas a alcanzar.
+ */
 void SimulationEngine::adjustParameters(double saleValue, double salesObjective) {
     double error = saleValue - salesObjective;
     double learningRate = 0.01;

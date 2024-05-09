@@ -1,18 +1,3 @@
-/* Funcionalidad general 27032024
-Implementa la clase "Parameter", proporcionando un constructor y un método
-"adjustProbability" para ajustar la probabilidad del parámetro y asegurarse
-de que permanezca en el rango [0,1].
-
-Problema encontrado (por solucionar): 
-- Se podrían aprovechar más funcionalidades
-de C++ para manejar archivos y procesamiento de texto, mejorando la calidad y
-robustez del código.
-- Agregar los parámetros al archivo simulation_config para que dinámicamente
-se puedan modificar.
-- Visualizar el vector de salida y la cantidad de iteraciones de la simulación
-que se alcanzaron a realizar
-*/
-
 #include "../include/Parameter.h"
 #include "../include/SimulationEngine.h"
 #include <iostream>
@@ -22,7 +7,11 @@ que se alcanzaron a realizar
 #include <sstream>
 #include <chrono>
 
-// Función para calcular ventas simuladas en función de parámetros.
+/**
+ * Función para calcular ventas simuladas en función de parámetros.
+ * @param parameters Lista de parámetros utilizados para calcular las ventas.
+ * @return Valor total de las ventas calculadas.
+ */
 double calculateSale(const std::vector<Parameter>& parameters) {
     double totalSaleValue = 0.0;
     for (const auto& param : parameters) {
@@ -59,29 +48,19 @@ double calculateSale(const std::vector<Parameter>& parameters) {
     return totalSaleValue;
 }
 
-void readConfig(const std::string& configFilePath, 
-                int& numberOfIterations, 
-                double& salesObjective, 
-                double& tolerance) {
-    std::ifstream configFile(configFilePath);
-    std::string line;
-
-    if (configFile.is_open()) {
-        while (getline(configFile, line)) {
-            std::istringstream iss(line);
-            std::string key;
-            if (getline(iss, key, '=')) {
-                std::string value;
-                if (getline(iss, value)) {
-                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
-                    else if (key == "salesObjective") salesObjective = std::stod(value);
-                    else if (key == "tolerance") tolerance = std::stod(value);
-                }
-            }
-        }
-    }
-}
-
+/**
+ * Lee una configuración completa desde un archivo para 8 parámetros.
+ * @param configFilePath Ruta al archivo de configuración.
+ * @param numberOfIterations Variable donde se almacenará el número de iteraciones.
+ * @param salesObjective Variable donde se almacenará el objetivo de ventas.
+ * @param tolerance Variable donde se almacenará la tolerancia.
+ * @param customerType Variable donde se almacenará el valor inicial de customerType.
+ * @param typeOfSeller Variable donde se almacenará el valor inicial de typeOfSeller.
+ * @param numberOfProductsSold Variable donde se almacenará el valor inicial de numberOfProductsSold.
+ * @param saleDate Variable donde se almacenará el valor inicial de saleDate.
+ * @param products Variable donde se almacenará el valor inicial de products.
+ * @param totalSaleValue Variable donde se almacenará el valor inicial de totalSaleValue.
+ */
 void readConfigFor8(const std::string& configFilePath, 
                     int& numberOfIterations, 
                     double& salesObjective, 
@@ -102,7 +81,6 @@ void readConfigFor8(const std::string& configFilePath,
             if (getline(iss, key, '=')) {
                 std::string value;
                 if (getline(iss, value)) {
-                    //std::cout << "Key: " << key << ", Value: " << value << std::endl;  // Debug output
                     if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
                     else if (key == "salesObjective") salesObjective = std::stod(value);
                     else if (key == "tolerance") tolerance = std::stod(value);
@@ -115,11 +93,32 @@ void readConfigFor8(const std::string& configFilePath,
                 }
             }
         }
-    }else {
+    } else {
         std::cerr << "Failed to open config file: " << configFilePath << std::endl;
     }
 }
 
+/**
+ * Lee una configuración completa desde un archivo para 17 parámetros.
+ * @param configFilePath Ruta al archivo de configuración.
+ * @param numberOfIterations Variable donde se almacenará el número de iteraciones.
+ * @param salesObjective Variable donde se almacenará el objetivo de ventas.
+ * @param tolerance Variable donde se almacenará la tolerancia.
+ * @param customerType Variable donde se almacenará el valor inicial de customerType.
+ * @param typeOfSeller Variable donde se almacenará el valor inicial de typeOfSeller.
+ * @param numberOfProductsSold Variable donde se almacenará el valor inicial de numberOfProductsSold.
+ * @param saleDate Variable donde se almacenará el valor inicial de saleDate.
+ * @param products Variable donde se almacenará el valor inicial de products.
+ * @param totalSaleValue Variable donde se almacenará el valor inicial de totalSaleValue.
+ * @param priceDiscounts Variable donde se almacenará el valor inicial de priceDiscounts.
+ * @param deliveryTime Variable donde se almacenará el valor inicial de deliveryTime.
+ * @param productType Variable donde se almacenará el valor inicial de productType.
+ * @param productList Variable donde se almacenará el valor inicial de productList.
+ * @param inventoryLevel Variable donde se almacenará el valor inicial de inventoryLevel.
+ * @param perceptionOfRelationshipValue Variable donde se almacenará el valor inicial de perceptionOfRelationshipValue.
+ * @param marketParticipation Variable donde se almacenará el valor inicial de marketParticipation.
+ * @param otherFactors Variable donde se almacenará el valor inicial de otherFactors.
+ */
 void readConfigFor17(const std::string& configFilePath, 
                     int& numberOfIterations, 
                     double& salesObjective, 
@@ -148,7 +147,6 @@ void readConfigFor17(const std::string& configFilePath,
             if (getline(iss, key, '=')) {
                 std::string value;
                 if (getline(iss, value)) {
-                    //std::cout << "Key: " << key << ", Value: " << value << std::endl;  // Debug output
                     if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
                     else if (key == "salesObjective") salesObjective = std::stod(value);
                     else if (key == "tolerance") tolerance = std::stod(value);
@@ -169,21 +167,14 @@ void readConfigFor17(const std::string& configFilePath,
                 }
             }
         }
-    }else {
+    } else {
         std::cerr << "Failed to open config file: " << configFilePath << std::endl;
     }
 }
 
 int main(int argc, char* argv[]) {
-
     // Obtiene el tiempo de inicio
     auto start = std::chrono::high_resolution_clock::now();
-
-    /* Por implementar (06052024) 
-    std::ofstream out("simulation_output.txt");
-    std::streambuf* coutbuf = std::cout.rdbuf(); // Guarda el buffer viejo
-    std::cout.rdbuf(out.rdbuf()); // Redirecciona std::cout al archivo output.txt
-    */
 
     int numberOfIterations;
     double salesObjective, tolerance;
@@ -229,7 +220,7 @@ int main(int argc, char* argv[]) {
     Parameter marketParticipationParameter("marketParticipation", marketParticipation);
     Parameter otherFactorsParameter("otherFactors", otherFactors);
 
-    // Agregar parámetros
+    // Agregar parámetros al motor de simulación
     simulationEngine.addParameter(customerTypeParameter);
     simulationEngine.addParameter(typeOfSellerParameter);
     simulationEngine.addParameter(numberOfProductsSoldParameter);
@@ -281,12 +272,6 @@ int main(int argc, char* argv[]) {
     std::cout << "***Duration***" << std::endl;
     std::cout << "Time: " << duration.count() << " milliseconds" << std::endl;
     std::cout << "\n";
-    
-    /* Por implementar (06052024) 
-    // Restaura el buffer original para que std::cout escriba a la consola de nuevo
-    std::cout.rdbuf(coutbuf);
-    out.close();
-    */
 
     return 0;
 }
