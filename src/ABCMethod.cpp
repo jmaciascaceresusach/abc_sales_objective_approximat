@@ -3,6 +3,7 @@
 #include <random>
 #include <cmath>
 #include <algorithm>
+#include <iostream>
 
 /**
  * Constructor por defecto.
@@ -123,6 +124,8 @@ void ABCMethod::dynamicAdjustParametersGradient(std::vector<Parameter>& paramete
     for (auto& param : parameters) {
         double gradiente = (saleValue < salesObjective) ? learningRate : -learningRate;
         param.adjustProbability(gradiente * std::abs(param.probability));
+
+        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
 }
 
@@ -162,6 +165,8 @@ void ABCMethod::dynamicAdjustParametersGenetic(std::vector<Parameter>& parameter
     for (auto& param : newGeneration) {
         double mutation = distribution(generator);
         param.adjustProbability(mutation);
+
+        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
 
     double newSaleValue = calculateSale(newGeneration);
@@ -191,6 +196,8 @@ void ABCMethod::dynamicAdjustParametersSimulatedAnnealing(std::vector<Parameter>
     for (auto& param : newParameters) {
         double mutation = distribution(generator);
         param.adjustProbability(mutation);
+
+        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
 
     double newSaleValue = calculateSale(newParameters);
@@ -220,6 +227,8 @@ void ABCMethod::dynamicAdjustParametersLM(std::vector<Parameter>& parameters, do
         double gradient = error * param.probability;
         double adjustment = (gradient / (1 + lambda * gradient)) * 0.01;
         param.adjustProbability(adjustment);
+
+        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
 
     normalizeParameters(parameters);

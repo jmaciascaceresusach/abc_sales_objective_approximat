@@ -48,8 +48,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     std::vector<Parameter> bestParameters;
     double closestDistance = std::numeric_limits<double>::max();
     std::string bestMethod;
+    int bestIteration = -1;
 
-    std::cout << "\n**Start SimulationX***\n";
+    std::cout << "\n**Start Simulation***\n";
 
     auto runAdjustmentSimple = [&, this](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, double, double), const std::string& methodName) {
         std::vector<Parameter> localParameters = parameters;
@@ -89,6 +90,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
                 closestDistance = localClosestDistance;
                 bestParameters = localBestParameters;
                 bestMethod = methodName;
+                bestIteration = localBestIteration;
             }
         }
     };
@@ -131,9 +133,10 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
                 closestDistance = localClosestDistance;
                 bestParameters = localBestParameters;
                 bestMethod = methodName;
+                bestIteration = localBestIteration;
             }
         }
-    }; 
+    };
 
     std::vector<std::thread> threads;
     threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParameters, "dynamicAdjustParameters"); });
@@ -152,7 +155,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
 
     std::cout << "\n***End Simulation***\n";
     std::cout << "\n***Results***\n";
-    std::cout << "Best parameters found with sale value " << calculateSale(bestParameters) << " using method: " << bestMethod << std::endl;
+    std::cout << "Best parameters found with sale value " << calculateSale(bestParameters) << " using method: " << bestMethod << " in iteration " << bestIteration << std::endl;
     std::cout << "\n***Best Parameters***\n";
     for (const auto& param : bestParameters) {
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
@@ -175,6 +178,7 @@ void SimulationEngine::adjustParameters(double saleValue, double salesObjective)
         param.adjustProbability(adjustment);
 
         param.probability = std::max(0.0, std::min(param.probability, 1.0));
+        
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
 }
