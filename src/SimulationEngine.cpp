@@ -4,6 +4,7 @@
 #include <chrono>
 #include <iomanip> // para std::put_time
 #include <thread>
+#include <mutex>
 
 /**
  * Implementación del constructor.
@@ -39,16 +40,21 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     }
     statsFile << "\n";
 
+    std::mutex mtx;
     double closestDistance = std::numeric_limits<double>::max();
     std::vector<Parameter> bestParameters = parameters;
+
+    /* Cambio realizado: 27052024 1448. Ajuste dinámico de parámetros según cada función disponible (cada uno en un hilo) */
+    /* 
     double bestSaleValue = 0;
     int bestIteration = -1;
+    */
 
     std::cout << "\n**Start Simulation***\n";
 
     /* Cambio realizado: 27052024 1448. Ajuste dinámico de parámetros según cada función disponible (cada uno en un hilo) */
     /* Inicio */
-    auto runAdjustment = [&](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, double, double)) {
+    /*auto runAdjustment = [&](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, double, double)) {
         for (int i = 0; i < numberOfIterations; ++i) {
             double saleValue = calculateSale(parameters);
             double distance = std::abs(saleValue - salesObjective);
@@ -70,7 +76,44 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
 
             (abcMethod.*adjustFunc)(parameters, saleValue, salesObjective);
         }
-    };
+    };*/
+
+    auto runAdjustment = [&](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, double, double)) {
+        std::vector<Parameter> localParameters = parameters;
+        double localClosestDistance = std::numeric_limits<double>::max();
+        std::vector<Parameter> localBestParameters = localParameters;
+        double localBestSaleValue = 0;
+        int localBestIteration = -1;
+
+        for (int i = 0; i < numberOfIterations; ++i) {
+            double saleValue = calculateSale(localParameters);
+            double distance = std::abs(saleValue - salesObjective);
+
+            std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
+
+            std::lock_guard<std::mutex> lock(mtx);
+            statsFile << i << "," << saleValue << "," << distance << "," << salesObjective << "," << tolerance;
+            for (const auto& param : localParameters) {
+                statsFile << "," << param.probability;
+            }
+            statsFile << "\n";
+
+            if (distance < localClosestDistance) {
+                localClosestDistance = distance;
+                localBestParameters = localParameters;
+                localBestSaleValue = saleValue;
+                localBestIteration = i;
+            }
+
+            (abcMethod.*adjustFunc)(localParameters, saleValue, salesObjective);
+        }
+
+        std::lock_guard<std::mutex> lock(mtx);
+        if (localClosestDistance < closestDistance) {
+            closestDistance = localClosestDistance;
+            bestParameters = localBestParameters;
+        }
+    };    
 
     std::thread t1(runAdjustment, &ABCMethod::dynamicAdjustParameters);
     std::thread t2(runAdjustment, &ABCMethod::dynamicAdjustParametersGradient);
@@ -90,9 +133,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     statsFile.close();
 
     std::cout << "\n***End Simulation***\n";
-
+    
     std::cout << "\n***Results***\n";
-    std::cout << "Best parameters found at iteration " << bestIteration << " with sale value " << bestSaleValue << std::endl;
+    std::cout << "Best parameters found with sale value " << calculateSale(bestParameters) << std::endl;
     std::cout << "\n***Best Parameters***\n";
     for (const auto& param : bestParameters) {
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
