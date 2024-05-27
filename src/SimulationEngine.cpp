@@ -12,7 +12,7 @@
 #include <sstream> // Incluir sstream para convertir std::thread::id a string
 
 void logFunction(const std::string& message) {
-    std::ofstream logFile("simulation_log.txt", std::ios_base::app); // Abre el archivo en modo append
+    std::ofstream logFile("simulation_log.txt", std::ios_base::app);
     if (logFile.is_open()) {
         auto now = std::chrono::system_clock::now();
         std::time_t now_time = std::chrono::system_clock::to_time_t(now);
@@ -78,7 +78,6 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
             std::stringstream ss;
             ss << "\n";
             ss << "Thread " << std::this_thread::get_id() << " - Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance;
-            
             std::string logMsg = ss.str();
             std::cout << logMsg << std::endl;
             logFunction(logMsg);
@@ -99,7 +98,20 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
                 localBestIteration = i;
             }
 
+            // Log the parameter adjustments
+            std::stringstream adjustmentLog;
+            adjustmentLog << "Adjusting parameters at iteration " << i << " using method: " << methodName;
+            logFunction(adjustmentLog.str());
+
             (abcMethod.*adjustFunc)(localParameters, saleValue, salesObjective);
+
+            // Log the new parameter values after adjustment
+            std::stringstream newParamsLog;
+            newParamsLog << "New parameter values after adjustment:";
+            for (const auto& param : localParameters) {
+                newParamsLog << " " << param.name << ": " << param.probability;
+            }
+            logFunction(newParamsLog.str());
         }
 
         {
@@ -162,13 +174,16 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
         }
     };*/
 
-    std::vector<std::thread> threads;
+    /*std::vector<std::thread> threads;
     threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParameters, "dynamicAdjustParameters"); });
-    /*threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParametersGradient, "dynamicAdjustParametersGradient"); });
+    threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParametersGradient, "dynamicAdjustParametersGradient"); });
     threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParametersSlidingAverage, "dynamicAdjustParametersSlidingAverage"); });
     threads.emplace_back([&] { runAdjustmentComplex(&ABCMethod::dynamicAdjustParametersGenetic, "dynamicAdjustParametersGenetic"); });
     threads.emplace_back([&] { runAdjustmentComplex(&ABCMethod::dynamicAdjustParametersSimulatedAnnealing, "dynamicAdjustParametersSimulatedAnnealing"); });
     threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParametersLM, "dynamicAdjustParametersLM"); });*/
+
+    std::vector<std::thread> threads;
+    threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParameters, "dynamicAdjustParameters"); });
 
     for (auto& thread : threads) {
         thread.join();
