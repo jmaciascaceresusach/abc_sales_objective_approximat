@@ -41,8 +41,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     statsFile << "\n";
 
     std::mutex mtx;
+    std::vector<Parameter> bestParameters;
     double closestDistance = std::numeric_limits<double>::max();
-    std::vector<Parameter> bestParameters = parameters;
     std::string bestMethod;
 
     /* Cambio realizado: 27052024 1448. Ajuste dinámico de parámetros según cada función disponible (cada uno en un hilo) */
@@ -92,27 +92,32 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
 
             std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
 
-            std::lock_guard<std::mutex> lock(mtx);
-            statsFile << i << "," << saleValue << "," << distance << "," << salesObjective << "," << tolerance;
-            for (const auto& param : localParameters) {
-                statsFile << "," << param.probability;
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                statsFile << i << "," << saleValue << "," << distance << "," << salesObjective << "," << tolerance;
+                for (const auto& param : localParameters) {
+                    statsFile << "," << param.probability;
+                }
+                statsFile << "\n";
             }
-            statsFile << "\n";
 
+            if (distance < localClosestDistance) {
+                localClosestDistance = distance;
+                localBestParameters = localParameters;
+                localBestSaleValue = saleValue;
+                localBestIteration = i;
+            }
+
+            (abcMethod.*adjustFunc)(localParameters, saleValue, salesObjective);
+        }
+
+        {
             std::lock_guard<std::mutex> lock(mtx);
             if (localClosestDistance < closestDistance) {
                 closestDistance = localClosestDistance;
                 bestParameters = localBestParameters;
                 bestMethod = methodName;
             }
-
-            (abcMethod.*adjustFunc)(localParameters, saleValue, salesObjective);
-        }
-
-        std::lock_guard<std::mutex> lock(mtx);
-        if (localClosestDistance < closestDistance) {
-            closestDistance = localClosestDistance;
-            bestParameters = localBestParameters;
         }
     };    
 
