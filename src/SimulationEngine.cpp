@@ -1,10 +1,14 @@
 #include "../include/SimulationEngine.h"
-#include <iostream>
-#include <algorithm> // para std::min_element
-#include <chrono>
-#include <iomanip> // para std::put_time
 #include <thread>
 #include <mutex>
+#include <vector>
+#include <string>
+#include <functional>
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <chrono>
+#include <ctime>
 
 /**
  * Implementación del constructor.
@@ -79,7 +83,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
         }
     };*/
 
-    auto runAdjustment = [&](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, double, double), const std::string& methodName) {
+    auto runAdjustment = [&, this](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, double, double), const std::string& methodName) {
         std::vector<Parameter> localParameters = parameters;
         double localClosestDistance = std::numeric_limits<double>::max();
         std::vector<Parameter> localBestParameters = localParameters;
@@ -122,12 +126,12 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     };    
 
     std::vector<std::thread> threads;
-    threads.emplace_back(runAdjustment, &ABCMethod::dynamicAdjustParameters, "dynamicAdjustParameters");
-    threads.emplace_back(runAdjustment, &ABCMethod::dynamicAdjustParametersGradient, "dynamicAdjustParametersGradient");
-    threads.emplace_back(runAdjustment, &ABCMethod::dynamicAdjustParametersSlidingAverage, "dynamicAdjustParametersSlidingAverage");
-    threads.emplace_back(runAdjustment, &ABCMethod::dynamicAdjustParametersGenetic, "dynamicAdjustParametersGenetic");
-    threads.emplace_back(runAdjustment, &ABCMethod::dynamicAdjustParametersSimulatedAnnealing, "dynamicAdjustParametersSimulatedAnnealing");
-    threads.emplace_back(runAdjustment, &ABCMethod::dynamicAdjustParametersLM, "dynamicAdjustParametersLM");
+    threads.emplace_back(std::bind(runAdjustment, &ABCMethod::dynamicAdjustParameters, "dynamicAdjustParameters"));
+    threads.emplace_back(std::bind(runAdjustment, &ABCMethod::dynamicAdjustParametersGradient, "dynamicAdjustParametersGradient"));
+    threads.emplace_back(std::bind(runAdjustment, &ABCMethod::dynamicAdjustParametersSlidingAverage, "dynamicAdjustParametersSlidingAverage"));
+    threads.emplace_back(std::bind(runAdjustment, &ABCMethod::dynamicAdjustParametersGenetic, "dynamicAdjustParametersGenetic"));
+    threads.emplace_back(std::bind(runAdjustment, &ABCMethod::dynamicAdjustParametersSimulatedAnnealing, "dynamicAdjustParametersSimulatedAnnealing"));
+    threads.emplace_back(std::bind(runAdjustment, &ABCMethod::dynamicAdjustParametersLM, "dynamicAdjustParametersLM"));
 
     for (auto& thread : threads) {
         thread.join();
