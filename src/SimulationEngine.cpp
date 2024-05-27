@@ -64,6 +64,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
             double distance = std::abs(saleValue - salesObjective);
 
             std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
+            std::cout << "\n";
 
             {
                 std::lock_guard<std::mutex> lock(mtx);
@@ -178,7 +179,7 @@ void SimulationEngine::adjustParameters(double saleValue, double salesObjective)
         param.adjustProbability(adjustment);
 
         param.probability = std::max(0.0, std::min(param.probability, 1.0));
-        
+
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
 }
