@@ -94,12 +94,12 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     };    
 
     std::vector<std::thread> threads;
-    threads.emplace_back(std::bind(runAdjustment, &ABCMethod::dynamicAdjustParameters, "dynamicAdjustParameters"));
-    threads.emplace_back(std::bind(runAdjustment, &ABCMethod::dynamicAdjustParametersGradient, "dynamicAdjustParametersGradient"));
-    threads.emplace_back(std::bind(runAdjustment, &ABCMethod::dynamicAdjustParametersSlidingAverage, "dynamicAdjustParametersSlidingAverage"));
-    threads.emplace_back(std::bind(runAdjustment, &ABCMethod::dynamicAdjustParametersGenetic, "dynamicAdjustParametersGenetic"));
-    threads.emplace_back(std::bind(runAdjustment, &ABCMethod::dynamicAdjustParametersSimulatedAnnealing, "dynamicAdjustParametersSimulatedAnnealing"));
-    threads.emplace_back(std::bind(runAdjustment, &ABCMethod::dynamicAdjustParametersLM, "dynamicAdjustParametersLM"));
+    threads.emplace_back([&] { runAdjustment(&ABCMethod::dynamicAdjustParameters, "dynamicAdjustParameters"); });
+    threads.emplace_back([&] { runAdjustment(&ABCMethod::dynamicAdjustParametersGradient, "dynamicAdjustParametersGradient"); });
+    threads.emplace_back([&] { runAdjustment(&ABCMethod::dynamicAdjustParametersSlidingAverage, "dynamicAdjustParametersSlidingAverage"); });
+    //threads.emplace_back([&] { runAdjustment(&ABCMethod::dynamicAdjustParametersGenetic, "dynamicAdjustParametersGenetic"); });
+    //threads.emplace_back([&] { runAdjustment(&ABCMethod::dynamicAdjustParametersSimulatedAnnealing, "dynamicAdjustParametersSimulatedAnnealing"); });
+    threads.emplace_back([&] { runAdjustment(&ABCMethod::dynamicAdjustParametersLM, "dynamicAdjustParametersLM"); });
 
     for (auto& thread : threads) {
         thread.join();
