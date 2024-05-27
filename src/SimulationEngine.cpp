@@ -98,20 +98,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
                 localBestIteration = i;
             }
 
-            // Log the parameter adjustments
-            std::stringstream adjustmentLog;
-            adjustmentLog << "Adjusting parameters at iteration " << i << " using method: " << methodName;
-            logFunction(adjustmentLog.str());
-
             (abcMethod.*adjustFunc)(localParameters, saleValue, salesObjective);
-
-            // Log the new parameter values after adjustment
-            std::stringstream newParamsLog;
-            newParamsLog << "New parameter values after adjustment:";
-            for (const auto& param : localParameters) {
-                newParamsLog << " " << param.name << ": " << param.probability;
-            }
-            logFunction(newParamsLog.str());
         }
 
         {
@@ -222,7 +209,13 @@ void SimulationEngine::adjustParameters(double saleValue, double salesObjective)
     for (auto& param : parameters) {
         double adjustment = (error > 0 ? -1 : 1) * learningRate * std::abs(param.probability);
         param.adjustProbability(adjustment);
-        param.probability = std::max(0.0, std::min(param.probability, 1.0));
+
+        // Evitar que los parámetros se ajusten a cero
+        if (param.probability < 0.01) {
+            param.probability = 0.01;
+        } else {
+            param.probability = std::max(0.0, std::min(param.probability, 1.0));
+        }
 
         std::string paramMsg = "Parameter: " + param.name + ", Probability: " + std::to_string(param.probability);
         std::cout << paramMsg << std::endl;
