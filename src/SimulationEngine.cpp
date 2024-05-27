@@ -10,6 +10,17 @@
 #include <chrono>
 #include <ctime>
 
+void logFunction(const std::string& message) {
+    std::ofstream logFile("simulation_log.txt", std::ios_base::app); // Abre el archivo en modo append
+    if (logFile.is_open()) {
+        auto now = std::chrono::system_clock::now();
+        std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+        std::tm now_tm = *std::localtime(&now_time);
+        logFile << std::put_time(&now_tm, "%Y-%m-%d %H:%M:%S") << " - " << message << "\n";
+        logFile.close();
+    }
+}
+
 /**
  * Implementación del constructor.
  */
@@ -51,6 +62,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     int bestIteration = -1;
 
     std::cout << "\n**Start Simulation***\n";
+    logFunction("**Start Simulation***");
 
     auto runAdjustmentSimple = [&, this](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, double, double), const std::string& methodName) {
         std::vector<Parameter> localParameters = parameters;
@@ -63,8 +75,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
             double saleValue = calculateSale(localParameters);
             double distance = std::abs(saleValue - salesObjective);
 
-            std::cout << "Thread " << std::this_thread::get_id() << " - Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
-            std::cout << "\n";
+            std::string logMsg = "Thread " + std::to_string(std::this_thread::get_id()) + " - Iteration: " + std::to_string(i) + " - saleValue: " + std::to_string(saleValue) + " - distance: " + std::to_string(distance);
+            std::cout << logMsg << std::endl;
+            logFunction(logMsg);
 
             {
                 std::lock_guard<std::mutex> lock(mtx);
@@ -107,8 +120,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
             double saleValue = calculateSale(localParameters);
             double distance = std::abs(saleValue - salesObjective);
 
-            std::cout << "Thread " << std::this_thread::get_id() << " - Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
-            std::cout << "\n";
+            std::string logMsg = "Thread " + std::to_string(std::this_thread::get_id()) + " - Iteration: " + std::to_string(i) + " - saleValue: " + std::to_string(saleValue) + " - distance: " + std::to_string(distance);
+            std::cout << logMsg << std::endl;
+            logFunction(logMsg);
 
             {
                 std::lock_guard<std::mutex> lock(mtx);
@@ -156,11 +170,18 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     statsFile.close();
 
     std::cout << "\n***End Simulation***\n";
+    logFunction("***End Simulation***");
+
+    std::string resultMsg = "Best parameters found with sale value " + std::to_string(calculateSale(bestParameters)) + " using method: " + bestMethod + " in iteration " + std::to_string(bestIteration);
     std::cout << "\n***Results***\n";
-    std::cout << "Best parameters found with sale value " << calculateSale(bestParameters) << " using method: " << bestMethod << " in iteration " << bestIteration << std::endl;
+    std::cout << resultMsg << std::endl;
+    logFunction(resultMsg);
+
     std::cout << "\n***Best Parameters***\n";
     for (const auto& param : bestParameters) {
-        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
+        std::string paramMsg = "Parameter: " + param.name + ", Probability: " + std::to_string(param.probability);
+        std::cout << paramMsg << std::endl;
+        logFunction(paramMsg);
     }
 
     abcMethod.refineParameters(parameters, calculateSale, salesObjective, tolerance);
@@ -178,9 +199,10 @@ void SimulationEngine::adjustParameters(double saleValue, double salesObjective)
     for (auto& param : parameters) {
         double adjustment = (error > 0 ? -1 : 1) * learningRate * std::abs(param.probability);
         param.adjustProbability(adjustment);
-
         param.probability = std::max(0.0, std::min(param.probability, 1.0));
 
-        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
+        std::string paramMsg = "Parameter: " + param.name + ", Probability: " + std::to_string(param.probability);
+        std::cout << paramMsg << std::endl;
+        logFunction(paramMsg);
     }
 }
