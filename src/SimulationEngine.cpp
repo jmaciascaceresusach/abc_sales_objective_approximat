@@ -77,6 +77,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
 
             std::stringstream ss;
             ss << "Thread " << std::this_thread::get_id() << " - Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance;
+            ss << "\n";
+            
             std::string logMsg = ss.str();
             std::cout << logMsg << std::endl;
             logFunction(logMsg);
@@ -111,7 +113,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
         }
     };
 
-    auto runAdjustmentComplex = [&, this](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, std::function<double(const std::vector<Parameter>&)>, double, double), const std::string& methodName) {
+    /*auto runAdjustmentComplex = [&, this](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, std::function<double(const std::vector<Parameter>&)>, double, double), const std::string& methodName) {
         std::vector<Parameter> localParameters = parameters;
         double localClosestDistance = std::numeric_limits<double>::max();
         std::vector<Parameter> localBestParameters = localParameters;
@@ -124,6 +126,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
 
             std::stringstream ss;
             ss << "Thread " << std::this_thread::get_id() << " - Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance;
+            ss << "\n";
+
             std::string logMsg = ss.str();
             std::cout << logMsg << std::endl;
             logFunction(logMsg);
@@ -156,7 +160,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
                 bestIteration = localBestIteration;
             }
         }
-    };
+    };*/
 
     std::vector<std::thread> threads;
     threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParameters, "dynamicAdjustParameters"); });
