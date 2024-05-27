@@ -9,6 +9,7 @@
 #include <iomanip>
 #include <chrono>
 #include <ctime>
+#include <sstream> // Incluir sstream para convertir std::thread::id a string
 
 void logFunction(const std::string& message) {
     std::ofstream logFile("simulation_log.txt", std::ios_base::app); // Abre el archivo en modo append
@@ -46,7 +47,6 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     std::time_t now_time = std::chrono::system_clock::to_time_t(now);
     std::tm now_tm = *std::localtime(&now_time);
 
-    // Abrir archivo para guardar estadísticas de simulación
     std::ofstream statsFile("statistics_simulations.txt");
     statsFile << "Creation Date and Time: " << std::put_time(&now_tm, "%Y-%m-%d %H:%M:%S") << "\n";
     statsFile << "Iteration,SaleValue,Distance,Objective,Tolerance";
@@ -75,7 +75,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
             double saleValue = calculateSale(localParameters);
             double distance = std::abs(saleValue - salesObjective);
 
-            std::string logMsg = "Thread " + std::to_string(std::this_thread::get_id()) + " - Iteration: " + std::to_string(i) + " - saleValue: " + std::to_string(saleValue) + " - distance: " + std::to_string(distance);
+            std::stringstream ss;
+            ss << "Thread " << std::this_thread::get_id() << " - Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance;
+            std::string logMsg = ss.str();
             std::cout << logMsg << std::endl;
             logFunction(logMsg);
 
@@ -120,7 +122,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
             double saleValue = calculateSale(localParameters);
             double distance = std::abs(saleValue - salesObjective);
 
-            std::string logMsg = "Thread " + std::to_string(std::this_thread::get_id()) + " - Iteration: " + std::to_string(i) + " - saleValue: " + std::to_string(saleValue) + " - distance: " + std::to_string(distance);
+            std::stringstream ss;
+            ss << "Thread " << std::this_thread::get_id() << " - Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance;
+            std::string logMsg = ss.str();
             std::cout << logMsg << std::endl;
             logFunction(logMsg);
 
