@@ -63,7 +63,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
             double saleValue = calculateSale(localParameters);
             double distance = std::abs(saleValue - salesObjective);
 
-            std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
+            std::cout << "Thread " << std::this_thread::get_id() << " - Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
             std::cout << "\n";
 
             {
@@ -107,7 +107,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
             double saleValue = calculateSale(localParameters);
             double distance = std::abs(saleValue - salesObjective);
 
-            std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
+            std::cout << "Thread " << std::this_thread::get_id() << " - Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
+            std::cout << "\n";
 
             {
                 std::lock_guard<std::mutex> lock(mtx);
