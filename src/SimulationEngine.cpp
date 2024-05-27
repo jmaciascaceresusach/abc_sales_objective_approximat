@@ -51,7 +51,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     int bestIteration = -1;
     */
 
-    std::cout << "\n**Start Simulation***\n";
+    std::cout << "\n**Start SimulationX***\n";
 
     /* Cambio realizado: 27052024 1448. Ajuste dinámico de parámetros según cada función disponible (cada uno en un hilo) */
     /* Inicio */
@@ -133,7 +133,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     parameters = bestParameters;
     statsFile.close();
 
-    std::cout << "\n***End Simulation***\n";
+    std::cout << "\n***End SimulationX***\n";
     std::cout << "\n***Results***\n";
     std::cout << "Best parameters found with sale value " << calculateSale(bestParameters) << " using method: " << bestMethod << std::endl;
     std::cout << "\n***Best Parameters***\n";
