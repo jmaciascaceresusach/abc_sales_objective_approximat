@@ -43,6 +43,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     std::mutex mtx;
     double closestDistance = std::numeric_limits<double>::max();
     std::vector<Parameter> bestParameters = parameters;
+    std::string bestMethod;
 
     /* Cambio realizado: 27052024 1448. Ajuste dinámico de parámetros según cada función disponible (cada uno en un hilo) */
     /* 
@@ -78,7 +79,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
         }
     };*/
 
-    auto runAdjustment = [&](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, double, double)) {
+    auto runAdjustment = [&](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, double, double), const std::string& methodName) {
         std::vector<Parameter> localParameters = parameters;
         double localClosestDistance = std::numeric_limits<double>::max();
         std::vector<Parameter> localBestParameters = localParameters;
@@ -98,11 +99,11 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
             }
             statsFile << "\n";
 
-            if (distance < localClosestDistance) {
-                localClosestDistance = distance;
-                localBestParameters = localParameters;
-                localBestSaleValue = saleValue;
-                localBestIteration = i;
+            std::lock_guard<std::mutex> lock(mtx);
+            if (localClosestDistance < closestDistance) {
+                closestDistance = localClosestDistance;
+                bestParameters = localBestParameters;
+                bestMethod = methodName;
             }
 
             (abcMethod.*adjustFunc)(localParameters, saleValue, salesObjective);
@@ -115,12 +116,12 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
         }
     };    
 
-    std::thread t1(runAdjustment, &ABCMethod::dynamicAdjustParameters);
-    std::thread t2(runAdjustment, &ABCMethod::dynamicAdjustParametersGradient);
-    std::thread t3(runAdjustment, &ABCMethod::dynamicAdjustParametersSlidingAverage);
-    std::thread t4(runAdjustment, &ABCMethod::dynamicAdjustParametersGenetic);
-    std::thread t5(runAdjustment, &ABCMethod::dynamicAdjustParametersSimulatedAnnealing);
-    std::thread t6(runAdjustment, &ABCMethod::dynamicAdjustParametersLM);
+    std::thread t1(runAdjustment, &ABCMethod::dynamicAdjustParameters, "dynamicAdjustParameters");
+    std::thread t2(runAdjustment, &ABCMethod::dynamicAdjustParametersGradient, "dynamicAdjustParametersGradient");
+    std::thread t3(runAdjustment, &ABCMethod::dynamicAdjustParametersSlidingAverage, "dynamicAdjustParametersSlidingAverage");
+    std::thread t4(runAdjustment, &ABCMethod::dynamicAdjustParametersGenetic, "dynamicAdjustParametersGenetic");
+    std::thread t5(runAdjustment, &ABCMethod::dynamicAdjustParametersSimulatedAnnealing, "dynamicAdjustParametersSimulatedAnnealing");
+    std::thread t6(runAdjustment, &ABCMethod::dynamicAdjustParametersLM, "dynamicAdjustParametersLM");
 
     t1.join();
     t2.join();
@@ -133,9 +134,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     statsFile.close();
 
     std::cout << "\n***End Simulation***\n";
-    
     std::cout << "\n***Results***\n";
-    std::cout << "Best parameters found with sale value " << calculateSale(bestParameters) << std::endl;
+    std::cout << "Best parameters found with sale value " << calculateSale(bestParameters) << " using method: " << bestMethod << std::endl;
     std::cout << "\n***Best Parameters***\n";
     for (const auto& param : bestParameters) {
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
