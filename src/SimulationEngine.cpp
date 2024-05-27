@@ -3,6 +3,7 @@
 #include <algorithm> // para std::min_element
 #include <chrono>
 #include <iomanip> // para std::put_time
+#include <thread>
 
 /**
  * Implementación del constructor.
@@ -45,8 +46,63 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
 
     std::cout << "\n**Start Simulation***\n";
 
+    /* Cambio realizado: 27052024 1448. Ajuste dinámico de parámetros según cada función disponible (cada uno en un hilo) */
+    /* Inicio */
+    auto runAdjustment = [&](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, double, double)) {
+        for (int i = 0; i < numberOfIterations; ++i) {
+            double saleValue = calculateSale(parameters);
+            double distance = std::abs(saleValue - salesObjective);
+            
+            std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
+
+            statsFile << i << "," << saleValue << "," << distance << "," << salesObjective << "," << tolerance;
+            for (const auto& param : parameters) {
+                statsFile << "," << param.probability;
+            }
+            statsFile << "\n";
+
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                bestParameters = parameters;
+                bestSaleValue = saleValue;
+                bestIteration = i;
+            }
+
+            (abcMethod.*adjustFunc)(parameters, saleValue, salesObjective);
+        }
+    };
+
+    std::thread t1(runAdjustment, &ABCMethod::dynamicAdjustParameters);
+    std::thread t2(runAdjustment, &ABCMethod::dynamicAdjustParametersGradient);
+    std::thread t3(runAdjustment, &ABCMethod::dynamicAdjustParametersSlidingAverage);
+    std::thread t4(runAdjustment, &ABCMethod::dynamicAdjustParametersGenetic);
+    std::thread t5(runAdjustment, &ABCMethod::dynamicAdjustParametersSimulatedAnnealing);
+    std::thread t6(runAdjustment, &ABCMethod::dynamicAdjustParametersLM);
+
+    t1.join();
+    t2.join();
+    t3.join();
+    t4.join();
+    t5.join();
+    t6.join();
+
+    parameters = bestParameters;
+    statsFile.close();
+
+    std::cout << "\n***End Simulation***\n";
+
+    std::cout << "\n***Results***\n";
+    std::cout << "Best parameters found at iteration " << bestIteration << " with sale value " << bestSaleValue << std::endl;
+    std::cout << "\n***Best Parameters***\n";
+    for (const auto& param : bestParameters) {
+        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
+    }
+
+    abcMethod.refineParameters(parameters, calculateSale, salesObjective, tolerance);
+    /* Fin */
+
     // Ejecutar iteraciones de simulación
-    for (int i = 0; i < numberOfIterations; ++i) {
+    /*for (int i = 0; i < numberOfIterations; ++i) {
         double saleValue = calculateSale(parameters);
         double distance = std::abs(saleValue - salesObjective);
 
@@ -81,7 +137,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
 
-    abcMethod.refineParameters(parameters, calculateSale, salesObjective, tolerance);
+    abcMethod.refineParameters(parameters, calculateSale, salesObjective, tolerance);*/
 }
 
 /**
