@@ -49,39 +49,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     double closestDistance = std::numeric_limits<double>::max();
     std::string bestMethod;
 
-    /* Cambio realizado: 27052024 1448. Ajuste dinámico de parámetros según cada función disponible (cada uno en un hilo) */
-    /* 
-    double bestSaleValue = 0;
-    int bestIteration = -1;
-    */
-
     std::cout << "\n**Start SimulationX***\n";
-
-    /* Cambio realizado: 27052024 1448. Ajuste dinámico de parámetros según cada función disponible (cada uno en un hilo) */
-    /* Inicio */
-    /*auto runAdjustment = [&](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, double, double)) {
-        for (int i = 0; i < numberOfIterations; ++i) {
-            double saleValue = calculateSale(parameters);
-            double distance = std::abs(saleValue - salesObjective);
-            
-            std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
-
-            statsFile << i << "," << saleValue << "," << distance << "," << salesObjective << "," << tolerance;
-            for (const auto& param : parameters) {
-                statsFile << "," << param.probability;
-            }
-            statsFile << "\n";
-
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                bestParameters = parameters;
-                bestSaleValue = saleValue;
-                bestIteration = i;
-            }
-
-            (abcMethod.*adjustFunc)(parameters, saleValue, salesObjective);
-        }
-    };*/
 
     auto runAdjustment = [&, this](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, double, double), const std::string& methodName) {
         std::vector<Parameter> localParameters = parameters;
@@ -149,45 +117,6 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     }
 
     abcMethod.refineParameters(parameters, calculateSale, salesObjective, tolerance);
-    /* Fin */
-
-    // Ejecutar iteraciones de simulación
-    /*for (int i = 0; i < numberOfIterations; ++i) {
-        double saleValue = calculateSale(parameters);
-        double distance = std::abs(saleValue - salesObjective);
-
-        std::cout << "\n";
-        std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
-
-        statsFile << i << "," << saleValue << "," << distance << "," << salesObjective << "," << tolerance;
-        for (const auto& param : parameters) {
-            statsFile << "," << param.probability;
-        }
-        statsFile << "\n";
-
-        if (distance < closestDistance) {
-            closestDistance = distance;
-            bestParameters = parameters;
-            bestSaleValue = saleValue;
-            bestIteration = i;
-        }
-
-        adjustParameters(saleValue, salesObjective);
-    }
-
-    parameters = bestParameters;
-    statsFile.close();
-
-    std::cout << "\n***End Simulation***\n";
-
-    std::cout << "\n***Results***\n";
-    std::cout << "Best parameters found at iteration " << bestIteration << " with sale value " << bestSaleValue << std::endl;
-    std::cout << "\n***Best Parameters***\n";
-    for (const auto& param : bestParameters) {
-        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
-    }
-
-    abcMethod.refineParameters(parameters, calculateSale, salesObjective, tolerance);*/
 }
 
 /**
