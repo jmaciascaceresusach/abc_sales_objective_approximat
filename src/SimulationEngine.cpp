@@ -76,8 +76,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
             double distance = std::abs(saleValue - salesObjective);
 
             std::stringstream ss;
-            ss << "Thread " << std::this_thread::get_id() << " - Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance;
             ss << "\n";
+            ss << "Thread " << std::this_thread::get_id() << " - Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance;
             
             std::string logMsg = ss.str();
             std::cout << logMsg << std::endl;
@@ -125,8 +125,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
             double distance = std::abs(saleValue - salesObjective);
 
             std::stringstream ss;
-            ss << "Thread " << std::this_thread::get_id() << " - Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance;
             ss << "\n";
+            ss << "Thread " << std::this_thread::get_id() << " - Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance;
 
             std::string logMsg = ss.str();
             std::cout << logMsg << std::endl;
