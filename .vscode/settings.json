@@ -54,5 +54,6 @@
         "random": "cpp",
         "sstream": "cpp",
         "fstream": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": true
 }
