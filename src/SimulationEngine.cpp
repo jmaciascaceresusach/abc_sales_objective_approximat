@@ -217,7 +217,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
  */
 void SimulationEngine::adjustParameters(double saleValue, double salesObjective) {
     double error = saleValue - salesObjective;
-    double learningRate = 0.01;
+    double learningRate = 0.001;
 
     for (auto& param : parameters) {
         double adjustment = (error > 0 ? -1 : 1) * learningRate * std::abs(param.probability);
