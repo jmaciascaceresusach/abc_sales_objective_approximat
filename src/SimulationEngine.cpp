@@ -160,11 +160,11 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
 
     std::vector<std::thread> threads;
     threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParameters, "dynamicAdjustParameters"); });
-    threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParametersGradient, "dynamicAdjustParametersGradient"); });
+    /*threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParametersGradient, "dynamicAdjustParametersGradient"); });
     threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParametersSlidingAverage, "dynamicAdjustParametersSlidingAverage"); });
     threads.emplace_back([&] { runAdjustmentComplex(&ABCMethod::dynamicAdjustParametersGenetic, "dynamicAdjustParametersGenetic"); });
     threads.emplace_back([&] { runAdjustmentComplex(&ABCMethod::dynamicAdjustParametersSimulatedAnnealing, "dynamicAdjustParametersSimulatedAnnealing"); });
-    threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParametersLM, "dynamicAdjustParametersLM"); });
+    threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParametersLM, "dynamicAdjustParametersLM"); });*/
 
     for (auto& thread : threads) {
         thread.join();
