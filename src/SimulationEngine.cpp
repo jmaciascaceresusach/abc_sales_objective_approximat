@@ -51,7 +51,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
 
     std::cout << "\n**Start SimulationX***\n";
 
-    auto runAdjustment = [&, this](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, double, double), const std::string& methodName) {
+    auto runAdjustmentSimple = [&, this](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, double, double), const std::string& methodName) {
         std::vector<Parameter> localParameters = parameters;
         double localClosestDistance = std::numeric_limits<double>::max();
         std::vector<Parameter> localBestParameters = localParameters;
@@ -91,15 +91,57 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
                 bestMethod = methodName;
             }
         }
-    };    
+    };
+
+    auto runAdjustmentComplex = [&, this](void (ABCMethod::*adjustFunc)(std::vector<Parameter>&, std::function<double(const std::vector<Parameter>&)>, double, double), const std::string& methodName) {
+        std::vector<Parameter> localParameters = parameters;
+        double localClosestDistance = std::numeric_limits<double>::max();
+        std::vector<Parameter> localBestParameters = localParameters;
+        double localBestSaleValue = 0;
+        int localBestIteration = -1;
+
+        for (int i = 0; i < numberOfIterations; ++i) {
+            double saleValue = calculateSale(localParameters);
+            double distance = std::abs(saleValue - salesObjective);
+
+            std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
+
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                statsFile << i << "," << saleValue << "," << distance << "," << salesObjective << "," << tolerance;
+                for (const auto& param : localParameters) {
+                    statsFile << "," << param.probability;
+                }
+                statsFile << "\n";
+            }
+
+            if (distance < localClosestDistance) {
+                localClosestDistance = distance;
+                localBestParameters = localParameters;
+                localBestSaleValue = saleValue;
+                localBestIteration = i;
+            }
+
+            (abcMethod.*adjustFunc)(localParameters, calculateSale, saleValue, salesObjective);
+        }
+
+        {
+            std::lock_guard<std::mutex> lock(mtx);
+            if (localClosestDistance < closestDistance) {
+                closestDistance = localClosestDistance;
+                bestParameters = localBestParameters;
+                bestMethod = methodName;
+            }
+        }
+    }; 
 
     std::vector<std::thread> threads;
-    threads.emplace_back([&] { runAdjustment(&ABCMethod::dynamicAdjustParameters, "dynamicAdjustParameters"); });
-    threads.emplace_back([&] { runAdjustment(&ABCMethod::dynamicAdjustParametersGradient, "dynamicAdjustParametersGradient"); });
-    threads.emplace_back([&] { runAdjustment(&ABCMethod::dynamicAdjustParametersSlidingAverage, "dynamicAdjustParametersSlidingAverage"); });
-    //threads.emplace_back([&] { runAdjustment(&ABCMethod::dynamicAdjustParametersGenetic, "dynamicAdjustParametersGenetic"); });
-    //threads.emplace_back([&] { runAdjustment(&ABCMethod::dynamicAdjustParametersSimulatedAnnealing, "dynamicAdjustParametersSimulatedAnnealing"); });
-    threads.emplace_back([&] { runAdjustment(&ABCMethod::dynamicAdjustParametersLM, "dynamicAdjustParametersLM"); });
+    threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParameters, "dynamicAdjustParameters"); });
+    threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParametersGradient, "dynamicAdjustParametersGradient"); });
+    threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParametersSlidingAverage, "dynamicAdjustParametersSlidingAverage"); });
+    threads.emplace_back([&] { runAdjustmentComplex(&ABCMethod::dynamicAdjustParametersGenetic, "dynamicAdjustParametersGenetic"); });
+    threads.emplace_back([&] { runAdjustmentComplex(&ABCMethod::dynamicAdjustParametersSimulatedAnnealing, "dynamicAdjustParametersSimulatedAnnealing"); });
+    threads.emplace_back([&] { runAdjustmentSimple(&ABCMethod::dynamicAdjustParametersLM, "dynamicAdjustParametersLM"); });
 
     for (auto& thread : threads) {
         thread.join();
