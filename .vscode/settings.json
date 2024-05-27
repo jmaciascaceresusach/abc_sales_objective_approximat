@@ -53,7 +53,20 @@
         "algorithm": "cpp",
         "random": "cpp",
         "sstream": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "array": "cpp",
+        "charconv": "cpp",
+        "chrono": "cpp",
+        "format": "cpp",
+        "forward_list": "cpp",
+        "iomanip": "cpp",
+        "locale": "cpp",
+        "optional": "cpp",
+        "ratio": "cpp",
+        "xlocbuf": "cpp",
+        "xlocmes": "cpp",
+        "xlocmon": "cpp",
+        "xloctime": "cpp"
     },
     "cmake.configureOnOpen": true
 }
