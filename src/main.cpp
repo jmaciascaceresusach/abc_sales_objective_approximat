@@ -25,9 +25,9 @@ double calculateSale(const std::vector<Parameter>& parameters) {
             totalSaleValue += param.probability * 5;
         } else if (param.name == "saleParam") {
             totalSaleValue += param.probability * 30;
-        }/* else if (param.name == "totalSaleValue") {
-            totalSaleValue += param.probability * 50;
-        }*/
+        } else if (param.name == "totalSaleValue") {
+            totalSaleValue += param.probability * 100;
+        }
     }
     return totalSaleValue;
 }
