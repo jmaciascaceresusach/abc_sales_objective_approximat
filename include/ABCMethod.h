@@ -23,6 +23,13 @@ public:
     void initializeParameters(std::vector<Parameter>& parameters);
 
     /**
+     * Lee una configuración simple desde un archivo.
+     * @param configFilePath Ruta al archivo de configuración.
+     * @param numberOfIterations Variable donde se almacenará el número de iteraciones.
+     */
+    void readConfigSimple(const std::string& configFilePath, int& numberOfIterations);
+
+    /**
      * Método para refinar parámetros usando el método ABC.
      * @param parameters Lista de parámetros a refinar.
      * @param calculateSale Función para calcular las ventas.

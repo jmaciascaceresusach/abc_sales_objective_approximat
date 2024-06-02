@@ -15,29 +15,6 @@ void SimulationEngine::addParameter(const Parameter& parameter) {
     this->parameters.push_back(parameter);
 }
 
-/**
- * Lee una configuración simple desde un archivo.
- * @param configFilePath Ruta al archivo de configuración.
- * @param numberOfIterations Variable donde se almacenará el número de iteraciones.
- */
-void readConfigSimple(const std::string& configFilePath, int& numberOfIterations) {
-    std::ifstream configFile(configFilePath);
-    std::string line;
-
-    if (configFile.is_open()) {
-        while (getline(configFile, line)) {
-            std::istringstream iss(line);
-            std::string key;
-            if (getline(iss, key, '=')) {
-                std::string value;
-                if (getline(iss, value)) {
-                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
-                }
-            }
-        }
-    }
-}
-
 // Ejecuta simulaciones para aproximarse al objetivo de ventas
 void SimulationEngine::runSimulations(int numberOfIterations, std::function<double(const std::vector<Parameter>&)> calculateSale, double salesObjectiveFinal, double tolerance) {
     auto now = std::chrono::system_clock::now();
@@ -148,7 +125,7 @@ void SimulationEngine::refineParameters(std::vector<Parameter>& parameters,
     std::vector<Parameter> bestParameters = parameters;
 
     int numberOfIterations;
-    readConfigSimple("simulation_config.txt", numberOfIterations);
+    abcMethod.readConfigSimple("simulation_config.txt", numberOfIterations);
 
     double initialTolerance = tolerance;
 

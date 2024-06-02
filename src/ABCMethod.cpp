@@ -10,11 +10,105 @@
  */
 ABCMethod::ABCMethod() {}
 
+/**
+ * Lee una configuración simple desde un archivo.
+ * @param configFilePath Ruta al archivo de configuración.
+ * @param numberOfIterations Variable donde se almacenará el número de iteraciones.
+ */
+void ABCMethod::readConfigSimple(const std::string& configFilePath, int& numberOfIterations) {
+    std::ifstream configFile(configFilePath);
+    std::string line;
+
+    if (configFile.is_open()) {
+        while (getline(configFile, line)) {
+            std::istringstream iss(line);
+            std::string key;
+            if (getline(iss, key, '=')) {
+                std::string value;
+                if (getline(iss, value)) {
+                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
+                }
+            }
+        }
+    }
+}
+
 void ABCMethod::initializeParameters(std::vector<Parameter>& parameters) {
     // Aquí puedes aplicar una optimización bayesiana u otro método
     for (auto& param : parameters) {
         param.adjustProbability(0.5); // Ajuste inicial basado en un valor heurístico
     }
+}
+
+/**
+ * Refina parámetros usando el método ABC.
+ * @param parameters Lista de parámetros a refinar.
+ * @param calculateSale Función para calcular las ventas.
+ * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
+ * @param tolerance Tolerancia aceptable entre las ventas calculadas y el objetivo.
+ */
+void ABCMethod::refineParameters(std::vector<Parameter>& parameters, 
+                                 std::function<double(const std::vector<Parameter>&)> calculateSale, 
+                                 double salesObjectiveFinal, 
+                                 double tolerance) {
+    initializeParameters(parameters); // Inicialización optimizada de parámetros
+
+    std::default_random_engine generator(std::random_device{}());
+    std::normal_distribution<double> distribution(0.0, 0.01); // Ajuste pequeño
+
+    for (auto& param : parameters) {
+        double adjustment = distribution(generator);
+        param.adjustProbability(adjustment);
+    }
+
+    normalizeParameters(parameters);
+
+    double closestDistance = std::numeric_limits<double>::max();
+    std::vector<Parameter> bestParameters = parameters;
+
+    int numberOfIterations;
+    readConfigSimple("simulation_config.txt", numberOfIterations);
+
+    double initialTolerance = tolerance;
+
+    for (int i = 0; i < numberOfIterations; ++i) {
+        double saleValue = calculateSale(parameters);
+        double distance = calculateDistance(saleValue, salesObjectiveFinal);
+
+        if (distance < closestDistance) {
+            closestDistance = distance;
+            bestParameters = parameters;
+        }
+
+        if (distance <= tolerance) {
+            break;
+        }
+
+        // Diversificación de Ajustes
+        switch (i % 5) {
+            case 0:
+                dynamicAdjustParameters(parameters, saleValue, salesObjectiveFinal);
+                break;
+            case 1:
+                dynamicAdjustParametersGradient(parameters, saleValue, salesObjectiveFinal);
+                break;
+            case 2:
+                dynamicAdjustParametersSlidingAverage(parameters, saleValue, salesObjectiveFinal);
+                break;
+            case 3:
+                dynamicAdjustParametersGenetic(parameters, calculateSale, saleValue, salesObjectiveFinal);
+                break;
+            case 4:
+                dynamicAdjustParametersSimulatedAnnealing(parameters, calculateSale, saleValue, salesObjectiveFinal);
+                break;
+        }
+        normalizeParameters(parameters);
+
+        // Adaptación Dinámica de la Tolerancia
+        tolerance = initialTolerance * (1.0 - (static_cast<double>(i) / numberOfIterations));
+    }
+
+    parameters = bestParameters;
 }
 
 /**
