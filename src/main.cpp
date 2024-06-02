@@ -15,34 +15,18 @@
 double calculateSale(const std::vector<Parameter>& parameters) {
     double totalSaleValue = 0.0;
     for (const auto& param : parameters) {
-        if (param.name == "customerType") {
+        if (param.name == "customerParam") {
             totalSaleValue += param.probability * 80;
-        } else if (param.name == "typeOfSeller") {
+        } else if (param.name == "dateParam") {
             totalSaleValue += param.probability * 50;
-        } else if (param.name == "numberOfProductsSold") {
+        } else if (param.name == "sellerParam") {
             totalSaleValue += param.probability * 90;
-        } else if (param.name == "saleDate") {
+        } else if (param.name == "productParam") {
             totalSaleValue += param.probability * 20;
-        } else if (param.name == "products") {
+        } else if (param.name == "saleParam") {
             totalSaleValue += param.probability * 10;
         } else if (param.name == "totalSaleValue") {
             totalSaleValue += param.probability * 11;
-        } else if (param.name == "priceDiscounts") {
-            totalSaleValue += param.probability * 21;
-        } else if (param.name == "deliveryTime") {
-            totalSaleValue += param.probability * 34;
-        } else if (param.name == "productType") {
-            totalSaleValue += param.probability * 24;
-        } else if (param.name == "productList") {
-            totalSaleValue += param.probability * 65;
-        } else if (param.name == "inventoryLevel") {
-            totalSaleValue += param.probability * 79;
-        } else if (param.name == "perceptionOfRelationshipValue") {
-            totalSaleValue += param.probability * 12;
-        } else if (param.name == "marketParticipation") {
-            totalSaleValue += param.probability * 45;
-        } else if (param.name == "otherFactors") {
-            totalSaleValue += param.probability * 72;
         }
     }
     return totalSaleValue;
@@ -52,24 +36,26 @@ double calculateSale(const std::vector<Parameter>& parameters) {
  * Lee una configuración completa desde un archivo para 8 parámetros.
  * @param configFilePath Ruta al archivo de configuración.
  * @param numberOfIterations Variable donde se almacenará el número de iteraciones.
- * @param salesObjective Variable donde se almacenará el objetivo de ventas.
+ * @param salesObjectiveInitial Variable donde se almacenará el objetivo de ventas inicial.
+ * @param salesObjectiveFinal Variable donde se almacenará el objetivo de ventas final.
  * @param tolerance Variable donde se almacenará la tolerancia.
- * @param customerType Variable donde se almacenará el valor inicial de customerType.
- * @param typeOfSeller Variable donde se almacenará el valor inicial de typeOfSeller.
- * @param numberOfProductsSold Variable donde se almacenará el valor inicial de numberOfProductsSold.
- * @param saleDate Variable donde se almacenará el valor inicial de saleDate.
- * @param products Variable donde se almacenará el valor inicial de products.
+ * @param customerParam Variable donde se almacenará el valor inicial de customerParam.
+ * @param sellerParam Variable donde se almacenará el valor inicial de sellerParam.
+ * @param saleParam Variable donde se almacenará el valor inicial de saleParam.
+ * @param dateParam Variable donde se almacenará el valor inicial de dateParam.
+ * @param productParam Variable donde se almacenará el valor inicial de productParam.
  * @param totalSaleValue Variable donde se almacenará el valor inicial de totalSaleValue.
  */
 void readConfigFor8(const std::string& configFilePath, 
                     int& numberOfIterations, 
-                    double& salesObjective, 
+                    double& salesObjectiveInitial, 
+                    double& salesObjectiveFinal, 
                     double& tolerance,
-                    double& customerType,
-                    double& typeOfSeller,
-                    double& numberOfProductsSold,
-                    double& saleDate,
-                    double& products,
+                    double& customerParam,
+                    double& sellerParam,
+                    double& saleParam,
+                    double& dateParam,
+                    double& productParam,
                     double& totalSaleValue) {
     std::ifstream configFile(configFilePath);
     std::string line;
@@ -82,88 +68,15 @@ void readConfigFor8(const std::string& configFilePath,
                 std::string value;
                 if (getline(iss, value)) {
                     if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
-                    else if (key == "salesObjective") salesObjective = std::stod(value);
+                    else if (key == "salesObjectiveInitial") salesObjectiveInitial = std::stod(value);
+                    else if (key == "salesObjectiveFinal") salesObjectiveFinal = std::stod(value);
                     else if (key == "tolerance") tolerance = std::stod(value);
-                    else if (key == "customerType") customerType = std::stod(value);
-                    else if (key == "typeOfSeller") typeOfSeller = std::stod(value);
-                    else if (key == "numberOfProductsSold") numberOfProductsSold = std::stod(value);
-                    else if (key == "saleDate") saleDate = std::stod(value);
-                    else if (key == "products") products = std::stod(value);
+                    else if (key == "customerParam") customerParam = std::stod(value);
+                    else if (key == "sellerParam") sellerParam = std::stod(value);
+                    else if (key == "saleParam") saleParam = std::stod(value);
+                    else if (key == "dateParam") dateParam = std::stod(value);
+                    else if (key == "productParam") productParam = std::stod(value);
                     else if (key == "totalSaleValue") totalSaleValue = std::stod(value);
-                }
-            }
-        }
-    } else {
-        std::cerr << "Failed to open config file: " << configFilePath << std::endl;
-    }
-}
-
-/**
- * Lee una configuración completa desde un archivo para 17 parámetros.
- * @param configFilePath Ruta al archivo de configuración.
- * @param numberOfIterations Variable donde se almacenará el número de iteraciones.
- * @param salesObjective Variable donde se almacenará el objetivo de ventas.
- * @param tolerance Variable donde se almacenará la tolerancia.
- * @param customerType Variable donde se almacenará el valor inicial de customerType.
- * @param typeOfSeller Variable donde se almacenará el valor inicial de typeOfSeller.
- * @param numberOfProductsSold Variable donde se almacenará el valor inicial de numberOfProductsSold.
- * @param saleDate Variable donde se almacenará el valor inicial de saleDate.
- * @param products Variable donde se almacenará el valor inicial de products.
- * @param totalSaleValue Variable donde se almacenará el valor inicial de totalSaleValue.
- * @param priceDiscounts Variable donde se almacenará el valor inicial de priceDiscounts.
- * @param deliveryTime Variable donde se almacenará el valor inicial de deliveryTime.
- * @param productType Variable donde se almacenará el valor inicial de productType.
- * @param productList Variable donde se almacenará el valor inicial de productList.
- * @param inventoryLevel Variable donde se almacenará el valor inicial de inventoryLevel.
- * @param perceptionOfRelationshipValue Variable donde se almacenará el valor inicial de perceptionOfRelationshipValue.
- * @param marketParticipation Variable donde se almacenará el valor inicial de marketParticipation.
- * @param otherFactors Variable donde se almacenará el valor inicial de otherFactors.
- */
-void readConfigFor17(const std::string& configFilePath, 
-                    int& numberOfIterations, 
-                    double& salesObjective, 
-                    double& tolerance,
-                    double& customerType,
-                    double& typeOfSeller,
-                    double& numberOfProductsSold,
-                    double& saleDate,
-                    double& products,
-                    double& totalSaleValue,
-                    double& priceDiscounts,
-                    double& deliveryTime,
-                    double& productType,
-                    double& productList,
-                    double& inventoryLevel,
-                    double& perceptionOfRelationshipValue,
-                    double& marketParticipation,
-                    double& otherFactors) {
-    std::ifstream configFile(configFilePath);
-    std::string line;
-
-    if (configFile.is_open()) {
-        while (getline(configFile, line)) {
-            std::istringstream iss(line);
-            std::string key;
-            if (getline(iss, key, '=')) {
-                std::string value;
-                if (getline(iss, value)) {
-                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
-                    else if (key == "salesObjective") salesObjective = std::stod(value);
-                    else if (key == "tolerance") tolerance = std::stod(value);
-                    else if (key == "customerType") customerType = std::stod(value);
-                    else if (key == "typeOfSeller") typeOfSeller = std::stod(value);
-                    else if (key == "numberOfProductsSold") numberOfProductsSold = std::stod(value);
-                    else if (key == "saleDate") saleDate = std::stod(value);
-                    else if (key == "products") products = std::stod(value);
-                    else if (key == "totalSaleValue") totalSaleValue = std::stod(value);
-                    else if (key == "priceDiscounts") priceDiscounts = std::stod(value);
-                    else if (key == "deliveryTime") deliveryTime = std::stod(value);
-                    else if (key == "productType") productType = std::stod(value);
-                    else if (key == "productList") productList = std::stod(value);
-                    else if (key == "inventoryLevel") inventoryLevel = std::stod(value);
-                    else if (key == "perceptionOfRelationshipValue") perceptionOfRelationshipValue = std::stod(value);
-                    else if (key == "marketParticipation") marketParticipation = std::stod(value);
-                    else if (key == "otherFactors") otherFactors = std::stod(value);
                 }
             }
         }
@@ -177,90 +90,58 @@ int main(int argc, char* argv[]) {
     auto start = std::chrono::high_resolution_clock::now();
 
     int numberOfIterations;
-    double salesObjective, tolerance;
-    double customerType, typeOfSeller, numberOfProductsSold, saleDate, products, totalSaleValue;
-    double priceDiscounts, deliveryTime, productType, productList, inventoryLevel, perceptionOfRelationshipValue;
-    double marketParticipation, otherFactors;
+    double salesObjectiveInitial, salesObjectiveFinal, tolerance;
+    double customerParam, sellerParam, saleParam, dateParam, productParam, totalSaleValue;
 
-    readConfigFor17("../simulation_config.txt", 
+    readConfigFor8("../simulation_config.txt", 
                     numberOfIterations, 
-                    salesObjective, 
+                    salesObjectiveInitial,
+                    salesObjectiveFinal, 
                     tolerance,
-                    customerType,
-                    typeOfSeller,
-                    numberOfProductsSold,
-                    saleDate,
-                    products,
-                    totalSaleValue,
-                    priceDiscounts,
-                    deliveryTime,
-                    productType,
-                    productList,
-                    inventoryLevel,
-                    perceptionOfRelationshipValue,
-                    marketParticipation,
-                    otherFactors);
+                    customerParam,
+                    sellerParam,
+                    saleParam,
+                    dateParam,
+                    productParam,
+                    totalSaleValue);
 
     // Inicializar el motor de simulación
     SimulationEngine simulationEngine;
 
     // Definir y agregar parámetros
-    Parameter customerTypeParameter("customerType", customerType);
-    Parameter typeOfSellerParameter("typeOfSeller", typeOfSeller);
-    Parameter numberOfProductsSoldParameter("numberOfProductsSold", numberOfProductsSold);
-    Parameter saleDateParameter("saleDate", saleDate);
-    Parameter productsParameter("products", products);
+    Parameter customerParamParameter("customerParam", customerParam);
+    Parameter sellerParamParameter("sellerParam", sellerParam);
+    Parameter saleParamParameter("saleParam", saleParam);
+    Parameter dateParamParameter("dateParam", dateParam);
+    Parameter productParamParameter("productParam", productParam);
     Parameter totalSaleValueParameter("totalSaleValue", totalSaleValue);
-    Parameter priceDiscountsParameter("priceDiscounts", priceDiscounts);
-    Parameter deliveryTimeParameter("deliveryTime", deliveryTime);
-    Parameter productTypeParameter("productType", productType);
-    Parameter productListParameter("productList", productList);
-    Parameter inventoryLevelParameter("inventoryLevel", inventoryLevel);
-    Parameter perceptionOfRelationshipValueParameter("perceptionOfRelationshipValue", perceptionOfRelationshipValue);
-    Parameter marketParticipationParameter("marketParticipation", marketParticipation);
-    Parameter otherFactorsParameter("otherFactors", otherFactors);
 
     // Agregar parámetros al motor de simulación
-    simulationEngine.addParameter(customerTypeParameter);
-    simulationEngine.addParameter(typeOfSellerParameter);
-    simulationEngine.addParameter(numberOfProductsSoldParameter);
-    simulationEngine.addParameter(saleDateParameter);
-    simulationEngine.addParameter(productsParameter);
+    simulationEngine.addParameter(customerParamParameter);
+    simulationEngine.addParameter(sellerParamParameter);
+    simulationEngine.addParameter(saleParamParameter);
+    simulationEngine.addParameter(dateParamParameter);
+    simulationEngine.addParameter(productParamParameter);
     simulationEngine.addParameter(totalSaleValueParameter);
-    simulationEngine.addParameter(priceDiscountsParameter);
-    simulationEngine.addParameter(deliveryTimeParameter);
-    simulationEngine.addParameter(productTypeParameter);
-    simulationEngine.addParameter(productListParameter);
-    simulationEngine.addParameter(inventoryLevelParameter);
-    simulationEngine.addParameter(perceptionOfRelationshipValueParameter);
-    simulationEngine.addParameter(marketParticipationParameter);
-    simulationEngine.addParameter(otherFactorsParameter);
 
     // Ejecutar simulaciones
-    simulationEngine.runSimulations(numberOfIterations, calculateSale, salesObjective, tolerance);
+    simulationEngine.runSimulations(numberOfIterations, calculateSale, salesObjectiveFinal, tolerance);
 
     std::cout << "\n";
     std::cout << "***Configurations***" << std::endl;
     std::cout << "numberOfIterations: " << numberOfIterations << std::endl;
-    std::cout << "salesObjective: " << salesObjective << std::endl;
+    std::cout << "salesObjectiveInitial: " << salesObjectiveInitial << std::endl;
+    std::cout << "salesObjectiveFinal: " << salesObjectiveFinal << std::endl;
     std::cout << "tolerance: " << tolerance << std::endl;
     std::cout << "\n";
 
     std::cout << "***Startup Parameters***" << std::endl;
-    std::cout << "customerType: " << customerType << std::endl;
-    std::cout << "typeOfSeller: " << typeOfSeller << std::endl;
-    std::cout << "numberOfProductsSold: " << numberOfProductsSold << std::endl;
-    std::cout << "saleDate: " << saleDate << std::endl;
-    std::cout << "products: " << products << std::endl;
+    std::cout << "customerParam: " << customerParam << std::endl;
+    std::cout << "sellerParam: " << sellerParam << std::endl;
+    std::cout << "saleParam: " << saleParam << std::endl;
+    std::cout << "dateParam: " << dateParam << std::endl;
+    std::cout << "productParam: " << productParam << std::endl;
     std::cout << "totalSaleValue: " << totalSaleValue << std::endl;
-    std::cout << "priceDiscounts: " << priceDiscounts << std::endl;
-    std::cout << "deliveryTime: " << deliveryTime << std::endl;
-    std::cout << "productType: " << productType << std::endl;
-    std::cout << "productList: " << productList << std::endl;
-    std::cout << "inventoryLevel: " << inventoryLevel << std::endl;
-    std::cout << "perceptionOfRelationshipValue: " << perceptionOfRelationshipValue << std::endl;    
-    std::cout << "marketParticipation: " << marketParticipation << std::endl;    
-    std::cout << "otherFactors: " << otherFactors << std::endl;
     std::cout << "\n";
 
     // Obtiene el tiempo de finalización

@@ -21,10 +21,10 @@ void SimulationEngine::addParameter(const Parameter& parameter) {
  * Ejecuta simulaciones para aproximarse al objetivo de ventas.
  * @param numberOfIterations Número de iteraciones a ejecutar.
  * @param calculateSale Función para calcular las ventas.
- * @param salesObjective Objetivo de ventas a alcanzar.
+ * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
  * @param tolerance Tolerancia aceptable entre las ventas calculadas y el objetivo.
  */
-void SimulationEngine::runSimulations(int numberOfIterations, std::function<double(const std::vector<Parameter>&)> calculateSale, double salesObjective, double tolerance) {
+void SimulationEngine::runSimulations(int numberOfIterations, std::function<double(const std::vector<Parameter>&)> calculateSale, double salesObjectiveFinal, double tolerance) {
     auto now = std::chrono::system_clock::now();
     std::time_t now_time = std::chrono::system_clock::to_time_t(now);
     std::tm now_tm = *std::localtime(&now_time);
@@ -48,12 +48,12 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     // Ejecutar iteraciones de simulación
     for (int i = 0; i < numberOfIterations; ++i) {
         double saleValue = calculateSale(parameters);
-        double distance = std::abs(saleValue - salesObjective);
+        double distance = std::abs(saleValue - salesObjectiveFinal);
 
         std::cout << "\n";
         std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
 
-        statsFile << i << "," << saleValue << "," << distance << "," << salesObjective << "," << tolerance;
+        statsFile << i << "," << saleValue << "," << distance << "," << salesObjectiveFinal << "," << tolerance;
         for (const auto& param : parameters) {
             statsFile << "," << param.probability;
         }
@@ -66,7 +66,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
             bestIteration = i;
         }
 
-        adjustParameters(saleValue, salesObjective);
+        adjustParameters(saleValue, salesObjectiveFinal);
     }
 
     parameters = bestParameters;
@@ -81,16 +81,16 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
 
-    abcMethod.refineParameters(parameters, calculateSale, salesObjective, tolerance);
+    abcMethod.refineParameters(parameters, calculateSale, salesObjectiveFinal, tolerance);
 }
 
 /**
  * Ajusta parámetros en función de los resultados de la simulación.
  * @param saleValue Valor de las ventas simuladas.
- * @param salesObjective Objetivo de ventas a alcanzar.
+ * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
  */
-void SimulationEngine::adjustParameters(double saleValue, double salesObjective) {
-    double error = saleValue - salesObjective;
+void SimulationEngine::adjustParameters(double saleValue, double salesObjectiveFinal) {
+    double error = saleValue - salesObjectiveFinal;
     double learningRate = 0.01;
 
     for (auto& param : parameters) {

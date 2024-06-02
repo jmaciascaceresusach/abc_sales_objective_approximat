@@ -37,12 +37,12 @@ void readConfigSimple(const std::string& configFilePath, int& numberOfIterations
  * Refina parámetros usando el método ABC.
  * @param parameters Lista de parámetros a refinar.
  * @param calculateSale Función para calcular las ventas.
- * @param salesObjective Objetivo de ventas a alcanzar.
+ * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
  * @param tolerance Tolerancia aceptable entre las ventas calculadas y el objetivo.
  */
 void ABCMethod::refineParameters(std::vector<Parameter>& parameters, 
                                  std::function<double(const std::vector<Parameter>&)> calculateSale, 
-                                 double salesObjective, 
+                                 double salesObjectiveFinal, 
                                  double tolerance) {
     std::default_random_engine generator(std::random_device{}());
     std::normal_distribution<double> distribution(0.0, 0.01); // Ajuste pequeño
@@ -64,7 +64,7 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
     // Iterar para refinar los parámetros
     for (int i = 0; i < numberOfIterations; ++i) {
         double saleValue = calculateSale(parameters);
-        double distance = calculateDistance(saleValue, salesObjective);
+        double distance = calculateDistance(saleValue, salesObjectiveFinal);
 
         if (distance < closestDistance) {
             closestDistance = distance;
@@ -75,7 +75,7 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
             break;
         }
 
-        dynamicAdjustParameters(parameters, saleValue, salesObjective);
+        dynamicAdjustParameters(parameters, saleValue, salesObjectiveFinal);
         normalizeParameters(parameters);
     }
 
@@ -86,16 +86,16 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
  * Ajusta dinámicamente los parámetros según los resultados de la simulación.
  * @param parameters Lista de parámetros a ajustar.
  * @param saleValue Valor de las ventas simuladas.
- * @param salesObjective Objetivo de ventas a alcanzar.
+ * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
  */
-void ABCMethod::dynamicAdjustParameters(std::vector<Parameter>& parameters, double saleValue, double salesObjective) {
-    double errorMargin = calculateDistance(saleValue, salesObjective);
+void ABCMethod::dynamicAdjustParameters(std::vector<Parameter>& parameters, double saleValue, double salesObjectiveFinal) {
+    double errorMargin = calculateDistance(saleValue, salesObjectiveFinal);
     std::default_random_engine generator(std::random_device{}());
     std::normal_distribution<double> distribution(0.0, 0.01);
 
     for (auto& param : parameters) {
         double randomFactor = distribution(generator);
-        double adjustment = (saleValue < salesObjective) ? 0.01 : -0.01;
+        double adjustment = (saleValue < salesObjectiveFinal) ? 0.01 : -0.01;
         param.adjustProbability(adjustment * errorMargin * (1 + randomFactor));
 
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
@@ -106,14 +106,14 @@ void ABCMethod::dynamicAdjustParameters(std::vector<Parameter>& parameters, doub
  * Ajuste basado en gradiente.
  * @param parameters Lista de parámetros a ajustar.
  * @param saleValue Valor de las ventas simuladas.
- * @param salesObjective Objetivo de ventas a alcanzar.
+ * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
  */
-void ABCMethod::dynamicAdjustParametersGradient(std::vector<Parameter>& parameters, double saleValue, double salesObjective) {
+void ABCMethod::dynamicAdjustParametersGradient(std::vector<Parameter>& parameters, double saleValue, double salesObjectiveFinal) {
     double learningRate = 0.01;
-    double error = saleValue - salesObjective;
+    double error = saleValue - salesObjectiveFinal;
 
     for (auto& param : parameters) {
-        double gradiente = (saleValue < salesObjective) ? learningRate : -learningRate;
+        double gradiente = (saleValue < salesObjectiveFinal) ? learningRate : -learningRate;
         param.adjustProbability(gradiente * std::abs(param.probability));
 
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
@@ -124,13 +124,13 @@ void ABCMethod::dynamicAdjustParametersGradient(std::vector<Parameter>& paramete
  * Ajuste basado en la media deslizante.
  * @param parameters Lista de parámetros a ajustar.
  * @param saleValue Valor de las ventas simuladas.
- * @param salesObjective Objetivo de ventas a alcanzar.
+ * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
  */
-void ABCMethod::dynamicAdjustParametersSlidingAverage(std::vector<Parameter>& parameters, double saleValue, double salesObjective) {
+void ABCMethod::dynamicAdjustParametersSlidingAverage(std::vector<Parameter>& parameters, double saleValue, double salesObjectiveFinal) {
     static std::vector<double> cumulativeProbabilities(parameters.size(), 0.0);
     static std::vector<int> count(parameters.size(), 0);
     double learningRate = 0.01;
-    double error = saleValue - salesObjective;
+    double error = saleValue - salesObjectiveFinal;
 
     for (size_t i = 0; i < parameters.size(); ++i) {
         double adjustment = (error > 0 ? -1 : 1) * learningRate * std::abs(parameters[i].probability);
@@ -146,9 +146,9 @@ void ABCMethod::dynamicAdjustParametersSlidingAverage(std::vector<Parameter>& pa
  * @param parameters Lista de parámetros a ajustar.
  * @param calculateSale Función para calcular las ventas.
  * @param saleValue Valor de las ventas simuladas.
- * @param salesObjective Objetivo de ventas a alcanzar.
+ * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
  */
-void ABCMethod::dynamicAdjustParametersGenetic(std::vector<Parameter>& parameters, std::function<double(const std::vector<Parameter>&)> calculateSale, double saleValue, double salesObjective) {
+void ABCMethod::dynamicAdjustParametersGenetic(std::vector<Parameter>& parameters, std::function<double(const std::vector<Parameter>&)> calculateSale, double saleValue, double salesObjectiveFinal) {
     std::default_random_engine generator(std::random_device{}());
     std::uniform_real_distribution<double> distribution(-0.05, 0.05);
 
@@ -161,8 +161,8 @@ void ABCMethod::dynamicAdjustParametersGenetic(std::vector<Parameter>& parameter
     }
 
     double newSaleValue = calculateSale(newGeneration);
-    double currentDistance = calculateDistance(saleValue, salesObjective);
-    double newDistance = calculateDistance(newSaleValue, salesObjective);
+    double currentDistance = calculateDistance(saleValue, salesObjectiveFinal);
+    double newDistance = calculateDistance(newSaleValue, salesObjectiveFinal);
 
     if (newDistance < currentDistance) {
         parameters = newGeneration;
@@ -176,9 +176,9 @@ void ABCMethod::dynamicAdjustParametersGenetic(std::vector<Parameter>& parameter
  * @param parameters Lista de parámetros a ajustar.
  * @param calculateSale Función para calcular las ventas.
  * @param saleValue Valor de las ventas simuladas.
- * @param salesObjective Objetivo de ventas a alcanzar.
+ * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
  */
-void ABCMethod::dynamicAdjustParametersSimulatedAnnealing(std::vector<Parameter>& parameters, std::function<double(const std::vector<Parameter>&)> calculateSale, double saleValue, double salesObjective) {
+void ABCMethod::dynamicAdjustParametersSimulatedAnnealing(std::vector<Parameter>& parameters, std::function<double(const std::vector<Parameter>&)> calculateSale, double saleValue, double salesObjectiveFinal) {
     std::default_random_engine generator(std::random_device{}());
     std::normal_distribution<double> distribution(0.0, 0.05);
     double temperature = 1.0;
@@ -192,8 +192,8 @@ void ABCMethod::dynamicAdjustParametersSimulatedAnnealing(std::vector<Parameter>
     }
 
     double newSaleValue = calculateSale(newParameters);
-    double currentDistance = calculateDistance(saleValue, salesObjective);
-    double newDistance = calculateDistance(newSaleValue, salesObjective);
+    double currentDistance = calculateDistance(saleValue, salesObjectiveFinal);
+    double newDistance = calculateDistance(newSaleValue, salesObjectiveFinal);
 
     if (newDistance < currentDistance || std::exp((currentDistance - newDistance) / temperature) > distribution(generator)) {
         parameters = newParameters;
@@ -208,11 +208,11 @@ void ABCMethod::dynamicAdjustParametersSimulatedAnnealing(std::vector<Parameter>
  * Optimización basada en cuadrados mínimos (Levenberg-Marquardt).
  * @param parameters Lista de parámetros a ajustar.
  * @param saleValue Valor de las ventas simuladas.
- * @param salesObjective Objetivo de ventas a alcanzar.
+ * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
  */
-void ABCMethod::dynamicAdjustParametersLM(std::vector<Parameter>& parameters, double saleValue, double salesObjective) {
+void ABCMethod::dynamicAdjustParametersLM(std::vector<Parameter>& parameters, double saleValue, double salesObjectiveFinal) {
     double lambda = 0.001; // Parámetro de amortiguación
-    double error = saleValue - salesObjective;
+    double error = saleValue - salesObjectiveFinal;
 
     for (auto& param : parameters) {
         double gradient = error * param.probability;
@@ -228,11 +228,11 @@ void ABCMethod::dynamicAdjustParametersLM(std::vector<Parameter>& parameters, do
 /**
  * Calcula la distancia entre las ventas simuladas y el objetivo de ventas.
  * @param saleValue Valor de las ventas simuladas.
- * @param salesObjective Objetivo de ventas a alcanzar.
+ * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
  * @return Distancia entre las ventas simuladas y el objetivo.
  */
-double ABCMethod::calculateDistance(double saleValue, double salesObjective) {
-    return std::abs(saleValue - salesObjective);
+double ABCMethod::calculateDistance(double saleValue, double salesObjectiveFinal) {
+    return std::abs(saleValue - salesObjectiveFinal);
 }
 
 /**

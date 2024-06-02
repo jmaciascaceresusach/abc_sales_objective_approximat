@@ -26,17 +26,17 @@ public:
      * Ejecuta simulaciones para aproximarse al objetivo de ventas.
      * @param numberOfIterations Número de iteraciones a ejecutar.
      * @param calculateSale Función para calcular las ventas.
-     * @param salesObjective Objetivo de ventas a alcanzar.
+     * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
      * @param tolerance Tolerancia aceptable entre las ventas calculadas y el objetivo.
      */
-    void runSimulations(int numberOfIterations, std::function<double(const std::vector<Parameter>&)> calculateSale, double salesObjective, double tolerance);
+    void runSimulations(int numberOfIterations, std::function<double(const std::vector<Parameter>&)> calculateSale, double salesObjectiveFinal, double tolerance);
 
     /**
      * Ajusta parámetros en función de los resultados de la simulación.
      * @param saleValue Valor de las ventas simuladas.
-     * @param salesObjective Objetivo de ventas a alcanzar.
+     * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
      */
-    void adjustParameters(double saleValue, double salesObjective);
+    void adjustParameters(double saleValue, double salesObjectiveFinal);
     
 private:
     ABCMethod abcMethod; ///< Instancia del método ABC.
