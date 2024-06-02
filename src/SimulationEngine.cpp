@@ -48,7 +48,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     // Ejecutar iteraciones de simulación
     for (int i = 0; i < numberOfIterations; ++i) {
         double saleValue = calculateSale(parameters);
-        double distance = std::abs(saleValue - salesObjectiveFinal);
+        double distance = calculateDistance(saleValue, salesObjectiveFinal);
 
         std::cout << "\n";
         std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
@@ -67,7 +67,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
         }
 
         adjustParameters(saleValue, salesObjectiveFinal);
-        monitorAndEvaluate(parameters, saleValue, salesObjectiveFinal);
+        monitorAndEvaluate(parameters, saleValue, salesObjectiveFinal); // Llamada a la función de monitoreo
     }
 
     parameters = bestParameters;
@@ -82,7 +82,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
 
-    refineParameters(parameters, calculateSale, salesObjectiveFinal, tolerance);
+    abcMethod.refineParameters(parameters, calculateSale, salesObjectiveFinal, tolerance);
 }
 
 /**
