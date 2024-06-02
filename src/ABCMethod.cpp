@@ -33,16 +33,6 @@ void readConfigSimple(const std::string& configFilePath, int& numberOfIterations
     }
 }
 
-/**
- * Calcula la distancia entre las ventas simuladas y el objetivo de ventas.
- * @param saleValue Valor de las ventas simuladas.
- * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
- * @return Distancia entre las ventas simuladas y el objetivo.
- */
-double ABCMethod::calculateDistance(double saleValue, double salesObjectiveFinal) {
-    return std::abs(saleValue - salesObjectiveFinal);
-}
-
 void ABCMethod::initializeParameters(std::vector<Parameter>& parameters) {
     // Aquí puedes aplicar una optimización bayesiana u otro método
     for (auto& param : parameters) {
