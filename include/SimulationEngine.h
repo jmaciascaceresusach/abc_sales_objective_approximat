@@ -60,6 +60,12 @@ private:
     double calculateDistance(double saleValue, double salesObjectiveFinal);
 
     /**
+     * Normaliza los parámetros para que sus probabilidades sumen 1 o menos.
+     * @param parameters Lista de parámetros a normalizar.
+     */
+    void normalizeParameters(std::vector<Parameter>& parameters);
+
+    /**
      * Monitorea y evalúa el rendimiento de la simulación.
      * @param parameters Lista de parámetros ajustados.
      * @param saleValue Valor de las ventas simuladas.
