@@ -16,18 +16,18 @@ double calculateSale(const std::vector<Parameter>& parameters) {
     double totalSaleValue = 0.0;
     for (const auto& param : parameters) {
         if (param.name == "customerParam") {
-            totalSaleValue += param.probability * 80;
+            totalSaleValue += param.probability * 27;
         } else if (param.name == "dateParam") {
-            totalSaleValue += param.probability * 50;
+            totalSaleValue += param.probability * 16;
         } else if (param.name == "sellerParam") {
-            totalSaleValue += param.probability * 90;
+            totalSaleValue += param.probability * 22;
         } else if (param.name == "productParam") {
-            totalSaleValue += param.probability * 20;
+            totalSaleValue += param.probability * 5;
         } else if (param.name == "saleParam") {
-            totalSaleValue += param.probability * 10;
-        } else if (param.name == "totalSaleValue") {
-            totalSaleValue += param.probability * 11;
-        }
+            totalSaleValue += param.probability * 30;
+        }/* else if (param.name == "totalSaleValue") {
+            totalSaleValue += param.probability * 50;
+        }*/
     }
     return totalSaleValue;
 }
