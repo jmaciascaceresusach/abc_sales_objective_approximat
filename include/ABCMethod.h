@@ -19,6 +19,12 @@ public:
     /**
      * Método para refinar parámetros usando el método ABC.
      * @param parameters Lista de parámetros a refinar.
+     */
+    void initializeParameters(std::vector<Parameter>& parameters);
+
+    /**
+     * Método para refinar parámetros usando el método ABC.
+     * @param parameters Lista de parámetros a refinar.
      * @param calculateSale Función para calcular las ventas.
      * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
      * @param tolerance Tolerancia aceptable entre las ventas calculadas y el objetivo.
@@ -89,6 +95,7 @@ private:
      * @param parameters Lista de parámetros a normalizar.
      */
     void normalizeParameters(std::vector<Parameter>& parameters);
+
 };
 
 #endif // ABCMETHOD_H

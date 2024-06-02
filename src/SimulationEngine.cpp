@@ -67,6 +67,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
         }
 
         adjustParameters(saleValue, salesObjectiveFinal);
+        monitorAndEvaluate(parameters, saleValue, salesObjectiveFinal);
     }
 
     parameters = bestParameters;
@@ -81,7 +82,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
 
-    abcMethod.refineParameters(parameters, calculateSale, salesObjectiveFinal, tolerance);
+    refineParameters(parameters, calculateSale, salesObjectiveFinal, tolerance);
 }
 
 /**
@@ -100,4 +101,17 @@ void SimulationEngine::adjustParameters(double saleValue, double salesObjectiveF
         param.probability = std::max(0.0, std::min(param.probability, 1.0));
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
     }
+}
+
+/**
+ * Monitorea y evalúa el rendimiento de la simulación.
+ * @param parameters Lista de parámetros ajustados.
+ * @param saleValue Valor de las ventas simuladas.
+ * @param salesObjectiveFinal Objetivo de ventas a alcanzar.
+ */
+void SimulationEngine::monitorAndEvaluate(const std::vector<Parameter>& parameters, double saleValue, double salesObjectiveFinal) {
+    double error = calculateDistance(saleValue, salesObjectiveFinal);
+    std::cout << "Monitoring - SaleValue: " << saleValue << ", Error: " << error << std::endl;
+
+    // Aquí puedes agregar más lógica para la evaluación continua, como registros adicionales, alertas, etc.
 }
