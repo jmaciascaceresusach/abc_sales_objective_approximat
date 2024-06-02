@@ -25,9 +25,9 @@ double calculateSale(const std::vector<Parameter>& parameters) {
             totalSaleValue += param.probability * 5;
         } else if (param.name == "saleParam") {
             totalSaleValue += param.probability * 30;
-        } else if (param.name == "totalSaleValue") {
+        }/* else if (param.name == "totalSaleValue") {
             totalSaleValue += param.probability * 100;
-        }
+        }*/
     }
     return totalSaleValue;
 }
@@ -44,7 +44,6 @@ double calculateSale(const std::vector<Parameter>& parameters) {
  * @param saleParam Variable donde se almacenará el valor inicial de saleParam.
  * @param dateParam Variable donde se almacenará el valor inicial de dateParam.
  * @param productParam Variable donde se almacenará el valor inicial de productParam.
- * @param totalSaleValue Variable donde se almacenará el valor inicial de totalSaleValue.
  */
 void readConfigFor8(const std::string& configFilePath, 
                     int& numberOfIterations, 
@@ -55,8 +54,8 @@ void readConfigFor8(const std::string& configFilePath,
                     double& sellerParam,
                     double& saleParam,
                     double& dateParam,
-                    double& productParam,
-                    double& totalSaleValue) {
+                    double& productParam/*,
+                    double& totalSaleValue*/) {
     std::ifstream configFile(configFilePath);
     std::string line;
 
@@ -76,7 +75,7 @@ void readConfigFor8(const std::string& configFilePath,
                     else if (key == "saleParam") saleParam = std::stod(value);
                     else if (key == "dateParam") dateParam = std::stod(value);
                     else if (key == "productParam") productParam = std::stod(value);
-                    else if (key == "totalSaleValue") totalSaleValue = std::stod(value);
+                    /*else if (key == "totalSaleValue") totalSaleValue = std::stod(value);*/
                 }
             }
         }
@@ -91,7 +90,7 @@ int main(int argc, char* argv[]) {
 
     int numberOfIterations;
     double salesObjectiveInitial, salesObjectiveFinal, tolerance;
-    double customerParam, sellerParam, saleParam, dateParam, productParam, totalSaleValue;
+    double customerParam, sellerParam, saleParam, dateParam, productParam/*, totalSaleValue*/;
 
     readConfigFor8("../simulation_config.txt", 
                     numberOfIterations, 
@@ -102,8 +101,8 @@ int main(int argc, char* argv[]) {
                     sellerParam,
                     saleParam,
                     dateParam,
-                    productParam,
-                    totalSaleValue);
+                    productParam/*,
+                    totalSaleValue*/);
 
     // Inicializar el motor de simulación
     SimulationEngine simulationEngine;
@@ -114,7 +113,7 @@ int main(int argc, char* argv[]) {
     Parameter saleParamParameter("saleParam", saleParam);
     Parameter dateParamParameter("dateParam", dateParam);
     Parameter productParamParameter("productParam", productParam);
-    Parameter totalSaleValueParameter("totalSaleValue", totalSaleValue);
+    /*Parameter totalSaleValueParameter("totalSaleValue", totalSaleValue);*/
 
     // Agregar parámetros al motor de simulación
     simulationEngine.addParameter(customerParamParameter);
@@ -122,7 +121,7 @@ int main(int argc, char* argv[]) {
     simulationEngine.addParameter(saleParamParameter);
     simulationEngine.addParameter(dateParamParameter);
     simulationEngine.addParameter(productParamParameter);
-    simulationEngine.addParameter(totalSaleValueParameter);
+    /*simulationEngine.addParameter(totalSaleValueParameter);*/
 
     // Ejecutar simulaciones
     simulationEngine.runSimulations(numberOfIterations, calculateSale, salesObjectiveFinal, tolerance);
@@ -141,7 +140,7 @@ int main(int argc, char* argv[]) {
     std::cout << "saleParam: " << saleParam << std::endl;
     std::cout << "dateParam: " << dateParam << std::endl;
     std::cout << "productParam: " << productParam << std::endl;
-    std::cout << "totalSaleValue: " << totalSaleValue << std::endl;
+    /*std::cout << "totalSaleValue: " << totalSaleValue << std::endl;*/
     std::cout << "\n";
 
     // Obtiene el tiempo de finalización

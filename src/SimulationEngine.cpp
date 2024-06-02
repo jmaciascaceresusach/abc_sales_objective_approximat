@@ -35,7 +35,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     double bestSaleValue = 0;
     int bestIteration = -1;
 
-    std::cout << "\n**Start Simulation X***\n";
+    std::cout << "\n**Start Simulation***\n";
 
     // Ejecutar iteraciones de simulación
     for (int i = 0; i < numberOfIterations; ++i) {
@@ -65,7 +65,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
     parameters = bestParameters;
     statsFile.close();
 
-    std::cout << "\n***End Simulation X***\n";
+    std::cout << "\n***End Simulation***\n";
 
     std::cout << "\n***Results***\n";
     std::cout << "Best parameters found at iteration " << bestIteration << " with sale value " << bestSaleValue << std::endl;
