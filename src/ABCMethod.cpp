@@ -120,11 +120,11 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
 void ABCMethod::dynamicAdjustParameters(std::vector<Parameter>& parameters, double saleValue, double salesObjectiveFinal) {
     double errorMargin = calculateDistance(saleValue, salesObjectiveFinal);
     std::default_random_engine generator(std::random_device{}());
-    std::normal_distribution<double> distribution(0.0, 0.01);
+    std::normal_distribution<double> distribution(0.0, 0.05); // Ajuste mayor
 
     for (auto& param : parameters) {
         double randomFactor = distribution(generator);
-        double adjustment = (saleValue < salesObjectiveFinal) ? 0.01 : -0.01;
+        double adjustment = (saleValue < salesObjectiveFinal) ? 0.05 : -0.05; // Ajuste mayor
         param.adjustProbability(adjustment * errorMargin * (1 + randomFactor));
 
         std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;

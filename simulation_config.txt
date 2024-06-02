@@ -1,5 +1,5 @@
 numberOfIterations=50
-tolerance=0.5
+tolerance=0.05
 salesObjectiveFinal=0.139669
 salesObjectiveInitial=0.15298
 customerParam=0.1730
