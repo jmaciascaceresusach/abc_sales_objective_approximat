@@ -1,4 +1,4 @@
-numberOfIterations=50
+numberOfIterations=500
 tolerance=10
 salesObjectiveFinal=0.139669
 salesObjectiveInitial=0.15298
