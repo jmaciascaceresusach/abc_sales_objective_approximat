@@ -87,6 +87,11 @@ void readConfigFor8(const std::string& configFilePath,
  */
 void analyzeStatistics(const std::string& statsFilePath) {
     std::ifstream statsFile(statsFilePath);
+    if (!statsFile.is_open()) {
+        std::cerr << "Failed to open statistics file: " << statsFilePath << std::endl;
+        return;
+    }
+
     std::string line;
     std::getline(statsFile, line); // Leer la primera línea de encabezados
 
@@ -98,14 +103,36 @@ void analyzeStatistics(const std::string& statsFilePath) {
     while (std::getline(statsFile, line)) {
         std::istringstream iss(line);
         std::string token;
-        std::getline(iss, token, ','); // Iteration
-        int iteration = std::stoi(token);
 
-        std::getline(iss, token, ','); // SaleValue
-        double saleValue = std::stod(token);
+        // Leer y convertir la iteración
+        if (!std::getline(iss, token, ',')) continue;
+        int iteration;
+        try {
+            iteration = std::stoi(token);
+        } catch (const std::invalid_argument& e) {
+            std::cerr << "Invalid iteration value: " << token << std::endl;
+            continue;
+        }
 
-        std::getline(iss, token, ','); // Distance
-        double distance = std::stod(token);
+        // Leer y convertir el valor de venta
+        if (!std::getline(iss, token, ',')) continue;
+        double saleValue;
+        try {
+            saleValue = std::stod(token);
+        } catch (const std::invalid_argument& e) {
+            std::cerr << "Invalid sale value: " << token << std::endl;
+            continue;
+        }
+
+        // Leer y convertir la distancia
+        if (!std::getline(iss, token, ',')) continue;
+        double distance;
+        try {
+            distance = std::stod(token);
+        } catch (const std::invalid_argument& e) {
+            std::cerr << "Invalid distance value: " << token << std::endl;
+            continue;
+        }
 
         if (distance < minDistance) {
             minDistance = distance;
@@ -113,16 +140,26 @@ void analyzeStatistics(const std::string& statsFilePath) {
             bestSaleValue = saleValue;
             bestParameters.clear();
             while (std::getline(iss, token, ',')) {
-                bestParameters.push_back({"", std::stod(token)});
+                try {
+                    bestParameters.push_back({"", std::stod(token)});
+                } catch (const std::invalid_argument& e) {
+                    std::cerr << "Invalid parameter value: " << token << std::endl;
+                    bestParameters.clear();
+                    break;
+                }
             }
         }
     }
 
-    std::cout << "\n***Best Iteration Analysis***\n";
-    std::cout << "Best parameters found at iteration " << bestIteration << " with sale value " << bestSaleValue << " and distance " << minDistance << std::endl;
-    std::cout << "\n***Best Parameters***\n";
-    for (const auto& param : bestParameters) {
-        std::cout << "Probability: " << param.second << std::endl;
+    if (bestIteration != -1) {
+        std::cout << "\n***Best Iteration Analysis***\n";
+        std::cout << "Best parameters found at iteration " << bestIteration << " with sale value " << bestSaleValue << " and distance " << minDistance << std::endl;
+        std::cout << "\n***Best Parameters***\n";
+        for (const auto& param : bestParameters) {
+            std::cout << "Probability: " << param.second << std::endl;
+        }
+    } else {
+        std::cerr << "No valid data found in statistics file." << std::endl;
     }
 }
 
