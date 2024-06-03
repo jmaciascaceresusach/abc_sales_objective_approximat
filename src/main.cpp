@@ -6,6 +6,7 @@
 #include <fstream>  
 #include <sstream>
 #include <chrono>
+#include <string>
 
 /**
  * Función para calcular ventas simuladas en función de parámetros.
@@ -52,8 +53,7 @@ void readConfigFor8(const std::string& configFilePath,
                     double& sellerParam,
                     double& saleParam,
                     double& dateParam,
-                    double& productParam/*,
-                    double& totalSaleValue*/) {
+                    double& productParam) {
     std::ifstream configFile(configFilePath);
     std::string line;
 
@@ -73,12 +73,56 @@ void readConfigFor8(const std::string& configFilePath,
                     else if (key == "saleParam") saleParam = std::stod(value);
                     else if (key == "dateParam") dateParam = std::stod(value);
                     else if (key == "productParam") productParam = std::stod(value);
-                    /*else if (key == "totalSaleValue") totalSaleValue = std::stod(value);*/
                 }
             }
         }
     } else {
         std::cerr << "Failed to open config file: " << configFilePath << std::endl;
+    }
+}
+
+/**
+ * Analiza el archivo de estadísticas y encuentra la iteración con la menor distancia.
+ * @param statsFilePath Ruta al archivo de estadísticas.
+ */
+void analyzeStatistics(const std::string& statsFilePath) {
+    std::ifstream statsFile(statsFilePath);
+    std::string line;
+    std::getline(statsFile, line); // Leer la primera línea de encabezados
+
+    int bestIteration = -1;
+    double minDistance = std::numeric_limits<double>::max();
+    double bestSaleValue = 0.0;
+    std::vector<std::pair<std::string, double>> bestParameters;
+
+    while (std::getline(statsFile, line)) {
+        std::istringstream iss(line);
+        std::string token;
+        std::getline(iss, token, ','); // Iteration
+        int iteration = std::stoi(token);
+
+        std::getline(iss, token, ','); // SaleValue
+        double saleValue = std::stod(token);
+
+        std::getline(iss, token, ','); // Distance
+        double distance = std::stod(token);
+
+        if (distance < minDistance) {
+            minDistance = distance;
+            bestIteration = iteration;
+            bestSaleValue = saleValue;
+            bestParameters.clear();
+            while (std::getline(iss, token, ',')) {
+                bestParameters.push_back({"", std::stod(token)});
+            }
+        }
+    }
+
+    std::cout << "\n***Best Iteration Analysis***\n";
+    std::cout << "Best parameters found at iteration " << bestIteration << " with sale value " << bestSaleValue << " and distance " << minDistance << std::endl;
+    std::cout << "\n***Best Parameters***\n";
+    for (const auto& param : bestParameters) {
+        std::cout << "Probability: " << param.second << std::endl;
     }
 }
 
@@ -88,7 +132,7 @@ int main(int argc, char* argv[]) {
 
     int numberOfIterations;
     double salesObjectiveInitial, salesObjectiveFinal, tolerance;
-    double customerParam, sellerParam, saleParam, dateParam, productParam/*, totalSaleValue*/;
+    double customerParam, sellerParam, saleParam, dateParam, productParam;
 
     readConfigFor8("../simulation_config.txt", 
                     numberOfIterations, 
@@ -99,8 +143,7 @@ int main(int argc, char* argv[]) {
                     sellerParam,
                     saleParam,
                     dateParam,
-                    productParam/*,
-                    totalSaleValue*/);
+                    productParam);
 
     // Inicializar el motor de simulación
     SimulationEngine simulationEngine;
@@ -111,7 +154,6 @@ int main(int argc, char* argv[]) {
     Parameter saleParamParameter("saleParam", saleParam);
     Parameter dateParamParameter("dateParam", dateParam);
     Parameter productParamParameter("productParam", productParam);
-    /*Parameter totalSaleValueParameter("totalSaleValue", totalSaleValue);*/
 
     // Agregar parámetros al motor de simulación
     simulationEngine.addParameter(customerParamParameter);
@@ -119,7 +161,6 @@ int main(int argc, char* argv[]) {
     simulationEngine.addParameter(saleParamParameter);
     simulationEngine.addParameter(dateParamParameter);
     simulationEngine.addParameter(productParamParameter);
-    /*simulationEngine.addParameter(totalSaleValueParameter);*/
 
     // Ejecutar simulaciones
     simulationEngine.runSimulations(numberOfIterations, calculateSale, salesObjectiveFinal, tolerance);
@@ -138,8 +179,10 @@ int main(int argc, char* argv[]) {
     std::cout << "saleParam: " << saleParam << std::endl;
     std::cout << "dateParam: " << dateParam << std::endl;
     std::cout << "productParam: " << productParam << std::endl;
-    /*std::cout << "totalSaleValue: " << totalSaleValue << std::endl;*/
     std::cout << "\n";
+
+    // Analizar el archivo de estadísticas
+    analyzeStatistics("../build/statistics_simulations.txt");
 
     // Obtiene el tiempo de finalización
     auto end = std::chrono::high_resolution_clock::now();
