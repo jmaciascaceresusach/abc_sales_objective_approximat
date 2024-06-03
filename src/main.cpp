@@ -122,7 +122,7 @@ void analyzeStatistics(const std::string& statsFilePath) {
             bestIteration = iteration;
             bestSaleValue = saleValue;
             bestParameters.clear();
-            int parameterIndex = 5;
+            int parameterIndex = 3; // Cambiado a 3 para empezar después de saleValue y distance
             while (std::getline(iss, token, ',')) {
                 try {
                     if (parameterIndex < parameterNames.size()) {
@@ -141,7 +141,7 @@ void analyzeStatistics(const std::string& statsFilePath) {
     if (bestIteration != -1) {
         std::cout << "\n***Best Iteration Analysis***\n";
         std::cout << "Best parameters found at iteration " << bestIteration << " with sale value " << bestSaleValue << " and distance " << minDistance << std::endl;
-        std::cout << "\n***Best Parameters***\n";
+        std::cout << "\n***Best Parameters (analyzeStatistics)***\n";
         for (const auto& param : bestParameters) {
             std::cout << "Parameter: " << param.first << ", Probability: " << param.second << std::endl;
         }
