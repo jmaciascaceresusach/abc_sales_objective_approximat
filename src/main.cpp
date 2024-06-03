@@ -125,8 +125,10 @@ void analyzeStatistics(const std::string& statsFilePath) {
             int parameterIndex = 5;
             while (std::getline(iss, token, ',')) {
                 try {
-                    bestParameters.push_back({parameterNames[parameterIndex], std::stod(token)});
-                    ++parameterIndex;
+                    if (parameterIndex < parameterNames.size()) {
+                        bestParameters.push_back({parameterNames[parameterIndex], std::stod(token)});
+                        ++parameterIndex;
+                    }
                 } catch (const std::invalid_argument& e) {
                     std::cerr << "Invalid parameter value: " << token << std::endl;
                     bestParameters.clear();
