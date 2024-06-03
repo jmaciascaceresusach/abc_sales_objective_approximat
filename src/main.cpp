@@ -1,12 +1,13 @@
-#include "../include/Parameter.h"
-#include "../include/SimulationEngine.h"
+#include <fstream>
 #include <iostream>
-#include <vector>
-#include <cstdlib> // para std::atoi and std::atof
-#include <fstream>  
 #include <sstream>
+#include <vector>
 #include <chrono>
 #include <string>
+#include <limits>
+#include <utility>
+#include "../include/Parameter.h"
+#include "../include/SimulationEngine.h"
 
 /**
  * Función para calcular ventas simuladas en función de parámetros.
@@ -95,6 +96,14 @@ void analyzeStatistics(const std::string& statsFilePath) {
     std::string line;
     std::getline(statsFile, line); // Leer la primera línea de encabezados
 
+    // Almacenar los nombres de los parámetros desde el encabezado
+    std::vector<std::string> parameterNames;
+    std::istringstream headerStream(line);
+    std::string headerToken;
+    while (std::getline(headerStream, headerToken, ',')) {
+        parameterNames.push_back(headerToken);
+    }
+
     int bestIteration = -1;
     double minDistance = std::numeric_limits<double>::max();
     double bestSaleValue = 0.0;
@@ -139,9 +148,11 @@ void analyzeStatistics(const std::string& statsFilePath) {
             bestIteration = iteration;
             bestSaleValue = saleValue;
             bestParameters.clear();
+            int parameterIndex = 5; // Los parámetros comienzan desde el índice 5 en adelante
             while (std::getline(iss, token, ',')) {
                 try {
-                    bestParameters.push_back({"", std::stod(token)});
+                    bestParameters.push_back({parameterNames[parameterIndex], std::stod(token)});
+                    ++parameterIndex;
                 } catch (const std::invalid_argument& e) {
                     std::cerr << "Invalid parameter value: " << token << std::endl;
                     bestParameters.clear();
@@ -156,7 +167,7 @@ void analyzeStatistics(const std::string& statsFilePath) {
         std::cout << "Best parameters found at iteration " << bestIteration << " with sale value " << bestSaleValue << " and distance " << minDistance << std::endl;
         std::cout << "\n***Best Parameters***\n";
         for (const auto& param : bestParameters) {
-            std::cout << "Probability: " << param.second << std::endl;
+            std::cout << "Parameter: " << param.first << ", Probability: " << param.second << std::endl;
         }
     } else {
         std::cerr << "No valid data found in statistics file." << std::endl;
