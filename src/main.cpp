@@ -9,11 +9,6 @@
 #include "../include/Parameter.h"
 #include "../include/SimulationEngine.h"
 
-/**
- * Función para calcular ventas simuladas en función de parámetros.
- * @param parameters Lista de parámetros utilizados para calcular las ventas.
- * @return Valor total de las ventas calculadas.
- */
 double calculateSale(const std::vector<Parameter>& parameters) {
     double totalSaleValue = 0.0;
     for (const auto& param : parameters) {
@@ -32,19 +27,6 @@ double calculateSale(const std::vector<Parameter>& parameters) {
     return totalSaleValue;
 }
 
-/**
- * Lee una configuración completa desde un archivo para 8 parámetros.
- * @param configFilePath Ruta al archivo de configuración.
- * @param numberOfIterations Variable donde se almacenará el número de iteraciones.
- * @param salesObjectiveInitial Variable donde se almacenará el objetivo de ventas inicial.
- * @param salesObjectiveFinal Variable donde se almacenará el objetivo de ventas final.
- * @param tolerance Variable donde se almacenará la tolerancia.
- * @param customerParam Variable donde se almacenará el valor inicial de customerParam.
- * @param sellerParam Variable donde se almacenará el valor inicial de sellerParam.
- * @param saleParam Variable donde se almacenará el valor inicial de saleParam.
- * @param dateParam Variable donde se almacenará el valor inicial de dateParam.
- * @param productParam Variable donde se almacenará el valor inicial de productParam.
- */
 void readConfigFor8(const std::string& configFilePath, 
                     int& numberOfIterations, 
                     double& salesObjectiveInitial, 
@@ -82,10 +64,6 @@ void readConfigFor8(const std::string& configFilePath,
     }
 }
 
-/**
- * Analiza el archivo de estadísticas y encuentra la iteración con la menor distancia.
- * @param statsFilePath Ruta al archivo de estadísticas.
- */
 void analyzeStatistics(const std::string& statsFilePath) {
     std::ifstream statsFile(statsFilePath);
     if (!statsFile.is_open()) {
@@ -96,7 +74,6 @@ void analyzeStatistics(const std::string& statsFilePath) {
     std::string line;
     std::getline(statsFile, line); // Leer la primera línea de encabezados
 
-    // Almacenar los nombres de los parámetros desde el encabezado
     std::vector<std::string> parameterNames;
     std::istringstream headerStream(line);
     std::string headerToken;
@@ -113,7 +90,6 @@ void analyzeStatistics(const std::string& statsFilePath) {
         std::istringstream iss(line);
         std::string token;
 
-        // Leer y convertir la iteración
         if (!std::getline(iss, token, ',')) continue;
         int iteration;
         try {
@@ -123,7 +99,6 @@ void analyzeStatistics(const std::string& statsFilePath) {
             continue;
         }
 
-        // Leer y convertir el valor de venta
         if (!std::getline(iss, token, ',')) continue;
         double saleValue;
         try {
@@ -133,7 +108,6 @@ void analyzeStatistics(const std::string& statsFilePath) {
             continue;
         }
 
-        // Leer y convertir la distancia
         if (!std::getline(iss, token, ',')) continue;
         double distance;
         try {
@@ -148,7 +122,7 @@ void analyzeStatistics(const std::string& statsFilePath) {
             bestIteration = iteration;
             bestSaleValue = saleValue;
             bestParameters.clear();
-            int parameterIndex = 5; // Los parámetros comienzan desde el índice 5 en adelante
+            int parameterIndex = 5;
             while (std::getline(iss, token, ',')) {
                 try {
                     bestParameters.push_back({parameterNames[parameterIndex], std::stod(token)});
@@ -175,7 +149,6 @@ void analyzeStatistics(const std::string& statsFilePath) {
 }
 
 int main(int argc, char* argv[]) {
-    // Obtiene el tiempo de inicio
     auto start = std::chrono::high_resolution_clock::now();
 
     int numberOfIterations;
@@ -193,24 +166,20 @@ int main(int argc, char* argv[]) {
                     dateParam,
                     productParam);
 
-    // Inicializar el motor de simulación
     SimulationEngine simulationEngine;
 
-    // Definir y agregar parámetros
     Parameter customerParamParameter("customerParam", customerParam);
     Parameter sellerParamParameter("sellerParam", sellerParam);
     Parameter saleParamParameter("saleParam", saleParam);
     Parameter dateParamParameter("dateParam", dateParam);
     Parameter productParamParameter("productParam", productParam);
 
-    // Agregar parámetros al motor de simulación
     simulationEngine.addParameter(customerParamParameter);
     simulationEngine.addParameter(sellerParamParameter);
     simulationEngine.addParameter(saleParamParameter);
     simulationEngine.addParameter(dateParamParameter);
     simulationEngine.addParameter(productParamParameter);
 
-    // Ejecutar simulaciones
     simulationEngine.runSimulations(numberOfIterations, calculateSale, salesObjectiveFinal, tolerance);
 
     std::cout << "\n";
@@ -229,15 +198,12 @@ int main(int argc, char* argv[]) {
     std::cout << "productParam: " << productParam << std::endl;
     std::cout << "\n";
 
-    // Analizar el archivo de estadísticas
     analyzeStatistics("../build/statistics_simulations.txt");
 
-    // Obtiene el tiempo de finalización
     auto end = std::chrono::high_resolution_clock::now();
-
-    // Calcula la duración en milisegundos
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
+    std::cout << "\n";
     std::cout << "***Duration***" << std::endl;
     std::cout << "Time: " << duration.count() << " milliseconds" << std::endl;
     std::cout << "\n";
