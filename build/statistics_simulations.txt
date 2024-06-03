@@ -1,4 +1,4 @@
-Creation Date and Time: 2024-06-02 22:43:01
+Creation Date and Time: 2024-06-02 22:50:43
 Iteration,SaleValue,Distance,Objective,Tolerance,customerParam,sellerParam,saleParam,dateParam,productParam
 0,15.6296,15.4899,0.139669,10,0.173,0.1816,0.015,0.4064,0.0022
 1,15.4733,15.3336,0.139669,10,0.17127,0.179784,0.01485,0.402336,0.002178
