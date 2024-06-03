@@ -220,22 +220,22 @@ int main(int argc, char* argv[]) {
     simulationEngine.addParameter(dateParamParameter);
     simulationEngine.addParameter(productParamParameter);
 
-    // Leer datos históricos desde un archivo
-    auto historicalDataMap = readHistoricalData("../historical_data.txt");
+    // Leer datos históricos desde un archivo (por verificar 03062024)
+    // auto historicalDataMap = readHistoricalData("../historical_data.txt");
 
-    // Especificar una fecha para usar los datos históricos
-    std::string selectedDate = "2024-02-01"; // Puedes cambiar esta fecha según tus necesidades
-    if (historicalDataMap.find(selectedDate) != historicalDataMap.end()) {
-        simulationEngine.addHistoricalData(historicalDataMap[selectedDate]);
-    } else {
-        std::cerr << "Historical data for the selected date not found." << std::endl;
-    }
+    // Especificar una fecha para usar los datos históricos (por verificar 03062024)
+    // std::string selectedDate = "2024-02-01"; // Puedes cambiar esta fecha según tus necesidades
+    // if (historicalDataMap.find(selectedDate) != historicalDataMap.end()) {
+    //     simulationEngine.addHistoricalData(historicalDataMap[selectedDate]);
+    // } else {
+    //     std::cerr << "Historical data for the selected date not found." << std::endl;
+    // }
 
-    // Verificar los valores de los parámetros después de añadir datos históricos
-    std::cout << "\n***Parameters After Adding Historical Data***" << std::endl;
-    for (const auto& param : simulationEngine.parameters) {
-        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
-    }
+    // Verificar los valores de los parámetros después de añadir datos históricos (por verificar 03062024)
+    // std::cout << "\n***Parameters After Adding Historical Data***" << std::endl;
+    // for (const auto& param : simulationEngine.parameters) {
+    //     std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
+    // }
 
     // Ejecutar simulaciones
     simulationEngine.runSimulations(numberOfIterations, calculateSale, salesObjectiveFinal, tolerance);

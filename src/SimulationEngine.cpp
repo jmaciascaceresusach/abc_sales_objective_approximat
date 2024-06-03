@@ -16,6 +16,7 @@ void SimulationEngine::addParameter(const Parameter& parameter) {
 }
 
 void SimulationEngine::addHistoricalData(const std::vector<Parameter>& historicalData) {
+    std::cout << "\n";
     std::cout << "Adding historical data to parameters:" << std::endl;
     for (size_t i = 0; i < parameters.size(); ++i) {
         double previousProbability = parameters[i].probability;
