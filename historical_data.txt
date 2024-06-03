@@ -1,5 +1,5 @@
-customerParam=0.2
-sellerParam=0.18
-saleParam=0.015
-dateParam=0.4
-productParam=0.002
+date,customerParam,sellerParam,saleParam,dateParam,productParam
+2024-01-01,0.2,0.18,0.015,0.4,0.002
+2024-02-01,0.21,0.17,0.014,0.39,0.0021
+2024-03-01,0.19,0.19,0.016,0.38,0.0019
+2024-04-01,0.22,0.18,0.015,0.37,0.0022

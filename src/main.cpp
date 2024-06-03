@@ -6,6 +6,7 @@
 #include <string>
 #include <limits>
 #include <utility>
+#include <map>
 #include "../include/Parameter.h"
 #include "../include/SimulationEngine.h"
 
@@ -151,18 +152,33 @@ void analyzeStatistics(const std::string& statsFilePath) {
 }
 
 // Función para leer los datos históricos desde un archivo
-std::vector<Parameter> readHistoricalData(const std::string& filePath) {
-    std::vector<Parameter> historicalData;
+std::map<std::string, std::vector<Parameter>> readHistoricalData(const std::string& filePath) {
+    std::map<std::string, std::vector<Parameter>> historicalData;
     std::ifstream file(filePath);
     std::string line;
+    
+    // Leer la primera línea como encabezado
+    std::getline(file, line);
+    std::vector<std::string> parameterNames;
+    std::istringstream headerStream(line);
+    std::string header;
+    while (std::getline(headerStream, header, ',')) {
+        parameterNames.push_back(header);
+    }
 
+    // Leer los datos
     while (std::getline(file, line)) {
         std::istringstream iss(line);
-        std::string key, value;
-        if (std::getline(iss, key, '=') && std::getline(iss, value)) {
-            double probability = std::stod(value);
-            historicalData.push_back(Parameter(key, probability));
+        std::string date;
+        std::getline(iss, date, ',');
+        std::vector<Parameter> parameters;
+        std::string value;
+        for (size_t i = 1; i < parameterNames.size(); ++i) {
+            if (std::getline(iss, value, ',')) {
+                parameters.push_back(Parameter(parameterNames[i], std::stod(value)));
+            }
         }
+        historicalData[date] = parameters;
     }
 
     return historicalData;
@@ -205,13 +221,21 @@ int main(int argc, char* argv[]) {
     simulationEngine.addParameter(productParamParameter);
 
     // Leer datos históricos desde un archivo
-    std::vector<Parameter> historicalData = readHistoricalData("../historical_data.txt");
+    auto historicalDataMap = readHistoricalData("../historical_data.txt");
 
-    // O inicializar directamente en el código
-    //std::vector<Parameter> historicalData = getHistoricalData();
+    // Especificar una fecha para usar los datos históricos
+    std::string selectedDate = "2024-02-01"; // Puedes cambiar esta fecha según tus necesidades
+    if (historicalDataMap.find(selectedDate) != historicalDataMap.end()) {
+        simulationEngine.addHistoricalData(historicalDataMap[selectedDate]);
+    } else {
+        std::cerr << "Historical data for the selected date not found." << std::endl;
+    }
 
-    // Agregar datos históricos al motor de simulación
-    simulationEngine.addHistoricalData(historicalData);
+    // Verificar los valores de los parámetros después de añadir datos históricos
+    std::cout << "\n***Parameters After Adding Historical Data***" << std::endl;
+    for (const auto& param : simulationEngine.parameters) {
+        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
+    }
 
     // Ejecutar simulaciones
     simulationEngine.runSimulations(numberOfIterations, calculateSale, salesObjectiveFinal, tolerance);
