@@ -150,7 +150,26 @@ void analyzeStatistics(const std::string& statsFilePath) {
     }
 }
 
+// Función para leer los datos históricos desde un archivo
+std::vector<Parameter> readHistoricalData(const std::string& filePath) {
+    std::vector<Parameter> historicalData;
+    std::ifstream file(filePath);
+    std::string line;
+
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string key, value;
+        if (std::getline(iss, key, '=') && std::getline(iss, value)) {
+            double probability = std::stod(value);
+            historicalData.push_back(Parameter(key, probability));
+        }
+    }
+
+    return historicalData;
+}
+
 int main(int argc, char* argv[]) {
+    // Obtiene el tiempo de inicio
     auto start = std::chrono::high_resolution_clock::now();
 
     int numberOfIterations;
@@ -158,30 +177,43 @@ int main(int argc, char* argv[]) {
     double customerParam, sellerParam, saleParam, dateParam, productParam;
 
     readConfigFor8("../simulation_config.txt", 
-                    numberOfIterations, 
-                    salesObjectiveInitial,
-                    salesObjectiveFinal, 
-                    tolerance,
-                    customerParam,
-                    sellerParam,
-                    saleParam,
-                    dateParam,
-                    productParam);
+                   numberOfIterations, 
+                   salesObjectiveInitial,
+                   salesObjectiveFinal, 
+                   tolerance,
+                   customerParam,
+                   sellerParam,
+                   saleParam,
+                   dateParam,
+                   productParam);
 
+    // Inicializar el motor de simulación
     SimulationEngine simulationEngine;
 
+    // Definir y agregar parámetros
     Parameter customerParamParameter("customerParam", customerParam);
     Parameter sellerParamParameter("sellerParam", sellerParam);
     Parameter saleParamParameter("saleParam", saleParam);
     Parameter dateParamParameter("dateParam", dateParam);
     Parameter productParamParameter("productParam", productParam);
 
+    // Agregar parámetros al motor de simulación
     simulationEngine.addParameter(customerParamParameter);
     simulationEngine.addParameter(sellerParamParameter);
     simulationEngine.addParameter(saleParamParameter);
     simulationEngine.addParameter(dateParamParameter);
     simulationEngine.addParameter(productParamParameter);
 
+    // Leer datos históricos desde un archivo
+    std::vector<Parameter> historicalData = readHistoricalData("../historical_data.txt");
+
+    // O inicializar directamente en el código
+    //std::vector<Parameter> historicalData = getHistoricalData();
+
+    // Agregar datos históricos al motor de simulación
+    simulationEngine.addHistoricalData(historicalData);
+
+    // Ejecutar simulaciones
     simulationEngine.runSimulations(numberOfIterations, calculateSale, salesObjectiveFinal, tolerance);
 
     std::cout << "\n";
@@ -200,9 +232,10 @@ int main(int argc, char* argv[]) {
     std::cout << "productParam: " << productParam << std::endl;
     std::cout << "\n";
 
-    //analyzeStatistics("../build/statistics_simulations.txt");
-
+    // Obtiene el tiempo de finalización
     auto end = std::chrono::high_resolution_clock::now();
+
+    // Calcula la duración en milisegundos
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
     std::cout << "***Duration***" << std::endl;

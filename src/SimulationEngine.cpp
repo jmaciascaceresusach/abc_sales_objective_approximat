@@ -15,6 +15,32 @@ void SimulationEngine::addParameter(const Parameter& parameter) {
     this->parameters.push_back(parameter);
 }
 
+void SimulationEngine::addHistoricalData(const std::vector<Parameter>& historicalData) {
+    // Combinar datos históricos con parámetros actuales
+    for (size_t i = 0; i < parameters.size(); ++i) {
+        parameters[i].adjustProbability(historicalData[i].probability);
+    }
+    normalizeParameters(parameters);
+}
+
+// Función para leer los datos históricos desde un archivo
+std::vector<Parameter> readHistoricalData(const std::string& filePath) {
+    std::vector<Parameter> historicalData;
+    std::ifstream file(filePath);
+    std::string line;
+
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string key, value;
+        if (std::getline(iss, key, '=') && std::getline(iss, value)) {
+            double probability = std::stod(value);
+            historicalData.push_back(Parameter(key, probability));
+        }
+    }
+
+    return historicalData;
+}
+
 // Ejecuta simulaciones para aproximarse al objetivo de ventas
 void SimulationEngine::runSimulations(int numberOfIterations, std::function<double(const std::vector<Parameter>&)> calculateSale, double salesObjectiveFinal, double tolerance) {
     auto now = std::chrono::system_clock::now();

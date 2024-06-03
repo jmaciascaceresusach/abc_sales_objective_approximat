@@ -47,6 +47,11 @@ public:
      */
     void refineParameters(std::vector<Parameter>& parameters, std::function<double(const std::vector<Parameter>&)> calculateSale, double salesObjectiveFinal, double tolerance);
 
+    /**
+     * Agrega datos históricos para ajustar los parámetros.
+     * @param historicalData Lista de parámetros históricos.
+     */
+    void addHistoricalData(const std::vector<Parameter>& historicalData);
     
 private:
     ABCMethod abcMethod; ///< Instancia del método ABC.

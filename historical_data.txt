@@ -1,0 +1,5 @@
+customerParam=0.2
+sellerParam=0.18
+saleParam=0.015
+dateParam=0.4
+productParam=0.002
