@@ -200,7 +200,7 @@ int main(int argc, char* argv[]) {
     std::cout << "productParam: " << productParam << std::endl;
     std::cout << "\n";
 
-    analyzeStatistics("../build/statistics_simulations.txt");
+    //analyzeStatistics("../build/statistics_simulations.txt");
 
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
