@@ -107,6 +107,14 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
     }
 
     parameters = bestParameters;
+
+    // Imprimir la mejor iteración y los parámetros encontrados
+    std::cout << "\n***Results (refineParameters)***\n";
+    std::cout << "Best parameters found at iteration " << bestIteration << " with sale value " << calculateSale(bestParameters) << std::endl;
+    std::cout << "\n***Best Parameters***\n";
+    for (const auto& param : bestParameters) {
+        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
+    }
 }
 
 /**

@@ -67,7 +67,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, std::function<doub
 
     std::cout << "\n***End Simulation***\n";
 
-    std::cout << "\n***Results***\n";
+    std::cout << "\n***Results (runSimulations)***\n";
     std::cout << "Best parameters found at iteration " << bestIteration << " with sale value " << bestSaleValue << std::endl;
     std::cout << "\n***Best Parameters***\n";
     for (const auto& param : bestParameters) {
