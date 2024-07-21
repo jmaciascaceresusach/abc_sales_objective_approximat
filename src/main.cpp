@@ -9,6 +9,7 @@
 #include <map>
 #include "../include/Parameter.h"
 #include "../include/SimulationEngine.h"
+#include "../include/DataLoader.h"
 
 SKUData loadSKUData(const std::string& filename) {
     SKUData data;
