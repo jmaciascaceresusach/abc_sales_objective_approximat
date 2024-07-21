@@ -157,7 +157,6 @@ int main(int argc, char* argv[]) {
     // Cargar características normalizadas
     std::vector<double> normalizedFeatures = loadNormalizedFeatures("../data/df_features_Z285320_sku_norm.txt");
     
-    SimulationEngine simulationEngine;
     simulationEngine.setProductData(skuData);
     simulationEngine.setNormalizedFeatures(normalizedFeatures);
     
