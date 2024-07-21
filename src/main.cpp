@@ -10,34 +10,111 @@
 #include "../include/Parameter.h"
 #include "../include/SimulationEngine.h"
 
-double calculateSale(const std::vector<Parameter>& parameters) {
-    double totalSaleValue = 0.0;
-    for (const auto& param : parameters) {
-        if (param.name == "customerParam") {
-            totalSaleValue += param.probability * 27;
-        } else if (param.name == "dateParam") {
-            totalSaleValue += param.probability * 16;
-        } else if (param.name == "sellerParam") {
-            totalSaleValue += param.probability * 22;
-        } else if (param.name == "productParam") {
-            totalSaleValue += param.probability * 5;
-        } else if (param.name == "saleParam") {
-            totalSaleValue += param.probability * 30;
+SKUData loadSKUData(const std::string& filename) {
+    SKUData data;
+    std::ifstream file(filename);
+    std::string line;
+
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file " << filename << std::endl;
+        return data;
+    }
+
+    // Leer la primera línea para obtener el SKU
+    if (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string token;
+        if (std::getline(iss, token, ';')) {
+            data.sku = token;
         }
     }
-    return totalSaleValue;
+
+    data.globalMinPrice = std::numeric_limits<double>::max();
+    data.globalMaxPrice = std::numeric_limits<double>::lowest();
+
+    // Leer los intervalos
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string token;
+        PriceInterval interval;
+
+        // Ignorar el nombre del intervalo
+        std::getline(iss, token, ';');
+
+        // Leer el rango de precios
+        if (std::getline(iss, token, ';')) {
+            sscanf(token.c_str(), "(%lf, %lf)", &interval.minPrice, &interval.maxPrice);
+        }
+
+        // Leer el conteo (si está disponible)
+        if (std::getline(iss, token, ';')) {
+            interval.count = std::stoi(token);
+        } else {
+            interval.count = 0; // Si no hay conteo, asumimos 0
+        }
+
+        data.intervals.push_back(interval);
+
+        // Actualizar min y max globales
+        data.globalMinPrice = std::min(data.globalMinPrice, interval.minPrice);
+        data.globalMaxPrice = std::max(data.globalMaxPrice, interval.maxPrice);
+    }
+
+    file.close();
+
+    std::cout << "Loaded SKU data for " << data.sku << " with " 
+              << data.intervals.size() << " intervals" << std::endl;
+    std::cout << "Global price range: [" << data.globalMinPrice 
+              << ", " << data.globalMaxPrice << "]" << std::endl;
+
+    return data;
 }
 
-void readConfigFor8(const std::string& configFilePath, 
-                    int& numberOfIterations, 
-                    double& salesObjectiveInitial, 
-                    double& salesObjectiveFinal, 
+std::vector<double> loadNormalizedFeatures(const std::string& filename) {
+    std::vector<double> features;
+    std::ifstream file(filename);
+    std::string line;
+
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file " << filename << std::endl;
+        return features;
+    }
+
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string key, value;
+
+        if (std::getline(iss, key, ':') && std::getline(iss, value)) {
+            // Eliminar espacios en blanco
+            key.erase(0, key.find_first_not_of(" \t"));
+            key.erase(key.find_last_not_of(" \t") + 1);
+            value.erase(0, value.find_first_not_of(" \t"));
+            value.erase(value.find_last_not_of(" \t") + 1);
+
+            // Convertir el valor a double y añadirlo al vector
+            try {
+                double featureValue = std::stod(value);
+                features.push_back(featureValue);
+                std::cout << "Loaded feature " << key << ": " << featureValue << std::endl;
+            } catch (const std::invalid_argument& ia) {
+                std::cerr << "Invalid argument: " << ia.what() << std::endl;
+            } catch (const std::out_of_range& oor) {
+                std::cerr << "Out of range: " << oor.what() << std::endl;
+            }
+        }
+    }
+
+    file.close();
+
+    std::cout << "Loaded " << features.size() << " normalized features" << std::endl;
+
+    return features;
+}
+
+void readConfigFor3(const std::string& configFilePath, 
+                    int& numberOfIterations,
                     double& tolerance,
-                    double& customerParam,
-                    double& sellerParam,
-                    double& saleParam,
-                    double& dateParam,
-                    double& productParam) {
+                    int& daysToSimulate) {
     std::ifstream configFile(configFilePath);
     std::string line;
 
@@ -49,14 +126,8 @@ void readConfigFor8(const std::string& configFilePath,
                 std::string value;
                 if (getline(iss, value)) {
                     if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
-                    else if (key == "salesObjectiveInitial") salesObjectiveInitial = std::stod(value);
-                    else if (key == "salesObjectiveFinal") salesObjectiveFinal = std::stod(value);
                     else if (key == "tolerance") tolerance = std::stod(value);
-                    else if (key == "customerParam") customerParam = std::stod(value);
-                    else if (key == "sellerParam") sellerParam = std::stod(value);
-                    else if (key == "saleParam") saleParam = std::stod(value);
-                    else if (key == "dateParam") dateParam = std::stod(value);
-                    else if (key == "productParam") productParam = std::stod(value);
+                    else if (key == "daysToSimulate") daysToSimulate = std::stod(value);
                 }
             }
         }
@@ -65,195 +136,39 @@ void readConfigFor8(const std::string& configFilePath,
     }
 }
 
-void analyzeStatistics(const std::string& statsFilePath) {
-    std::ifstream statsFile(statsFilePath);
-    if (!statsFile.is_open()) {
-        std::cerr << "Failed to open statistics file: " << statsFilePath << std::endl;
-        return;
-    }
-
-    std::string line;
-    std::getline(statsFile, line); // Leer la primera línea de encabezados
-
-    std::vector<std::string> parameterNames;
-    std::istringstream headerStream(line);
-    std::string headerToken;
-    while (std::getline(headerStream, headerToken, ',')) {
-        parameterNames.push_back(headerToken);
-    }
-
-    int bestIteration = -1;
-    double minDistance = std::numeric_limits<double>::max();
-    double bestSaleValue = 0.0;
-    std::vector<std::pair<std::string, double>> bestParameters;
-
-    while (std::getline(statsFile, line)) {
-        std::istringstream iss(line);
-        std::string token;
-
-        if (!std::getline(iss, token, ',')) continue;
-        int iteration;
-        try {
-            iteration = std::stoi(token);
-        } catch (const std::invalid_argument& e) {
-            std::cerr << "Invalid iteration value: " << token << std::endl;
-            continue;
-        }
-
-        if (!std::getline(iss, token, ',')) continue;
-        double saleValue;
-        try {
-            saleValue = std::stod(token);
-        } catch (const std::invalid_argument& e) {
-            std::cerr << "Invalid sale value: " << token << std::endl;
-            continue;
-        }
-
-        if (!std::getline(iss, token, ',')) continue;
-        double distance;
-        try {
-            distance = std::stod(token);
-        } catch (const std::invalid_argument& e) {
-            std::cerr << "Invalid distance value: " << token << std::endl;
-            continue;
-        }
-
-        if (distance < minDistance) {
-            minDistance = distance;
-            bestIteration = iteration;
-            bestSaleValue = saleValue;
-            bestParameters.clear();
-            int parameterIndex = 3; // Cambiado a 3 para empezar después de saleValue y distance
-            while (std::getline(iss, token, ',')) {
-                try {
-                    if (parameterIndex < parameterNames.size()) {
-                        bestParameters.push_back({parameterNames[parameterIndex], std::stod(token)});
-                        ++parameterIndex;
-                    }
-                } catch (const std::invalid_argument& e) {
-                    std::cerr << "Invalid parameter value: " << token << std::endl;
-                    bestParameters.clear();
-                    break;
-                }
-            }
-        }
-    }
-
-    if (bestIteration != -1) {
-        std::cout << "\n***Best Iteration Analysis***\n";
-        std::cout << "Best parameters found at iteration " << bestIteration << " with sale value " << bestSaleValue << " and distance " << minDistance << std::endl;
-        std::cout << "\n***Best Parameters (analyzeStatistics)***\n";
-        for (const auto& param : bestParameters) {
-            std::cout << "Parameter: " << param.first << ", Probability: " << param.second << std::endl;
-        }
-    } else {
-        std::cerr << "No valid data found in statistics file." << std::endl;
-    }
-}
-
-// Función para leer los datos históricos desde un archivo
-std::map<std::string, std::vector<Parameter>> readHistoricalData(const std::string& filePath) {
-    std::map<std::string, std::vector<Parameter>> historicalData;
-    std::ifstream file(filePath);
-    std::string line;
-    
-    // Leer la primera línea como encabezado
-    std::getline(file, line);
-    std::vector<std::string> parameterNames;
-    std::istringstream headerStream(line);
-    std::string header;
-    while (std::getline(headerStream, header, ',')) {
-        parameterNames.push_back(header);
-    }
-
-    // Leer los datos
-    while (std::getline(file, line)) {
-        std::istringstream iss(line);
-        std::string date;
-        std::getline(iss, date, ',');
-        std::vector<Parameter> parameters;
-        std::string value;
-        for (size_t i = 1; i < parameterNames.size(); ++i) {
-            if (std::getline(iss, value, ',')) {
-                parameters.push_back(Parameter(parameterNames[i], std::stod(value)));
-            }
-        }
-        historicalData[date] = parameters;
-    }
-
-    return historicalData;
-}
-
 int main(int argc, char* argv[]) {
     // Obtiene el tiempo de inicio
     auto start = std::chrono::high_resolution_clock::now();
 
-    int numberOfIterations;
-    double salesObjectiveInitial, salesObjectiveFinal, tolerance;
-    double customerParam, sellerParam, saleParam, dateParam, productParam;
+    int numberOfIterations, daysToSimulate;
+    double tolerance;
 
-    readConfigFor8("../simulation_config.txt", 
+    readConfigFor3("../data/simulation_config.txt", 
                    numberOfIterations, 
-                   salesObjectiveInitial,
-                   salesObjectiveFinal, 
                    tolerance,
-                   customerParam,
-                   sellerParam,
-                   saleParam,
-                   dateParam,
-                   productParam);
+                   daysToSimulate);
 
     // Inicializar el motor de simulación
     SimulationEngine simulationEngine;
 
-    // Definir y agregar parámetros
-    Parameter customerParamParameter("customerParam", customerParam);
-    Parameter sellerParamParameter("sellerParam", sellerParam);
-    Parameter saleParamParameter("saleParam", saleParam);
-    Parameter dateParamParameter("dateParam", dateParam);
-    Parameter productParamParameter("productParam", productParam);
-
-    // Agregar parámetros al motor de simulación
-    simulationEngine.addParameter(customerParamParameter);
-    simulationEngine.addParameter(sellerParamParameter);
-    simulationEngine.addParameter(saleParamParameter);
-    simulationEngine.addParameter(dateParamParameter);
-    simulationEngine.addParameter(productParamParameter);
-
-    // Leer datos históricos desde un archivo (por verificar 03062024)
-    // auto historicalDataMap = readHistoricalData("../historical_data.txt");
-
-    // Especificar una fecha para usar los datos históricos (por verificar 03062024)
-    // std::string selectedDate = "2024-02-01"; // Puedes cambiar esta fecha según tus necesidades
-    // if (historicalDataMap.find(selectedDate) != historicalDataMap.end()) {
-    //     simulationEngine.addHistoricalData(historicalDataMap[selectedDate]);
-    // } else {
-    //     std::cerr << "Historical data for the selected date not found." << std::endl;
-    // }
-
-    // Verificar los valores de los parámetros después de añadir datos históricos (por verificar 03062024)
-    // std::cout << "\n***Parameters After Adding Historical Data***" << std::endl;
-    // for (const auto& param : simulationEngine.parameters) {
-    //     std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
-    // }
-
+    // Cargar datos del SKU
+    SKUData skuData = loadSKUData("../data/matriz_intervals_df_Z285320.csv");
+    
+    // Cargar características normalizadas
+    std::vector<double> normalizedFeatures = loadNormalizedFeatures("../data/df_features_Z285320_sku_norm.txt");
+    
+    SimulationEngine simulationEngine;
+    simulationEngine.setProductData(skuData);
+    simulationEngine.setNormalizedFeatures(normalizedFeatures);
+    
     // Ejecutar simulaciones
-    simulationEngine.runSimulations(numberOfIterations, calculateSale, salesObjectiveFinal, tolerance);
+    simulationEngine.runSimulations(numberOfIterations, daysToSimulate, tolerance);
 
     std::cout << "\n";
     std::cout << "***Configurations***" << std::endl;
     std::cout << "numberOfIterations: " << numberOfIterations << std::endl;
-    std::cout << "salesObjectiveInitial: " << salesObjectiveInitial << std::endl;
-    std::cout << "salesObjectiveFinal: " << salesObjectiveFinal << std::endl;
     std::cout << "tolerance: " << tolerance << std::endl;
-    std::cout << "\n";
-
-    std::cout << "***Startup Parameters***" << std::endl;
-    std::cout << "customerParam: " << customerParam << std::endl;
-    std::cout << "sellerParam: " << sellerParam << std::endl;
-    std::cout << "saleParam: " << saleParam << std::endl;
-    std::cout << "dateParam: " << dateParam << std::endl;
-    std::cout << "productParam: " << productParam << std::endl;
+    std::cout << "daysToSimulate: " << daysToSimulate << std::endl;
     std::cout << "\n";
 
     // Obtiene el tiempo de finalización

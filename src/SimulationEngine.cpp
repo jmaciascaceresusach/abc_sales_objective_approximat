@@ -1,197 +1,116 @@
 #include "../include/SimulationEngine.h"
 #include <iostream>
-#include <algorithm> // para std::min_element
-#include <chrono>
-#include <iomanip> // para std::put_time
-#include <limits>
-#include <random>
-#include <cmath>
+#include <fstream>
+#include <algorithm>
+#include <numeric>
 
-// Implementación del constructor
 SimulationEngine::SimulationEngine() {}
 
-// Agrega un parámetro a la simulación
 void SimulationEngine::addParameter(const Parameter& parameter) {
     this->parameters.push_back(parameter);
 }
 
-void SimulationEngine::addHistoricalData(const std::vector<Parameter>& historicalData) {
-    std::cout << "\n";
-    std::cout << "Adding historical data to parameters:" << std::endl;
-    for (size_t i = 0; i < parameters.size(); ++i) {
-        double previousProbability = parameters[i].probability;
-        parameters[i].adjustProbability(historicalData[i].probability);
-        std::cout << "Parameter: " << parameters[i].name 
-                  << ", Previous Probability: " << previousProbability 
-                  << ", New Probability: " << parameters[i].probability << std::endl;
-    }
-    normalizeParameters(parameters);
+void SimulationEngine::setProductData(const SKUData& data) {
+    this->skuData = data;
 }
 
-// Ejecuta simulaciones para aproximarse al objetivo de ventas
-void SimulationEngine::runSimulations(int numberOfIterations, std::function<double(const std::vector<Parameter>&)> calculateSale, double salesObjectiveFinal, double tolerance) {
-    auto now = std::chrono::system_clock::now();
-    std::time_t now_time = std::chrono::system_clock::to_time_t(now);
-    std::tm now_tm = *std::localtime(&now_time);
+void SimulationEngine::setNormalizedFeatures(const std::vector<double>& features) {
+    this->normalizedFeatures = features;
+}
 
-    // Abrir archivo para guardar estadísticas de simulación
-    std::ofstream statsFile("statistics_simulations.txt");
-    statsFile << "Creation Date and Time: " << std::put_time(&now_tm, "%Y-%m-%d %H:%M:%S") << "\n";
+void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate, double tolerance) {
+    std::ofstream logFile("../build/simulation_log.txt");
+    std::ofstream statsFile("../build/statistics_simulations.txt");
+
+    logFile << "Starting simulation with " << numberOfIterations << " iterations, "
+            << daysToSimulate << " days to simulate, and tolerance " << tolerance << std::endl;
+
+    // Escribir encabezados en el archivo de estadísticas
     statsFile << "Iteration,SaleValue,Distance,Objective,Tolerance";
     for (const auto& param : parameters) {
         statsFile << "," << param.name;
     }
-    statsFile << "\n";
+    statsFile << std::endl;
 
-    double closestDistance = std::numeric_limits<double>::max();
-    std::vector<Parameter> bestParameters = parameters;
-    double bestSaleValue = 0;
-    int bestIteration = -1;
+    std::vector<std::vector<double>> allSimulatedPrices;
+    std::vector<double> bestSimulation;
+    double bestDistance = std::numeric_limits<double>::max();
 
-    std::cout << "\n**Start Simulation***\n";
-
-    // Ejecutar iteraciones de simulación
     for (int i = 0; i < numberOfIterations; ++i) {
-        double saleValue = calculateSale(parameters);
-        double distance = calculateDistance(saleValue, salesObjectiveFinal);
+        logFile << "Iteration " << i + 1 << " of " << numberOfIterations << std::endl;
 
-        std::cout << "\n";
-        std::cout << "Iteration: " << i << " - saleValue: " << saleValue << " - distance: " << distance << std::endl;
+        abcMethod.refineParameters(parameters, skuData, normalizedFeatures, daysToSimulate, tolerance);
 
-        statsFile << i << "," << saleValue << "," << distance << "," << salesObjectiveFinal << "," << tolerance;
+        std::vector<double> simulatedPrices = abcMethod.simulateFuturePrices(skuData, normalizedFeatures, daysToSimulate);
+
+        double distance = abcMethod.calculateDistance(simulatedPrices, skuData);
+        double saleValue = std::accumulate(simulatedPrices.begin(), simulatedPrices.end(), 0.0);
+
+        logFile << "  Distance: " << distance << std::endl;
+
+        // Escribir estadísticas de esta iteración
+        statsFile << i + 1 << "," << saleValue << "," << distance << "," << skuData.globalMaxPrice * daysToSimulate << "," << tolerance;
         for (const auto& param : parameters) {
             statsFile << "," << param.probability;
         }
-        statsFile << "\n";
+        statsFile << std::endl;
 
-        if (distance < closestDistance) {
-            closestDistance = distance;
-            bestParameters = parameters;
-            bestSaleValue = saleValue;
-            bestIteration = i;
+        if (distance < bestDistance) {
+            bestDistance = distance;
+            bestSimulation = simulatedPrices;
+            logFile << "  New best simulation found" << std::endl;
         }
 
-        adjustParameters(saleValue, salesObjectiveFinal);
-        monitorAndEvaluate(parameters, saleValue, salesObjectiveFinal); // Llamada a la función de monitoreo
-    }
+        allSimulatedPrices.push_back(simulatedPrices);
 
-    parameters = bestParameters;
-    statsFile.close();
-
-    std::cout << "\n***End Simulation***\n";
-
-    std::cout << "\n***Results (runSimulations)***\n";
-    std::cout << "Best parameters found at iteration " << bestIteration << " with sale value " << bestSaleValue << std::endl;
-    std::cout << "\n***Best Parameters***\n";
-    for (const auto& param : bestParameters) {
-        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
-    }
-
-    abcMethod.refineParameters(parameters, calculateSale, salesObjectiveFinal, tolerance);
-}
-
-// Ajusta parámetros en función de los resultados de la simulación
-void SimulationEngine::adjustParameters(double saleValue, double salesObjectiveFinal) {
-    double error = saleValue - salesObjectiveFinal;
-    double learningRate = 0.01;
-
-    for (auto& param : parameters) {
-        double adjustment = (error > 0 ? -1 : 1) * learningRate * std::abs(param.probability);
-        param.adjustProbability(adjustment);
-
-        param.probability = std::max(0.0, std::min(param.probability, 1.0));
-        std::cout << "Parameter: " << param.name << ", Probability: " << param.probability << std::endl;
-    }
-}
-
-// Monitorea y evalúa el rendimiento de la simulación
-void SimulationEngine::monitorAndEvaluate(const std::vector<Parameter>& parameters, double saleValue, double salesObjectiveFinal) {
-    double error = calculateDistance(saleValue, salesObjectiveFinal);
-    std::cout << "Monitoring - SaleValue: " << saleValue << ", Error: " << error << std::endl;
-
-    // Aquí puedes agregar más lógica para la evaluación continua, como registros adicionales, alertas, etc.
-}
-
-// Calcula la distancia entre las ventas simuladas y el objetivo de ventas
-double SimulationEngine::calculateDistance(double saleValue, double salesObjectiveFinal) {
-    return std::abs(saleValue - salesObjectiveFinal);
-}
-
-// Refina parámetros usando el método ABC
-void SimulationEngine::refineParameters(std::vector<Parameter>& parameters, 
-                                        std::function<double(const std::vector<Parameter>&)> calculateSale, 
-                                        double salesObjectiveFinal, 
-                                        double tolerance) {
-    abcMethod.initializeParameters(parameters); // Inicialización optimizada de parámetros
-
-    std::default_random_engine generator(std::random_device{}());
-    std::normal_distribution<double> distribution(0.0, 0.01); // Ajuste pequeño
-
-    for (auto& param : parameters) {
-        double adjustment = distribution(generator);
-        param.adjustProbability(adjustment);
-    }
-
-    normalizeParameters(parameters);
-
-    double closestDistance = std::numeric_limits<double>::max();
-    std::vector<Parameter> bestParameters = parameters;
-
-    int numberOfIterations;
-    abcMethod.readConfigSimple("simulation_config.txt", numberOfIterations);
-
-    double initialTolerance = tolerance;
-
-    for (int i = 0; i < numberOfIterations; ++i) {
-        double saleValue = calculateSale(parameters);
-        double distance = calculateDistance(saleValue, salesObjectiveFinal);
-
-        if (distance < closestDistance) {
-            closestDistance = distance;
-            bestParameters = parameters;
+        logFile << "  Current parameters:" << std::endl;
+        for (const auto& param : parameters) {
+            logFile << "    " << param.name << ": " << param.probability << std::endl;
         }
+
+        double averagePrice = saleValue / daysToSimulate;
+        auto minmaxPrice = std::minmax_element(simulatedPrices.begin(), simulatedPrices.end());
+
+        logFile << "  Simulation summary:" << std::endl;
+        logFile << "    Average price: " << averagePrice << std::endl;
+        logFile << "    Min price: " << *minmaxPrice.first << std::endl;
+        logFile << "    Max price: " << *minmaxPrice.second << std::endl;
 
         if (distance <= tolerance) {
+            logFile << "Satisfactory simulation found. Stopping early." << std::endl;
             break;
         }
-
-        // Diversificación de Ajustes
-        switch (i % 5) {
-            case 0:
-                abcMethod.dynamicAdjustParameters(parameters, saleValue, salesObjectiveFinal);
-                break;
-            case 1:
-                abcMethod.dynamicAdjustParametersGradient(parameters, saleValue, salesObjectiveFinal);
-                break;
-            case 2:
-                abcMethod.dynamicAdjustParametersSlidingAverage(parameters, saleValue, salesObjectiveFinal);
-                break;
-            case 3:
-                abcMethod.dynamicAdjustParametersGenetic(parameters, calculateSale, saleValue, salesObjectiveFinal);
-                break;
-            case 4:
-                abcMethod.dynamicAdjustParametersSimulatedAnnealing(parameters, calculateSale, saleValue, salesObjectiveFinal);
-                break;
-        }
-        normalizeParameters(parameters);
-
-        // Adaptación Dinámica de la Tolerancia
-        tolerance = initialTolerance * (1.0 - (static_cast<double>(i) / numberOfIterations));
     }
 
-    parameters = bestParameters;
-}
+    logFile << "\nFinal Results:" << std::endl;
+    logFile << "Best simulation distance: " << bestDistance << std::endl;
+    logFile << "Best simulation prices:" << std::endl;
+    for (size_t i = 0; i < bestSimulation.size(); ++i) {
+        logFile << "  Day " << i + 1 << ": " << bestSimulation[i] << std::endl;
+    }
 
-// Normaliza los parámetros para que sus probabilidades sumen 1 o menos
-void SimulationEngine::normalizeParameters(std::vector<Parameter>& parameters) {
-    double totalProbability = 0.0;
+    std::vector<double> averagePrices(daysToSimulate, 0.0);
+    for (const auto& simulation : allSimulatedPrices) {
+        for (size_t i = 0; i < simulation.size(); ++i) {
+            averagePrices[i] += simulation[i];
+        }
+    }
+    for (auto& price : averagePrices) {
+        price /= allSimulatedPrices.size();
+    }
+
+    logFile << "\nAverage prices across all simulations:" << std::endl;
+    for (size_t i = 0; i < averagePrices.size(); ++i) {
+        logFile << "  Day " << i + 1 << ": " << averagePrices[i] << std::endl;
+    }
+
+    logFile << "\nFinal parameters:" << std::endl;
     for (const auto& param : parameters) {
-        totalProbability += param.probability;
+        logFile << "  " << param.name << ": " << param.probability << std::endl;
     }
 
-    if (totalProbability > 1.0) {
-        for (auto& param : parameters) {
-            param.probability /= totalProbability;
-        }
-    }
+    logFile.close();
+    statsFile.close();
+
+    std::cout << "Simulation completed. Results saved in simulation_log.txt and statistics_simulations.txt" << std::endl;
 }

@@ -1,9 +1,0 @@
-numberOfIterations=50
-tolerance=13
-salesObjectiveFinal=0.139669
-salesObjectiveInitial=0.15298
-customerParam=0.1730
-dateParam=0.4064
-sellerParam=0.1816
-productParam=0.0022
-saleParam=0.015
