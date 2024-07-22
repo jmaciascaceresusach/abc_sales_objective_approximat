@@ -3,7 +3,6 @@
 #include <fstream>
 #include <algorithm>
 #include <numeric>
-#include <limits>
 
 SimulationEngine::SimulationEngine() {}
 
@@ -45,17 +44,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     std::vector<double> bestSimulation;
     double bestDistance = std::numeric_limits<double>::max();
 
-    logFile << "\nInitial parameters:" << std::endl;
-    for (const auto& param : parameters) {
-        logFile << "  " << param.name << ": " << param.probability << std::endl;
-    }
-    logFile.flush();
-
-    int acceptedSimulations = 0;
-
     for (int i = 0; i < numberOfIterations; ++i) {
-        logFile << "\nIteration " << i + 1 << " of " << numberOfIterations << std::endl;
-        std::cout << "Iteration " << i + 1 << " of " << numberOfIterations << std::endl;
+        logFile << "Iteration " << i + 1 << " of " << numberOfIterations << std::endl;
 
         abcMethod.refineParameters(parameters, skuData, normalizedFeatures, daysToSimulate, tolerance);
 
@@ -64,12 +54,11 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         double distance = abcMethod.calculateDistance(simulatedPrices, skuData);
         double saleValue = std::accumulate(simulatedPrices.begin(), simulatedPrices.end(), 0.0);
 
+        logFile << "  Distance: " << distance << std::endl;
+
         double averageSaleValue = saleValue / daysToSimulate;
         double minSaleValue = *std::min_element(simulatedPrices.begin(), simulatedPrices.end());
         double maxSaleValue = *std::max_element(simulatedPrices.begin(), simulatedPrices.end());
-
-        logFile << "  Distance: " << distance << std::endl;
-        std::cout << "  Distance: " << distance << std::endl;
 
         statsFile << i + 1 << "," << averageSaleValue << "," << minSaleValue << "," << maxSaleValue 
                   << "," << distance << "," << tolerance;
@@ -87,36 +76,27 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
         allSimulatedPrices.push_back(simulatedPrices);
 
+        logFile << "  Current parameters:" << std::endl;
+        for (const auto& param : parameters) {
+            logFile << "    " << param.name << ": " << param.probability << std::endl;
+        }
+
         logFile << "  Simulation summary:" << std::endl;
         logFile << "    Average price: " << averageSaleValue << std::endl;
         logFile << "    Min price: " << minSaleValue << std::endl;
         logFile << "    Max price: " << maxSaleValue << std::endl;
-        logFile.flush();
-
-        std::cout << "  Simulation summary:" << std::endl;
-        std::cout << "    Average price: " << averageSaleValue << std::endl;
-        std::cout << "    Min price: " << minSaleValue << std::endl;
-        std::cout << "    Max price: " << maxSaleValue << std::endl;
 
         if (distance <= tolerance) {
-            acceptedSimulations++;
-            logFile << "  Satisfactory simulation found." << std::endl;
-            std::cout << "  Satisfactory simulation found." << std::endl;
-            // No salimos del bucle, continuamos con la siguiente iteración
+            logFile << "Satisfactory simulation found. Stopping early." << std::endl;
+            break;
         }
     }
 
     logFile << "\nFinal Results:" << std::endl;
     logFile << "Best simulation distance: " << bestDistance << std::endl;
-    logFile << "Number of accepted simulations: " << acceptedSimulations << std::endl;
-    
-    if (!bestSimulation.empty()) {
-        logFile << "Best simulation prices:" << std::endl;
-        for (size_t i = 0; i < bestSimulation.size(); ++i) {
-            logFile << "  Day " << i + 1 << ": " << bestSimulation[i] << std::endl;
-        }
-    } else {
-        logFile << "No satisfactory simulation found." << std::endl;
+    logFile << "Best simulation prices:" << std::endl;
+    for (size_t i = 0; i < bestSimulation.size(); ++i) {
+        logFile << "  Day " << i + 1 << ": " << bestSimulation[i] << std::endl;
     }
 
     std::vector<double> averagePrices(daysToSimulate, 0.0);
@@ -142,6 +122,5 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     logFile.close();
     statsFile.close();
 
-    std::cout << "\nSimulation completed. Results saved in simulation_log.txt and statistics_simulations.txt" << std::endl;
-    std::cout << "Number of accepted simulations: " << acceptedSimulations << std::endl;
+    std::cout << "Simulation completed. Results saved in simulation_log.txt and statistics_simulations.txt" << std::endl;
 }

@@ -56,7 +56,7 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
         tolerance *= 1.1;
     }
 
-    std::cout << "\n*** Parameters initial ***" << std::endl;
+    std::cout << "\n*** refineParameters ***" << std::endl;
 
     for (const auto& param : parameters) {
         std::cout << "  " << param.name << ": " << param.probability << std::endl;
@@ -102,25 +102,21 @@ double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices, 
     std::cout << "Calculating distance for " << simulatedPrices.size() << " prices" << std::endl;
 
     for (const auto& price : simulatedPrices) {
-        // Comprobar si el precio está dentro del rango global
-        if (price < skuData.globalMinPrice || price > skuData.globalMaxPrice) {
-            outOfRangeCount++;
-            continue;
-        }
+        auto it = std::find_if(skuData.intervals.begin(), skuData.intervals.end(),
+            [price](const PriceInterval& interval) {
+                return price >= interval.minPrice && price <= interval.maxPrice;
+            });
 
-        // Encontrar el intervalo más cercano
-        double minDistance = std::numeric_limits<double>::max();
-        for (const auto& interval : skuData.listProducts) {
-            if (price >= interval.first && price <= interval.second) {
-                minDistance = 0;
-                break;
+        if (it != skuData.intervals.end()) {
+            distance += 0;
+        } else {
+            double minDist = std::numeric_limits<double>::max();
+            for (const auto& interval : skuData.intervals) {
+                double dist = std::min(std::abs(price - interval.minPrice), std::abs(price - interval.maxPrice));
+                minDist = std::min(minDist, dist);
             }
-            double distToMin = std::abs(price - interval.first);
-            double distToMax = std::abs(price - interval.second);
-            double intervalDistance = std::min(distToMin, distToMax);
-            minDistance = std::min(minDistance, intervalDistance);
+            distance += minDist;
         }
-        totalDistance += minDistance;
     }
 
     // Penalizar fuertemente los precios fuera del rango global
