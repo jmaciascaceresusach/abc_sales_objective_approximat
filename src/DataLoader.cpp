@@ -6,6 +6,7 @@
 #include <string>
 #include <algorithm>
 #include <stdexcept>
+#include <vector>
 
 SKUData loadSKUData(const std::string& filename) {
     SKUData data;
@@ -27,7 +28,7 @@ SKUData loadSKUData(const std::string& filename) {
 
     data.globalMinPrice = std::numeric_limits<double>::max();
     data.globalMaxPrice = std::numeric_limits<double>::lowest();
-    
+
     while (std::getline(file, line)) {
         std::istringstream iss(line);
         std::string token;
@@ -42,7 +43,15 @@ SKUData loadSKUData(const std::string& filename) {
         }
 
         if (std::getline(iss, token, ';')) {
-            interval.count = std::stoi(token);
+            try {
+                interval.count = std::stoi(token);
+            } catch (const std::invalid_argument& e) {
+                std::cerr << "Invalid count value: " << token << std::endl;
+                interval.count = 0;
+            } catch (const std::out_of_range& e) {
+                std::cerr << "Count value out of range: " << token << std::endl;
+                interval.count = 0;
+            }
         } else {
             interval.count = 0;
         }
@@ -121,13 +130,18 @@ void loadSimulationConfig(const std::string& filename, int& numberOfIterations, 
             value.erase(0, value.find_first_not_of(" \t"));
             value.erase(value.find_last_not_of(" \t") + 1);
 
+            std::cout << "Key: " << key << ", Value: " << value << std::endl; // Depuración
+
             try {
                 if (key == "numberOfIterations") {
                     numberOfIterations = std::stoi(value);
+                    std::cout << "numberOfIterations set to " << numberOfIterations << std::endl; // Depuración
                 } else if (key == "tolerance") {
                     tolerance = std::stoi(value);
+                    std::cout << "tolerance set to " << tolerance << std::endl; // Depuración
                 } else if (key == "daysToSimulate") {
                     daysToSimulate = std::stoi(value);
+                    std::cout << "daysToSimulate set to " << daysToSimulate << std::endl; // Depuración
                 }
             } catch (const std::invalid_argument& e) {
                 std::cerr << "Invalid argument for key " << key << ": " << value << std::endl;
