@@ -96,20 +96,39 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
 }
 
 double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices, const SKUData& skuData) {
-    double distance = 0.0;
+    double totalDistance = 0.0;
+    int outOfRangeCount = 0;
+
     for (const auto& price : simulatedPrices) {
-        double minDist = std::numeric_limits<double>::max();
+        // Comprobar si el precio está dentro del rango global
+        if (price < skuData.globalMinPrice || price > skuData.globalMaxPrice) {
+            outOfRangeCount++;
+            continue;
+        }
+
+        // Encontrar el intervalo más cercano
+        double minDistance = std::numeric_limits<double>::max();
         for (const auto& interval : skuData.listProducts) {
             if (price >= interval.first && price <= interval.second) {
-                minDist = 0;
+                minDistance = 0;
                 break;
             }
-            double dist = std::min(std::abs(price - interval.first), std::abs(price - interval.second));
-            minDist = std::min(minDist, dist);
+            double distToMin = std::abs(price - interval.first);
+            double distToMax = std::abs(price - interval.second);
+            double intervalDistance = std::min(distToMin, distToMax);
+            minDistance = std::min(minDistance, intervalDistance);
         }
-        distance += minDist;
+        totalDistance += minDistance;
+
+        std::cout << "Calculating distance for " << simulatedPrices.size() << " prices" << std::endl;
+        std::cout << "Total distance: " << totalDistance << ", Out of range count: " << outOfRangeCount << std::endl;
     }
-    return distance / simulatedPrices.size();
+
+    // Penalizar fuertemente los precios fuera del rango global
+    totalDistance += outOfRangeCount * (skuData.globalMaxPrice - skuData.globalMinPrice);
+
+    // Normalizar la distancia
+    return totalDistance / simulatedPrices.size();
 }
 
 void ABCMethod::normalizeParameters(std::vector<Parameter>& parameters) {

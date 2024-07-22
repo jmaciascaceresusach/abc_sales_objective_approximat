@@ -60,6 +60,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         double minSaleValue = *std::min_element(simulatedPrices.begin(), simulatedPrices.end());
         double maxSaleValue = *std::max_element(simulatedPrices.begin(), simulatedPrices.end());
 
+        // Añade esta línea para imprimir la distancia de cada simulación
+        std::cout << "Simulation " << i + 1 << " distance: " << distance << std::endl;
+
         logFile << "  Distance: " << distance << std::endl;
 
         statsFile << i + 1 << "," << averageSaleValue << "," << minSaleValue << "," << maxSaleValue 
