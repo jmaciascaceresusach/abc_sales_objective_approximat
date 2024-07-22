@@ -8,6 +8,12 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 file(GLOB SOURCES "src/*.cpp")
 
-add_executable(ABC_SALES_OBJECTIVE_APPROXIMAT ${SOURCES})
+add_executable(ABC_SALES_OBJECTIVE_APPROXIMAT 
+    src/main.cpp
+    src/ABCMethod.cpp
+    src/Parameter.cpp
+    src/SimulationEngine.cpp
+    src/DataLoader.cpp
+)
 
 target_link_libraries(ABC_SALES_OBJECTIVE_APPROXIMAT pthread)
