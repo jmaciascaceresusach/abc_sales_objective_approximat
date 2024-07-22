@@ -56,7 +56,7 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
         tolerance *= 1.1;
     }
 
-    std::cout << "\n*** refineParameters ***" << std::endl;
+    std::cout << "\n*** Parameters initial ***" << std::endl;
 
     for (const auto& param : parameters) {
         std::cout << "  " << param.name << ": " << param.probability << std::endl;
@@ -98,21 +98,16 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
 double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices, const SKUData& skuData) {
     double distance = 0.0;
     for (const auto& price : simulatedPrices) {
-        auto it = std::find_if(skuData.intervals.begin(), skuData.intervals.end(),
-            [price](const PriceInterval& interval) {
-                return price >= interval.minPrice && price <= interval.maxPrice;
-            });
-
-        if (it != skuData.intervals.end()) {
-            distance += 0;
-        } else {
-            double minDist = std::numeric_limits<double>::max();
-            for (const auto& interval : skuData.intervals) {
-                double dist = std::min(std::abs(price - interval.minPrice), std::abs(price - interval.maxPrice));
-                minDist = std::min(minDist, dist);
+        double minDist = std::numeric_limits<double>::max();
+        for (const auto& interval : skuData.listProducts) {
+            if (price >= interval.first && price <= interval.second) {
+                minDist = 0;
+                break;
             }
-            distance += minDist;
+            double dist = std::min(std::abs(price - interval.first), std::abs(price - interval.second));
+            minDist = std::min(minDist, dist);
         }
+        distance += minDist;
     }
     return distance / simulatedPrices.size();
 }

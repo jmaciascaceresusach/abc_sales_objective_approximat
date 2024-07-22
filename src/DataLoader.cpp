@@ -23,6 +23,8 @@ SKUData loadSKUData(const std::string& filename) {
     std::string token;
     std::getline(headerStream, token, ';'); // Ignorar "sku"
     
+    std::cout << "\n*** loadSKUData ***" << std::endl;
+
     // Leer los encabezados de list_products
     while (std::getline(headerStream, token, ';')) {
         if (token.find("list_products_") != std::string::npos) {
@@ -124,8 +126,6 @@ void loadSimulationConfig(const std::string& filename, int& numberOfIterations, 
             key.erase(key.find_last_not_of(" \t") + 1);
             value.erase(0, value.find_first_not_of(" \t"));
             value.erase(value.find_last_not_of(" \t") + 1);
-
-            std::cout << "Key: " << key << ", Value: " << value << std::endl; // Depuración
 
             try {
                 if (key == "numberOfIterations") {
