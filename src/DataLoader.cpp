@@ -2,6 +2,8 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <limits>
+#include <algorithm>
 
 SKUData loadSKUData(const std::string& filename) {
     SKUData data;
@@ -23,16 +25,18 @@ SKUData loadSKUData(const std::string& filename) {
 
     data.globalMinPrice = std::numeric_limits<double>::max();
     data.globalMaxPrice = std::numeric_limits<double>::lowest();
-
+    
     while (std::getline(file, line)) {
         std::istringstream iss(line);
         std::string token;
         PriceInterval interval;
 
-        std::getline(iss, token, ';');
+        std::getline(iss, token, ';'); // Ignorar el primer token
 
         if (std::getline(iss, token, ';')) {
-            sscanf(token.c_str(), "(%lf, %lf)", &interval.minPrice, &interval.maxPrice);
+            std::istringstream intervalStream(token);
+            char dummy; // Para los paréntesis
+            intervalStream >> dummy >> interval.minPrice >> dummy >> interval.maxPrice >> dummy;
         }
 
         if (std::getline(iss, token, ';')) {
