@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
 
     int numberOfIterations, tolerance, daysToSimulate;
 
-    loadSimulationConfig("../data/simulation_config.txt", numberOfIterations, tolerance, daysToSimulate);
+    loadSimulationConfig("../data/simulation_config_initial.txt", numberOfIterations, tolerance, daysToSimulate);
 
     // Inicializar el motor de simulación
     SimulationEngine simulationEngine;
