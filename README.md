@@ -1,6 +1,6 @@
 **ABC_SALES_OBJECTIVE_APPROXIMAT**
 
-This is the v0.1 repository of the application of the ABC method in a pricing case study.
+This is the v0.2 repository of the application of the ABC method in a pricing case study.
 
 Below are the statements for the build of the project.
 
@@ -8,7 +8,7 @@ Below are the statements for the build of the project.
 
 ## Build
 
-This is the v0.1 repository of the application of the ABC (Approximate Bayesian Computation) method in a pricing case study.
+This is the v0.2 repository of the application of the ABC (Approximate Bayesian Computation) method in a pricing case study.
 
 Below are the statements for the build of the project.
 
@@ -31,16 +31,10 @@ After this, verify the compilation that was carried out correctly and was also e
 Now, to test the project, you would have to use the following statements:
 
 1. cd abc_sales_objective_approximat/build
-2. ./ABC_SALES_OBJECTIVE_APPROXIMAT ../simulation_config.txt
+2. ./ABC_SALES_OBJECTIVE_APPROXIMAT
 
-The simulation_config.txt file, can be modified according to:
+The simulation_config_initial.txt file, can be modified according to:
 
 - numberOfIterations=50
-- tolerance=0.500
-- salesObjectiveFinal=0.139669
-- salesObjectiveInitial=0.15298
-- customerParam=0.1730
-- dateParam=0.4064
-- sellerParam=0.1816
-- productParam=0.0022
-- saleParam=0.015
+- tolerance=13
+- daysToSimulate=30
