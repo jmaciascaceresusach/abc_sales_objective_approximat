@@ -14,24 +14,6 @@ void ABCMethod::initializeParameters(std::vector<Parameter>& parameters) {
     }
 }
 
-void ABCMethod::readConfigSimple(const std::string& configFilePath, int& numberOfIterations) {
-    std::ifstream configFile(configFilePath);
-    std::string line;
-
-    if (configFile.is_open()) {
-        while (getline(configFile, line)) {
-            std::istringstream iss(line);
-            std::string key;
-            if (getline(iss, key, '=')) {
-                std::string value;
-                if (getline(iss, value)) {
-                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
-                }
-            }
-        }
-    }
-}
-
 void ABCMethod::refineParameters(std::vector<Parameter>& parameters, 
                                  const SKUData& skuData,
                                  const std::vector<double>& normalizedFeatures,
@@ -74,7 +56,8 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
         tolerance *= 1.1;
     }
 
-    std::cout << "Refined parameters:" << std::endl;
+    std::cout << "\n*** refineParameters ***" << std::endl;
+
     for (const auto& param : parameters) {
         std::cout << "  " << param.name << ": " << param.probability << std::endl;
     }
@@ -126,10 +109,6 @@ double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices, 
         }
     }
     return distance / simulatedPrices.size();
-}
-
-double ABCMethod::calculateDistance(double saleValue, double salesObjectiveFinal) {
-    return std::abs(saleValue - salesObjectiveFinal);
 }
 
 void ABCMethod::normalizeParameters(std::vector<Parameter>& parameters) {

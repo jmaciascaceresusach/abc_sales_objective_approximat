@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
     simulationEngine.runSimulations(numberOfIterations, daysToSimulate, tolerance);
 
     std::cout << "\n";
-    std::cout << "***Configurations***" << std::endl;
+    std::cout << "*** Configurations ***" << std::endl;
     std::cout << "numberOfIterations: " << numberOfIterations << std::endl;
     std::cout << "tolerance: " << tolerance << std::endl;
     std::cout << "daysToSimulate: " << daysToSimulate << std::endl;
@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
     // Calcula la duración en milisegundos
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-    std::cout << "***Duration***" << std::endl;
+    std::cout << " ***Duration ***" << std::endl;
     std::cout << "Time: " << duration.count() << " milliseconds" << std::endl;
     std::cout << "\n";
 
