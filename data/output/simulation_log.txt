@@ -4,7 +4,7 @@ Iteration 1 of 50
   New best simulation found
   Current parameters:
   Simulation summary:
-    Average price: 1980.93
+    Average price: 1962.8
     Min price: 1898
     Max price: 2148
 Satisfactory simulation found. Stopping early.
@@ -12,67 +12,67 @@ Satisfactory simulation found. Stopping early.
 Final Results:
 Best simulation distance: 0
 Best simulation prices:
-  Day 1: 1898
+  Day 1: 2148
   Day 2: 1898
   Day 3: 1898
-  Day 4: 2148
-  Day 5: 2148
-  Day 6: 1898
+  Day 4: 1898
+  Day 5: 1898
+  Day 6: 2148
   Day 7: 1898
-  Day 8: 1898
+  Day 8: 2148
   Day 9: 1898
-  Day 10: 1898
+  Day 10: 2148
   Day 11: 1898
   Day 12: 2148
-  Day 13: 1898
+  Day 13: 2148
   Day 14: 1898
-  Day 15: 2135.91
+  Day 15: 1898
   Day 16: 1898
   Day 17: 1898
-  Day 18: 2148
-  Day 19: 2148
+  Day 18: 1898
+  Day 19: 1898
   Day 20: 1898
   Day 21: 1898
   Day 22: 1898
-  Day 23: 2148
-  Day 24: 2148
+  Day 23: 1898
+  Day 24: 1898
   Day 25: 1898
   Day 26: 1898
   Day 27: 1898
-  Day 28: 1898
-  Day 29: 2148
+  Day 28: 2092.09
+  Day 29: 1898
   Day 30: 2148
 
 Average prices across all simulations:
-  Day 1: 1898
+  Day 1: 2148
   Day 2: 1898
   Day 3: 1898
-  Day 4: 2148
-  Day 5: 2148
-  Day 6: 1898
+  Day 4: 1898
+  Day 5: 1898
+  Day 6: 2148
   Day 7: 1898
-  Day 8: 1898
+  Day 8: 2148
   Day 9: 1898
-  Day 10: 1898
+  Day 10: 2148
   Day 11: 1898
   Day 12: 2148
-  Day 13: 1898
+  Day 13: 2148
   Day 14: 1898
-  Day 15: 2135.91
+  Day 15: 1898
   Day 16: 1898
   Day 17: 1898
-  Day 18: 2148
-  Day 19: 2148
+  Day 18: 1898
+  Day 19: 1898
   Day 20: 1898
   Day 21: 1898
   Day 22: 1898
-  Day 23: 2148
-  Day 24: 2148
+  Day 23: 1898
+  Day 24: 1898
   Day 25: 1898
   Day 26: 1898
   Day 27: 1898
-  Day 28: 1898
-  Day 29: 2148
+  Day 28: 2092.09
+  Day 29: 1898
   Day 30: 2148
 
 Final parameters:
