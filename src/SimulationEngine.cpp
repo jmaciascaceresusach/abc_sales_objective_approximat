@@ -19,8 +19,8 @@ void SimulationEngine::setNormalizedFeatures(const std::vector<double>& features
 }
 
 void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate, double tolerance) {
-    std::ofstream logFile("../data/simulation_log.txt");
-    std::ofstream statsFile("../data/statistics_simulations.txt");
+    std::ofstream logFile("../data/output/simulation_log.txt");
+    std::ofstream statsFile("../data/output/statistics_simulations.txt");
 
     logFile << "Starting simulation with " << numberOfIterations << " iterations, "
             << daysToSimulate << " days to simulate, and tolerance " << tolerance << std::endl;
