@@ -106,7 +106,7 @@ std::map<std::string, double> loadNormalizedFeatures(const std::string& filename
     return features;
 }
 
-void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& tolerance, int& daysToSimulate) {
+void loadSimulationConfig(const std::string& filename, int& numberOfIterations, double& tolerance, int& daysToSimulate) {
     std::ifstream file(filename);
     std::string line;
 
@@ -130,13 +130,13 @@ void loadSimulationConfig(const std::string& filename, int& numberOfIterations, 
             try {
                 if (key == "numberOfIterations") {
                     numberOfIterations = std::stoi(value);
-                    std::cout << "numberOfIterations set to " << numberOfIterations << std::endl; // Depuración
+                    std::cout << "numberOfIterations set to " << numberOfIterations << std::endl;
                 } else if (key == "tolerance") {
-                    tolerance = std::stoi(value);
-                    std::cout << "tolerance set to " << tolerance << std::endl; // Depuración
+                    tolerance = std::stod(value);  // Cambiado de stoi a stod
+                    std::cout << "tolerance set to " << tolerance << std::endl;
                 } else if (key == "daysToSimulate") {
                     daysToSimulate = std::stoi(value);
-                    std::cout << "daysToSimulate set to " << daysToSimulate << std::endl; // Depuración
+                    std::cout << "daysToSimulate set to " << daysToSimulate << std::endl;
                 }
             } catch (const std::invalid_argument& e) {
                 std::cerr << "Invalid argument for key " << key << ": " << value << std::endl;

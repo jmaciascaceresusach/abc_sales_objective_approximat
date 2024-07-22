@@ -14,11 +14,13 @@
 int main(int argc, char* argv[]) {
     auto start = std::chrono::high_resolution_clock::now();
 
-    int numberOfIterations = 0, tolerance = 0, daysToSimulate = 0;
+    int numberOfIterations = 0;
+    double tolerance = 0.0;
+    int daysToSimulate = 0;
 
     loadSimulationConfig("../data/simulation_config_initial.txt", numberOfIterations, tolerance, daysToSimulate);
 
-    if (numberOfIterations == 0 || tolerance == 0 || daysToSimulate == 0) {
+    if (numberOfIterations == 0 || tolerance == 0.0 || daysToSimulate == 0) {
         std::cerr << "Failed to load simulation configuration correctly." << std::endl;
         return 1;
     }
