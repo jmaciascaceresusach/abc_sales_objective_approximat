@@ -1,4 +1,4 @@
-Starting simulation with 50 iterations, 30 days to simulate, and tolerance 0.05
+Starting simulation with 50 iterations, 30 days to simulate, and tolerance 13
 
 Initial parameters:
   client_numeric: -0.759755
@@ -14,84 +14,84 @@ Iteration 1 of 50
   Distance: 0
   New best simulation found
   Simulation summary:
-    Average price: 5248.79
-    Min price: 2561.82
-    Max price: 8228.72
+    Average price: 4775.12
+    Min price: 2005.67
+    Max price: 8161.47
   Satisfactory simulation found.
 
 Final Results:
 Best simulation distance: 0
 Number of accepted simulations: 1
 Best simulation prices:
-  Day 1: 4072.24
-  Day 2: 3233.06
-  Day 3: 3761.72
-  Day 4: 7345.63
-  Day 5: 6124.86
-  Day 6: 6712.52
-  Day 7: 4051.63
-  Day 8: 6751.03
-  Day 9: 3861.23
-  Day 10: 6251.15
-  Day 11: 7197.44
-  Day 12: 7795.77
-  Day 13: 4424.25
-  Day 14: 2947.95
-  Day 15: 6624.98
-  Day 16: 2561.82
-  Day 17: 3088.37
-  Day 18: 4410.56
-  Day 19: 3283.88
-  Day 20: 3586.49
-  Day 21: 2710.49
-  Day 22: 8228.72
-  Day 23: 5572.6
-  Day 24: 3934.23
-  Day 25: 7891.74
-  Day 26: 5662.87
-  Day 27: 4490.69
-  Day 28: 5327.27
-  Day 29: 7835.03
-  Day 30: 7723.41
+  Day 1: 4513.55
+  Day 2: 2748.04
+  Day 3: 4593.33
+  Day 4: 7867.25
+  Day 5: 4092.12
+  Day 6: 5157.14
+  Day 7: 5493.34
+  Day 8: 2063.2
+  Day 9: 4819.69
+  Day 10: 3961.91
+  Day 11: 2591.9
+  Day 12: 6541.34
+  Day 13: 2553.16
+  Day 14: 2752.9
+  Day 15: 7310.66
+  Day 16: 3538.07
+  Day 17: 4949.53
+  Day 18: 2005.67
+  Day 19: 2233.12
+  Day 20: 7430.13
+  Day 21: 7474.66
+  Day 22: 7109.18
+  Day 23: 3932.89
+  Day 24: 5098.82
+  Day 25: 5842.38
+  Day 26: 3814.46
+  Day 27: 4605.78
+  Day 28: 7714.76
+  Day 29: 8161.47
+  Day 30: 2283.09
 
 Average prices across all simulations:
-  Day 1: 4072.24
-  Day 2: 3233.06
-  Day 3: 3761.72
-  Day 4: 7345.63
-  Day 5: 6124.86
-  Day 6: 6712.52
-  Day 7: 4051.63
-  Day 8: 6751.03
-  Day 9: 3861.23
-  Day 10: 6251.15
-  Day 11: 7197.44
-  Day 12: 7795.77
-  Day 13: 4424.25
-  Day 14: 2947.95
-  Day 15: 6624.98
-  Day 16: 2561.82
-  Day 17: 3088.37
-  Day 18: 4410.56
-  Day 19: 3283.88
-  Day 20: 3586.49
-  Day 21: 2710.49
-  Day 22: 8228.72
-  Day 23: 5572.6
-  Day 24: 3934.23
-  Day 25: 7891.74
-  Day 26: 5662.87
-  Day 27: 4490.69
-  Day 28: 5327.27
-  Day 29: 7835.03
-  Day 30: 7723.41
+  Day 1: 4513.55
+  Day 2: 2748.04
+  Day 3: 4593.33
+  Day 4: 7867.25
+  Day 5: 4092.12
+  Day 6: 5157.14
+  Day 7: 5493.34
+  Day 8: 2063.2
+  Day 9: 4819.69
+  Day 10: 3961.91
+  Day 11: 2591.9
+  Day 12: 6541.34
+  Day 13: 2553.16
+  Day 14: 2752.9
+  Day 15: 7310.66
+  Day 16: 3538.07
+  Day 17: 4949.53
+  Day 18: 2005.67
+  Day 19: 2233.12
+  Day 20: 7430.13
+  Day 21: 7474.66
+  Day 22: 7109.18
+  Day 23: 3932.89
+  Day 24: 5098.82
+  Day 25: 5842.38
+  Day 26: 3814.46
+  Day 27: 4605.78
+  Day 28: 7714.76
+  Day 29: 8161.47
+  Day 30: 2283.09
 
 Final parameters:
   client_numeric: 0
-  day: 0.168593
-  month: 0.00711573
+  day: 0.170186
+  month: 0.00760168
   sku_count_products: 0
-  total_num_count_products: 6.26051e-05
+  total_num_count_products: 8.08169e-05
   total_price_products: 0
   vendor_numeric: 0
-  year: 0.824229
+  year: 0.822132
