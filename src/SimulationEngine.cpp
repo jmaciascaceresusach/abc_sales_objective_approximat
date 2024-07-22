@@ -26,8 +26,14 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     std::ofstream logFile("../data/output/simulation_log.txt");
     std::ofstream statsFile("../data/output/statistics_simulations.txt");
 
+    if (!logFile.is_open() || !statsFile.is_open()) {
+        std::cerr << "Error: Could not open output files for writing" << std::endl;
+        return;
+    }
+
     logFile << "Starting simulation with " << numberOfIterations << " iterations, "
             << daysToSimulate << " days to simulate, and tolerance " << tolerance << std::endl;
+    logFile.flush();
 
     statsFile << "Iteration,AverageSaleValue,MinSaleValue,MaxSaleValue,Distance,Tolerance";
     for (const auto& param : parameters) {
@@ -43,12 +49,13 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     for (const auto& param : parameters) {
         logFile << "  " << param.name << ": " << param.probability << std::endl;
     }
+    logFile.flush();
 
     int acceptedSimulations = 0;
 
     for (int i = 0; i < numberOfIterations; ++i) {
-        std::cout << "Iteration " << i + 1 << " of " << numberOfIterations << std::endl;
         logFile << "\nIteration " << i + 1 << " of " << numberOfIterations << std::endl;
+        std::cout << "Iteration " << i + 1 << " of " << numberOfIterations << std::endl;
 
         abcMethod.refineParameters(parameters, skuData, normalizedFeatures, daysToSimulate, tolerance);
 
@@ -61,8 +68,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         double minSaleValue = *std::min_element(simulatedPrices.begin(), simulatedPrices.end());
         double maxSaleValue = *std::max_element(simulatedPrices.begin(), simulatedPrices.end());
 
-        std::cout << "  Distance: " << distance << std::endl;
         logFile << "  Distance: " << distance << std::endl;
+        std::cout << "  Distance: " << distance << std::endl;
 
         statsFile << i + 1 << "," << averageSaleValue << "," << minSaleValue << "," << maxSaleValue 
                   << "," << distance << "," << tolerance;
@@ -74,35 +81,33 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         if (distance < bestDistance) {
             bestDistance = distance;
             bestSimulation = simulatedPrices;
-            std::cout << "  New best simulation found" << std::endl;
             logFile << "  New best simulation found" << std::endl;
+            std::cout << "  New best simulation found" << std::endl;
         }
 
         allSimulatedPrices.push_back(simulatedPrices);
+
+        logFile << "  Simulation summary:" << std::endl;
+        logFile << "    Average price: " << averageSaleValue << std::endl;
+        logFile << "    Min price: " << minSaleValue << std::endl;
+        logFile << "    Max price: " << maxSaleValue << std::endl;
+        logFile.flush();
 
         std::cout << "  Simulation summary:" << std::endl;
         std::cout << "    Average price: " << averageSaleValue << std::endl;
         std::cout << "    Min price: " << minSaleValue << std::endl;
         std::cout << "    Max price: " << maxSaleValue << std::endl;
 
-        logFile << "  Simulation summary:" << std::endl;
-        logFile << "    Average price: " << averageSaleValue << std::endl;
-        logFile << "    Min price: " << minSaleValue << std::endl;
-        logFile << "    Max price: " << maxSaleValue << std::endl;
-
         if (distance <= tolerance) {
             acceptedSimulations++;
-            std::cout << "  Satisfactory simulation found." << std::endl;
             logFile << "  Satisfactory simulation found." << std::endl;
-            break;  // Salir del bucle si se encuentra una simulación satisfactoria
+            std::cout << "  Satisfactory simulation found." << std::endl;
+            // No salimos del bucle, continuamos con la siguiente iteración
         }
     }
 
-    std::cout << "\nFinal Results:" << std::endl;
     logFile << "\nFinal Results:" << std::endl;
-    std::cout << "Best simulation distance: " << bestDistance << std::endl;
     logFile << "Best simulation distance: " << bestDistance << std::endl;
-    std::cout << "Number of accepted simulations: " << acceptedSimulations << std::endl;
     logFile << "Number of accepted simulations: " << acceptedSimulations << std::endl;
     
     if (!bestSimulation.empty()) {
