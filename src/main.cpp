@@ -12,7 +12,7 @@
 #include "../include/DataLoader.h"
 
 void readConfigFor3(const std::string& configFilePath, 
-                    int& numberOfIterations,
+                    double& numberOfIterations,
                     double& tolerance,
                     double& daysToSimulate) {
     std::ifstream configFile(configFilePath);
@@ -25,7 +25,7 @@ void readConfigFor3(const std::string& configFilePath,
             if (getline(iss, key, '=')) {
                 std::string value;
                 if (getline(iss, value)) {
-                    if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
+                    if (key == "numberOfIterations") numberOfIterations = std::stod(value);
                     else if (key == "tolerance") tolerance = std::stod(value);
                     else if (key == "daysToSimulate") daysToSimulate = std::stod(value);
                 }
@@ -40,8 +40,7 @@ int main(int argc, char* argv[]) {
     // Obtiene el tiempo de inicio
     auto start = std::chrono::high_resolution_clock::now();
 
-    int numberOfIterations;
-    double tolerance, daysToSimulate;
+    double numberOfIterations, tolerance, daysToSimulate;
 
     readConfigFor3("../data/simulation_config.txt", 
                    numberOfIterations, 
