@@ -50,5 +50,6 @@ Thumbs.db
 
 # Archives
 /build/*
+!/build/.gitkeep
 #/data/*
 #!/data/.gitkeep
