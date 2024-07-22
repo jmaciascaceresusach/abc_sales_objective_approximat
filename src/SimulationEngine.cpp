@@ -47,6 +47,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     int acceptedSimulations = 0;
 
     for (int i = 0; i < numberOfIterations; ++i) {
+        std::cout << "Iteration " << i + 1 << " of " << numberOfIterations << std::endl;
         logFile << "\nIteration " << i + 1 << " of " << numberOfIterations << std::endl;
 
         abcMethod.refineParameters(parameters, skuData, normalizedFeatures, daysToSimulate, tolerance);
@@ -60,9 +61,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         double minSaleValue = *std::min_element(simulatedPrices.begin(), simulatedPrices.end());
         double maxSaleValue = *std::max_element(simulatedPrices.begin(), simulatedPrices.end());
 
-        // Añade esta línea para imprimir la distancia de cada simulación
-        std::cout << "Simulation " << i + 1 << " distance: " << distance << std::endl;
-
+        std::cout << "  Distance: " << distance << std::endl;
         logFile << "  Distance: " << distance << std::endl;
 
         statsFile << i + 1 << "," << averageSaleValue << "," << minSaleValue << "," << maxSaleValue 
@@ -75,30 +74,35 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         if (distance < bestDistance) {
             bestDistance = distance;
             bestSimulation = simulatedPrices;
+            std::cout << "  New best simulation found" << std::endl;
             logFile << "  New best simulation found" << std::endl;
         }
 
         allSimulatedPrices.push_back(simulatedPrices);
+
+        std::cout << "  Simulation summary:" << std::endl;
+        std::cout << "    Average price: " << averageSaleValue << std::endl;
+        std::cout << "    Min price: " << minSaleValue << std::endl;
+        std::cout << "    Max price: " << maxSaleValue << std::endl;
 
         logFile << "  Simulation summary:" << std::endl;
         logFile << "    Average price: " << averageSaleValue << std::endl;
         logFile << "    Min price: " << minSaleValue << std::endl;
         logFile << "    Max price: " << maxSaleValue << std::endl;
 
-        std::cout << "Iteration " << i + 1 << ": ";
-        std::cout << "AverageSaleValue=" << averageSaleValue << ", ";
-        std::cout << "MinSaleValue=" << minSaleValue << ", ";
-        std::cout << "MaxSaleValue=" << maxSaleValue << ", ";
-        std::cout << "Distance=" << distance << std::endl;
-
         if (distance <= tolerance) {
             acceptedSimulations++;
+            std::cout << "  Satisfactory simulation found." << std::endl;
             logFile << "  Satisfactory simulation found." << std::endl;
+            break;  // Salir del bucle si se encuentra una simulación satisfactoria
         }
     }
 
+    std::cout << "\nFinal Results:" << std::endl;
     logFile << "\nFinal Results:" << std::endl;
+    std::cout << "Best simulation distance: " << bestDistance << std::endl;
     logFile << "Best simulation distance: " << bestDistance << std::endl;
+    std::cout << "Number of accepted simulations: " << acceptedSimulations << std::endl;
     logFile << "Number of accepted simulations: " << acceptedSimulations << std::endl;
     
     if (!bestSimulation.empty()) {

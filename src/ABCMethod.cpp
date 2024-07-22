@@ -99,6 +99,8 @@ double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices, 
     double totalDistance = 0.0;
     int outOfRangeCount = 0;
 
+    std::cout << "Calculating distance for " << simulatedPrices.size() << " prices" << std::endl;
+
     for (const auto& price : simulatedPrices) {
         // Comprobar si el precio está dentro del rango global
         if (price < skuData.globalMinPrice || price > skuData.globalMaxPrice) {
@@ -119,16 +121,18 @@ double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices, 
             minDistance = std::min(minDistance, intervalDistance);
         }
         totalDistance += minDistance;
-
-        std::cout << "Calculating distance for " << simulatedPrices.size() << " prices" << std::endl;
-        std::cout << "Total distance: " << totalDistance << ", Out of range count: " << outOfRangeCount << std::endl;
     }
 
     // Penalizar fuertemente los precios fuera del rango global
     totalDistance += outOfRangeCount * (skuData.globalMaxPrice - skuData.globalMinPrice);
 
     // Normalizar la distancia
-    return totalDistance / simulatedPrices.size();
+    double normalizedDistance = totalDistance / simulatedPrices.size();
+
+    std::cout << "Total distance: " << totalDistance << ", Out of range count: " << outOfRangeCount << std::endl;
+    std::cout << "Normalized distance: " << normalizedDistance << std::endl;
+
+    return normalizedDistance;
 }
 
 void ABCMethod::normalizeParameters(std::vector<Parameter>& parameters) {
