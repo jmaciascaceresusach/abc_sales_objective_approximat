@@ -1,0 +1,78 @@
+Starting simulation with 50 iterations, 30 days to simulate, and tolerance 13
+Iteration 1 of 50
+  Distance: 0
+  New best simulation found
+  Current parameters:
+  Simulation summary:
+    Average price: 1964.67
+    Min price: 1898
+    Max price: 2148
+Satisfactory simulation found. Stopping early.
+
+Final Results:
+Best simulation distance: 0
+Best simulation prices:
+  Day 1: 2148
+  Day 2: 2148
+  Day 3: 1898
+  Day 4: 1898
+  Day 5: 1898
+  Day 6: 2148
+  Day 7: 1898
+  Day 8: 1898
+  Day 9: 2148
+  Day 10: 2148
+  Day 11: 1898
+  Day 12: 1898
+  Day 13: 1898
+  Day 14: 1898
+  Day 15: 2148
+  Day 16: 1898
+  Day 17: 1898
+  Day 18: 1898
+  Day 19: 1898
+  Day 20: 1898
+  Day 21: 1898
+  Day 22: 2148
+  Day 23: 2148
+  Day 24: 1898
+  Day 25: 1898
+  Day 26: 1898
+  Day 27: 1898
+  Day 28: 1898
+  Day 29: 1898
+  Day 30: 1898
+
+Average prices across all simulations:
+  Day 1: 2148
+  Day 2: 2148
+  Day 3: 1898
+  Day 4: 1898
+  Day 5: 1898
+  Day 6: 2148
+  Day 7: 1898
+  Day 8: 1898
+  Day 9: 2148
+  Day 10: 2148
+  Day 11: 1898
+  Day 12: 1898
+  Day 13: 1898
+  Day 14: 1898
+  Day 15: 2148
+  Day 16: 1898
+  Day 17: 1898
+  Day 18: 1898
+  Day 19: 1898
+  Day 20: 1898
+  Day 21: 1898
+  Day 22: 2148
+  Day 23: 2148
+  Day 24: 1898
+  Day 25: 1898
+  Day 26: 1898
+  Day 27: 1898
+  Day 28: 1898
+  Day 29: 1898
+  Day 30: 1898
+
+Final parameters:
