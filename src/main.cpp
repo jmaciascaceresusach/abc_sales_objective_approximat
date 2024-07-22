@@ -15,9 +15,16 @@ int main(int argc, char* argv[]) {
     // Obtiene el tiempo de inicio
     auto start = std::chrono::high_resolution_clock::now();
 
-    int numberOfIterations, tolerance, daysToSimulate;
+    int numberOfIterations = 0, tolerance = 0, daysToSimulate = 0;
 
-    loadSimulationConfig("../data/simulation_config_initial.txt", numberOfIterations, tolerance, daysToSimulate);
+    // Cargar configuración de simulación
+    loadSimulationConfig("../data/simulation_config.txt", numberOfIterations, tolerance, daysToSimulate);
+
+    // Verificar si los valores fueron correctamente cargados
+    if (numberOfIterations == 0 || tolerance == 0 || daysToSimulate == 0) {
+        std::cerr << "Failed to load simulation configuration correctly." << std::endl;
+        return 1;
+    }
 
     // Inicializar el motor de simulación
     SimulationEngine simulationEngine;
