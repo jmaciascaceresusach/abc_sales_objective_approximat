@@ -7,5 +7,6 @@
 
 SKUData loadSKUData(const std::string& filename);
 std::vector<double> loadNormalizedFeatures(const std::string& filename);
+void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& tolerance, int& daysToSimulate);
 
 #endif // DATALOADER_H

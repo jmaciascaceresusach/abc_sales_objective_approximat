@@ -11,38 +11,13 @@
 #include "../include/SimulationEngine.h"
 #include "../include/DataLoader.h"
 
-void readConfigFor3(const std::string& configFilePath, 
-                    double& numberOfIterations,
-                    double& tolerance,
-                    double& daysToSimulate) {
-    std::ifstream configFile(configFilePath);
-    std::string line;
-
-    if (configFile.is_open()) {
-        while (getline(configFile, line)) {
-            std::istringstream iss(line);
-            std::string key;
-            if (getline(iss, key, '=')) {
-                std::string value;
-                if (getline(iss, value)) {
-                    if (key == "numberOfIterations") numberOfIterations = std::stod(value);
-                    else if (key == "tolerance") tolerance = std::stod(value);
-                    else if (key == "daysToSimulate") daysToSimulate = std::stod(value);
-                }
-            }
-        }
-    } else {
-        std::cerr << "Failed to open config file: " << configFilePath << std::endl;
-    }
-}
-
 int main(int argc, char* argv[]) {
     // Obtiene el tiempo de inicio
     auto start = std::chrono::high_resolution_clock::now();
 
-    double numberOfIterations, tolerance, daysToSimulate;
+    int numberOfIterations, tolerance, daysToSimulate;
 
-    readConfigFor3("../data/simulation_config.txt", 
+    loadSimulationConfig("../data/simulation_config.txt", 
                    numberOfIterations, 
                    tolerance,
                    daysToSimulate);

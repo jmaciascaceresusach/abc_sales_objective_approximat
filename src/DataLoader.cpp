@@ -99,3 +99,35 @@ std::vector<double> loadNormalizedFeatures(const std::string& filename) {
 
     return features;
 }
+
+void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& tolerance, int& daysToSimulate) {
+    std::ifstream file(filename);
+    std::string line;
+
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file " << filename << std::endl;
+        return;
+    }
+
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string key, value;
+
+        if (std::getline(iss, key, '=') && std::getline(iss, value)) {
+            key.erase(0, key.find_first_not_of(" \t"));
+            key.erase(key.find_last_not_of(" \t") + 1);
+            value.erase(0, value.find_first_not_of(" \t"));
+            value.erase(value.find_last_not_of(" \t") + 1);
+
+            if (key == "numberOfIterations") {
+                numberOfIterations = std::stoi(value);
+            } else if (key == "tolerance") {
+                tolerance = std::stoi(value);
+            } else if (key == "daysToSimulate") {
+                daysToSimulate = std::stoi(value);
+            }
+        }
+    }
+
+    file.close();
+}
