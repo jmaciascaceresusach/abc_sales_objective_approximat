@@ -1,2 +1,2 @@
 Iteration,SaleValue,Distance,Objective,Tolerance
-1,58940,0,64440,13
+1,59940.2,0,64440,13
