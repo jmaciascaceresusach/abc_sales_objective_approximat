@@ -1,8 +1,10 @@
 #include "../include/DataLoader.h"
-#include <iostream>
 #include <fstream>
 #include <sstream>
+#include <iostream>
+#include <limits>
 #include <string>
+#include <algorithm>
 #include <stdexcept>
 
 SKUData loadSKUData(const std::string& filename) {
