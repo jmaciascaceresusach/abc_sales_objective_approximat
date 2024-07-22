@@ -27,7 +27,7 @@ void readConfigFor3(const std::string& configFilePath,
                 if (getline(iss, value)) {
                     if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
                     else if (key == "tolerance") tolerance = std::stod(value);
-                    else if (key == "daysToSimulate") daysToSimulate = std::stod(value);
+                    else if (key == "daysToSimulate") daysToSimulate = std::stoi(value);
                 }
             }
         }
