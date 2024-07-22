@@ -49,5 +49,6 @@ Thumbs.db
 *.wmv
 
 # Archives
+/build/*
 #/data/*
 #!/data/.gitkeep

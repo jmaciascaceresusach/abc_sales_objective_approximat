@@ -42,7 +42,7 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
         }
     }
 
-    if (!acceptedParameters.empty()) {
+    if (!acceptedParameters.empty()) {  
         for (size_t i = 0; i < parameters.size(); ++i) {
             double sum = 0.0;
             for (const auto& accepted : acceptedParameters) {
