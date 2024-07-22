@@ -1,9 +1,9 @@
 #include "../include/DataLoader.h"
+#include <iostream>
 #include <fstream>
 #include <sstream>
-#include <iostream>
-#include <limits>
-#include <algorithm>
+#include <string>
+#include <stdexcept>
 
 SKUData loadSKUData(const std::string& filename) {
     SKUData data;
@@ -119,12 +119,18 @@ void loadSimulationConfig(const std::string& filename, int& numberOfIterations, 
             value.erase(0, value.find_first_not_of(" \t"));
             value.erase(value.find_last_not_of(" \t") + 1);
 
-            if (key == "numberOfIterations") {
-                numberOfIterations = std::stoi(value);
-            } else if (key == "tolerance") {
-                tolerance = std::stoi(value);
-            } else if (key == "daysToSimulate") {
-                daysToSimulate = std::stoi(value);
+            try {
+                if (key == "numberOfIterations") {
+                    numberOfIterations = std::stoi(value);
+                } else if (key == "tolerance") {
+                    tolerance = std::stoi(value);
+                } else if (key == "daysToSimulate") {
+                    daysToSimulate = std::stoi(value);
+                }
+            } catch (const std::invalid_argument& e) {
+                std::cerr << "Invalid argument for key " << key << ": " << value << std::endl;
+            } catch (const std::out_of_range& e) {
+                std::cerr << "Out of range value for key " << key << ": " << value << std::endl;
             }
         }
     }
