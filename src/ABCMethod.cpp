@@ -16,7 +16,7 @@ void ABCMethod::initializeParameters(std::vector<Parameter>& parameters) {
 
 void ABCMethod::refineParameters(std::vector<Parameter>& parameters, 
                                  const SKUData& skuData,
-                                 const std::vector<double>& normalizedFeatures,
+                                 const std::map<std::string, double>& normalizedFeatures,
                                  int daysToSimulate,
                                  double tolerance) {
     std::vector<std::vector<Parameter>> acceptedParameters;
@@ -66,24 +66,30 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
 }
 
 std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData, 
-                                                    const std::vector<double>& normalizedFeatures,
+                                                    const std::map<std::string, double>& normalizedFeatures,
                                                     int daysToSimulate) {
     std::vector<double> futurePrices;
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    double volatility = std::abs(normalizedFeatures[0]);
-    double trend = normalizedFeatures[1];
-
-    std::normal_distribution<> priceChange(trend, volatility);
-
-    double currentPrice = (skuData.globalMinPrice + skuData.globalMaxPrice) / 2;
+    // Inicializar con un tramo aleatorio
+    std::uniform_int_distribution<> initialDist(0, skuData.listProducts.size() - 1);
+    int currentInterval = initialDist(gen);
 
     for (int i = 0; i < daysToSimulate; ++i) {
-        double change = priceChange(gen);
-        currentPrice *= (1 + change);
-        currentPrice = std::max(skuData.globalMinPrice, std::min(currentPrice, skuData.globalMaxPrice));
-        futurePrices.push_back(currentPrice);
+        // Calcular probabilidades de transición (puedes ajustar esto según tus necesidades)
+        std::vector<double> transitionProbs(skuData.listProducts.size(), 1.0 / skuData.listProducts.size());
+
+        // Elegir el siguiente intervalo
+        std::discrete_distribution<> transition(transitionProbs.begin(), transitionProbs.end());
+        currentInterval = transition(gen);
+
+        // Elegir un precio dentro del intervalo
+        std::uniform_real_distribution<> intervalDist(skuData.listProducts[currentInterval].first,
+                                                      skuData.listProducts[currentInterval].second);
+        double price = intervalDist(gen);
+
+        futurePrices.push_back(price);
     }
 
     return futurePrices;

@@ -2,6 +2,7 @@
 #define SIMULATIONENGINE_H
 
 #include <vector>
+#include <map>
 #include "ABCMethod.h"
 #include "Parameter.h"
 
@@ -11,14 +12,14 @@ public:
 
     void addParameter(const Parameter& parameter);
     void setProductData(const SKUData& data);
-    void setNormalizedFeatures(const std::vector<double>& features);
+    void setNormalizedFeatures(const std::map<std::string, double>& features);
     void runSimulations(int numberOfIterations, int daysToSimulate, double tolerance);
 
 private:
     std::vector<Parameter> parameters;
     ABCMethod abcMethod;
     SKUData skuData;
-    std::vector<double> normalizedFeatures;
+    std::map<std::string, double> normalizedFeatures;
 };
 
 #endif // SIMULATIONENGINE_H

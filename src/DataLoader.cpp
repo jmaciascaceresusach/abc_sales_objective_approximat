@@ -6,7 +6,6 @@
 #include <string>
 #include <algorithm>
 #include <stdexcept>
-#include <vector>
 
 SKUData loadSKUData(const std::string& filename) {
     SKUData data;
@@ -18,64 +17,52 @@ SKUData loadSKUData(const std::string& filename) {
         return data;
     }
 
-    if (std::getline(file, line)) {
-        std::istringstream iss(line);
-        std::string token;
-        if (std::getline(iss, token, ';')) {
-            data.sku = token;
+    // Leer la primera línea (encabezados)
+    std::getline(file, line);
+    std::istringstream headerStream(line);
+    std::string token;
+    std::getline(headerStream, token, ';'); // Ignorar "sku"
+    
+    // Leer los encabezados de list_products
+    while (std::getline(headerStream, token, ';')) {
+        if (token.find("list_products_") != std::string::npos) {
+            data.listProducts.push_back(std::make_pair(0.0, 0.0));
         }
     }
 
-    std::cout << "\n*** loadSKUData ***" << std::endl;
+    // Leer la segunda línea (datos)
+    std::getline(file, line);
+    std::istringstream dataStream(line);
+    
+    // Leer SKU
+    std::getline(dataStream, data.sku, ';');
 
-    data.globalMinPrice = std::numeric_limits<double>::max();
-    data.globalMaxPrice = std::numeric_limits<double>::lowest();
-
-    while (std::getline(file, line)) {
-        std::istringstream iss(line);
-        std::string token;
-        PriceInterval interval;
-
-        std::getline(iss, token, ';'); // Ignorar el primer token
-
-        if (std::getline(iss, token, ';')) {
-            std::istringstream intervalStream(token);
-            char dummy; // Para los paréntesis
-            intervalStream >> dummy >> interval.minPrice >> dummy >> interval.maxPrice >> dummy;
-        }
-
-        if (std::getline(iss, token, ';')) {
-            try {
-                interval.count = std::stoi(token);
-            } catch (const std::invalid_argument& e) {
-                std::cerr << "Invalid count value: " << token << std::endl;
-                interval.count = 0;
-            } catch (const std::out_of_range& e) {
-                std::cerr << "Count value out of range: " << token << std::endl;
-                interval.count = 0;
-            }
-        } else {
-            interval.count = 0;
-        }
-
-        data.intervals.push_back(interval);
-
-        data.globalMinPrice = std::min(data.globalMinPrice, interval.minPrice);
-        data.globalMaxPrice = std::max(data.globalMaxPrice, interval.maxPrice);
+    // Leer intervalos de list_products
+    for (auto& interval : data.listProducts) {
+        std::string intervalStr;
+        std::getline(dataStream, intervalStr, ';');
+        sscanf(intervalStr.c_str(), "(%lf, %lf)", &interval.first, &interval.second);
     }
+
+    // Leer min_price y max_price
+    std::string minPriceStr, maxPriceStr;
+    std::getline(dataStream, minPriceStr, ';');
+    std::getline(dataStream, maxPriceStr, ';');
+    data.globalMinPrice = std::stod(minPriceStr);
+    data.globalMaxPrice = std::stod(maxPriceStr);
 
     file.close();
 
     std::cout << "Loaded SKU data for " << data.sku << " with " 
-              << data.intervals.size() << " intervals" << std::endl;
+              << data.listProducts.size() << " price intervals" << std::endl;
     std::cout << "Global price range: [" << data.globalMinPrice 
               << ", " << data.globalMaxPrice << "]" << std::endl;
 
     return data;
 }
 
-std::vector<double> loadNormalizedFeatures(const std::string& filename) {
-    std::vector<double> features;
+std::map<std::string, double> loadNormalizedFeatures(const std::string& filename) {
+    std::map<std::string, double> features;
     std::ifstream file(filename);
     std::string line;
 
@@ -91,34 +78,27 @@ std::vector<double> loadNormalizedFeatures(const std::string& filename) {
         std::string key, value;
 
         if (std::getline(iss, key, ':') && std::getline(iss, value)) {
-            // Eliminar espacios en blanco
             key.erase(0, key.find_first_not_of(" \t"));
             key.erase(key.find_last_not_of(" \t") + 1);
             value.erase(0, value.find_first_not_of(" \t"));
             value.erase(value.find_last_not_of(" \t") + 1);
 
-            // Encontrar el valor entre paréntesis
             size_t start = value.find('(');
             size_t end = value.find(')', start);
             if (start != std::string::npos && end != std::string::npos) {
                 std::string featureValueStr = value.substr(start + 1, end - start - 1);
                 try {
                     double featureValue = std::stod(featureValueStr);
-                    features.push_back(featureValue);
+                    features[key] = featureValue;
                     std::cout << "Loaded feature " << key << ": " << featureValue << std::endl;
-                } catch (const std::invalid_argument& ia) {
-                    std::cerr << "Invalid argument for " << key << ": " << ia.what() << std::endl;
-                } catch (const std::out_of_range& oor) {
-                    std::cerr << "Out of range for " << key << ": " << oor.what() << std::endl;
+                } catch (const std::exception& e) {
+                    std::cerr << "Error parsing value for " << key << ": " << e.what() << std::endl;
                 }
-            } else {
-                std::cerr << "Could not find value between parentheses for " << key << std::endl;
             }
         }
     }
 
     file.close();
-
     std::cout << "Loaded " << features.size() << " normalized features" << std::endl;
 
     return features;

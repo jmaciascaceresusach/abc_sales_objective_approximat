@@ -14,8 +14,11 @@ void SimulationEngine::setProductData(const SKUData& data) {
     this->skuData = data;
 }
 
-void SimulationEngine::setNormalizedFeatures(const std::vector<double>& features) {
+void SimulationEngine::setNormalizedFeatures(const std::map<std::string, double>& features) {
     this->normalizedFeatures = features;
+    for (const auto& feature : features) {
+        this->parameters.push_back(Parameter(feature.first, feature.second));
+    }
 }
 
 void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate, double tolerance) {
@@ -25,8 +28,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     logFile << "Starting simulation with " << numberOfIterations << " iterations, "
             << daysToSimulate << " days to simulate, and tolerance " << tolerance << std::endl;
 
-    // Escribir encabezados en el archivo de estadísticas
-    statsFile << "Iteration,SaleValue,Distance,Objective,Tolerance";
+    statsFile << "Iteration,AverageSaleValue,MinSaleValue,MaxSaleValue,Distance,Tolerance";
     for (const auto& param : parameters) {
         statsFile << "," << param.name;
     }
@@ -48,8 +50,12 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
         logFile << "  Distance: " << distance << std::endl;
 
-        // Escribir estadísticas de esta iteración
-        statsFile << i + 1 << "," << saleValue << "," << distance << "," << skuData.globalMaxPrice * daysToSimulate << "," << tolerance;
+        double averageSaleValue = saleValue / daysToSimulate;
+        double minSaleValue = *std::min_element(simulatedPrices.begin(), simulatedPrices.end());
+        double maxSaleValue = *std::max_element(simulatedPrices.begin(), simulatedPrices.end());
+
+        statsFile << i + 1 << "," << averageSaleValue << "," << minSaleValue << "," << maxSaleValue 
+                  << "," << distance << "," << tolerance;
         for (const auto& param : parameters) {
             statsFile << "," << param.probability;
         }
@@ -68,13 +74,10 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
             logFile << "    " << param.name << ": " << param.probability << std::endl;
         }
 
-        double averagePrice = saleValue / daysToSimulate;
-        auto minmaxPrice = std::minmax_element(simulatedPrices.begin(), simulatedPrices.end());
-
         logFile << "  Simulation summary:" << std::endl;
-        logFile << "    Average price: " << averagePrice << std::endl;
-        logFile << "    Min price: " << *minmaxPrice.first << std::endl;
-        logFile << "    Max price: " << *minmaxPrice.second << std::endl;
+        logFile << "    Average price: " << averageSaleValue << std::endl;
+        logFile << "    Min price: " << minSaleValue << std::endl;
+        logFile << "    Max price: " << maxSaleValue << std::endl;
 
         if (distance <= tolerance) {
             logFile << "Satisfactory simulation found. Stopping early." << std::endl;

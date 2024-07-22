@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <functional>
+#include <map>
 #include "Parameter.h"
 
 struct PriceInterval {
@@ -17,6 +18,7 @@ struct SKUData {
     std::vector<PriceInterval> intervals;
     double globalMinPrice;
     double globalMaxPrice;
+    std::vector<std::pair<double, double>> listProducts;
 };
 
 class ABCMethod {
@@ -27,12 +29,12 @@ public:
 
     void refineParameters(std::vector<Parameter>& parameters, 
                           const SKUData& skuData,
-                          const std::vector<double>& normalizedFeatures,
+                          const std::map<std::string, double>& normalizedFeatures,
                           int daysToSimulate,
                           double tolerance);
                           
     std::vector<double> simulateFuturePrices(const SKUData& skuData, 
-                                             const std::vector<double>& normalizedFeatures,
+                                             const std::map<std::string, double>& normalizedFeatures,
                                              int daysToSimulate);
 
     double calculateDistance(const std::vector<double>& simulatedPrices, 
