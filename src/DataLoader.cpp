@@ -87,19 +87,28 @@ std::vector<double> loadNormalizedFeatures(const std::string& filename) {
         std::string key, value;
 
         if (std::getline(iss, key, ':') && std::getline(iss, value)) {
+            // Eliminar espacios en blanco
             key.erase(0, key.find_first_not_of(" \t"));
             key.erase(key.find_last_not_of(" \t") + 1);
             value.erase(0, value.find_first_not_of(" \t"));
             value.erase(value.find_last_not_of(" \t") + 1);
 
-            try {
-                double featureValue = std::stod(value);
-                features.push_back(featureValue);
-                std::cout << "Loaded feature " << key << ": " << featureValue << std::endl;
-            } catch (const std::invalid_argument& ia) {
-                std::cerr << "Invalid argument: " << ia.what() << std::endl;
-            } catch (const std::out_of_range& oor) {
-                std::cerr << "Out of range: " << oor.what() << std::endl;
+            // Encontrar el valor entre paréntesis
+            size_t start = value.find('(');
+            size_t end = value.find(')', start);
+            if (start != std::string::npos && end != std::string::npos) {
+                std::string featureValueStr = value.substr(start + 1, end - start - 1);
+                try {
+                    double featureValue = std::stod(featureValueStr);
+                    features.push_back(featureValue);
+                    std::cout << "Loaded feature " << key << ": " << featureValue << std::endl;
+                } catch (const std::invalid_argument& ia) {
+                    std::cerr << "Invalid argument for " << key << ": " << ia.what() << std::endl;
+                } catch (const std::out_of_range& oor) {
+                    std::cerr << "Out of range for " << key << ": " << oor.what() << std::endl;
+                }
+            } else {
+                std::cerr << "Could not find value between parentheses for " << key << std::endl;
             }
         }
     }
