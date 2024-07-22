@@ -26,6 +26,8 @@ SKUData loadSKUData(const std::string& filename) {
         }
     }
 
+    std::cout << "\n*** loadSKUData ***" << std::endl;
+
     data.globalMinPrice = std::numeric_limits<double>::max();
     data.globalMaxPrice = std::numeric_limits<double>::lowest();
 
@@ -82,6 +84,8 @@ std::vector<double> loadNormalizedFeatures(const std::string& filename) {
         return features;
     }
 
+    std::cout << "\n*** loadNormalizedFeatures ***" << std::endl;
+
     while (std::getline(file, line)) {
         std::istringstream iss(line);
         std::string key, value;
@@ -128,6 +132,8 @@ void loadSimulationConfig(const std::string& filename, int& numberOfIterations, 
         std::cerr << "Error: Could not open file " << filename << std::endl;
         return;
     }
+
+    std::cout << "\n*** loadSimulationConfig ***" << std::endl;
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
