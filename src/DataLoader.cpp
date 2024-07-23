@@ -144,7 +144,7 @@ std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filena
     }
 
     file.close();
-    std::cout << "Loaded " << features.size() << " no normalized features" << std::endl;
+    std::cout << "Loaded " << features.size() << " no normalized features \n" << std::endl;
 
     return features;
 }

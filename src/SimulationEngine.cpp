@@ -55,6 +55,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(skuData.globalMinPrice, skuData.globalMaxPrice);
 
+    std::cout << "\n*** iterationSimulations ***" << std::endl;
+
     for (int i = 0; i < numberOfIterations; ++i) {
         logFile << "\nIteration " << i + 1 << " of " << numberOfIterations << std::endl;
 
@@ -144,9 +146,4 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
     std::cout << "\nSimulation completed. Results saved in simulation_log.txt and statistics_simulations.txt" << std::endl;
     std::cout << "Number of accepted simulations: " << acceptedSimulations << std::endl;
-
-    logFile << "\nCaracterísticas no normalizadas:" << std::endl;
-    for (const auto& feature : noNormalizedFeatures) {
-        logFile << "  " << feature.first << ": " << feature.second << std::endl;
-    }
 }
