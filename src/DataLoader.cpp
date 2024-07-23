@@ -106,6 +106,49 @@ std::map<std::string, double> loadNormalizedFeatures(const std::string& filename
     return features;
 }
 
+std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filename) {
+    std::map<std::string, double> features;
+    std::ifstream file(filename);
+    std::string line;
+
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file " << filename << std::endl;
+        return features;
+    }
+
+    std::cout << "\n*** loadNoNormalizedFeatures ***" << std::endl;
+
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string key, value;
+
+        if (std::getline(iss, key, ':') && std::getline(iss, value)) {
+            key.erase(0, key.find_first_not_of(" \t"));
+            key.erase(key.find_last_not_of(" \t") + 1);
+            value.erase(0, value.find_first_not_of(" \t"));
+            value.erase(value.find_last_not_of(" \t") + 1);
+
+            size_t start = value.find('(');
+            size_t end = value.find(')', start);
+            if (start != std::string::npos && end != std::string::npos) {
+                std::string featureValueStr = value.substr(start + 1, end - start - 1);
+                try {
+                    double featureValue = std::stod(featureValueStr);
+                    features[key] = featureValue;
+                    std::cout << "Loaded feature " << key << ": " << featureValue << std::endl;
+                } catch (const std::exception& e) {
+                    std::cerr << "Error parsing value for " << key << ": " << e.what() << std::endl;
+                }
+            }
+        }
+    }
+
+    file.close();
+    std::cout << "Loaded " << features.size() << " no normalized features" << std::endl;
+
+    return features;
+}
+
 void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& tolerance, int& daysToSimulate) {
     std::ifstream file(filename);
     std::string line;

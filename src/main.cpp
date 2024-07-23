@@ -25,12 +25,16 @@ int main(int argc, char* argv[]) {
 
     SimulationEngine simulationEngine;
 
-    SKUData skuData = loadSKUData("../data/matriz_intervals_df_Z285320_2024-07-22.csv");
+    SKUData skuData = loadSKUData("../data/matriz_intervals_df_Z285320_2024-07-23.csv");
     
-    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/df_features_Z285320_sku_norm_2024-07-22.txt");
+    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/df_features_Z285320_sku_norm_2024-07-23.txt");
+
+    /* No se está utilizando aún dentro del simulationEngine 22072024 */
+    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/df_features_Z285320_sku_2024-07-23.txt");
     
     simulationEngine.setProductData(skuData);
     simulationEngine.setNormalizedFeatures(normalizedFeatures);
+    simulationEngine.setNoNormalizedFeatures(noNormalizedFeatures);
     
     simulationEngine.runSimulations(numberOfIterations, daysToSimulate, tolerance);
 

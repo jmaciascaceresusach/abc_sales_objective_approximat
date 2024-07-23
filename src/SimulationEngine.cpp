@@ -23,6 +23,10 @@ void SimulationEngine::setNormalizedFeatures(const std::map<std::string, double>
     }
 }
 
+void SimulationEngine::setNoNormalizedFeatures(const std::map<std::string, double>& features) {
+    this->noNormalizedFeatures = features;
+}
+
 void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate, double tolerance) {
     std::ofstream logFile("../data/output/simulation_log.txt");
     std::ofstream statsFile("../data/output/statistics_simulations.txt");
@@ -140,4 +144,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
     std::cout << "\nSimulation completed. Results saved in simulation_log.txt and statistics_simulations.txt" << std::endl;
     std::cout << "Number of accepted simulations: " << acceptedSimulations << std::endl;
+
+    logFile << "\nCaracterísticas no normalizadas:" << std::endl;
+    for (const auto& feature : noNormalizedFeatures) {
+        logFile << "  " << feature.first << ": " << feature.second << std::endl;
+    }
 }
