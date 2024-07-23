@@ -29,13 +29,17 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
     for (int i = 0; i < numberOfSimulations; ++i) {
         std::vector<Parameter> proposedParameters = parameters;
         
+        // Solo ajustamos los parámetros dinámicos
         for (auto& param : proposedParameters) {
-            std::normal_distribution<> d(param.probability, 0.1);
-            param.probability = std::max(0.0, std::min(1.0, d(gen)));
+            if (param.name == "total_num_count_products" || param.name == "total_price_products") {
+                std::normal_distribution<> d(param.probability, 0.1);
+                param.probability = std::max(0.0, std::min(1.0, d(gen)));
+            }
         }
 
-        std::vector<double> simulatedPrices = simulateFuturePrices(skuData, normalizedFeatures, daysToSimulate);
-        double distance = calculateDistance(simulatedPrices, skuData);
+        double initialPrice = skuData.globalMinPrice + dis(gen) * (skuData.globalMaxPrice - skuData.globalMinPrice);
+        std::vector<double> simulatedPrices = simulateFuturePrices(skuData, normalizedFeatures, daysToSimulate, initialPrice);
+        double distance = calculateDistance(simulatedPrices, skuData, initialPrice, daysToSimulate);
 
         if (distance < tolerance) {
             acceptedParameters.push_back(proposedParameters);
@@ -44,49 +48,42 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
 
     if (!acceptedParameters.empty()) {  
         for (size_t i = 0; i < parameters.size(); ++i) {
-            double sum = 0.0;
-            for (const auto& accepted : acceptedParameters) {
-                sum += accepted[i].probability;
+            if (parameters[i].name == "total_num_count_products" || parameters[i].name == "total_price_products") {
+                double sum = 0.0;
+                for (const auto& accepted : acceptedParameters) {
+                    sum += accepted[i].probability;
+                }
+                parameters[i].probability = sum / acceptedParameters.size();
             }
-            parameters[i].probability = sum / acceptedParameters.size();
         }
         
         normalizeParameters(parameters);
     } else {
         tolerance *= 1.1;
     }
-
-    std::cout << "\n*** Parameters initial ***" << std::endl;
-
-    for (const auto& param : parameters) {
-        std::cout << "  " << param.name << ": " << param.probability << std::endl;
-    }
-    std::cout << "Number of accepted simulations: " << acceptedParameters.size() << std::endl;
-    std::cout << "Final tolerance: " << tolerance << std::endl;
 }
 
 std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData, 
                                                     const std::map<std::string, double>& normalizedFeatures,
-                                                    int daysToSimulate) {
+                                                    int daysToSimulate,
+                                                    double initialPrice) {
     std::vector<double> futurePrices;
+    futurePrices.push_back(initialPrice);
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    // Inicializar con un tramo aleatorio
-    std::uniform_int_distribution<> initialDist(0, skuData.listProducts.size() - 1);
-    int currentInterval = initialDist(gen);
+    for (int i = 1; i < daysToSimulate; ++i) {
+        std::vector<double> probabilities;
+        for (const auto& interval : skuData.listProducts) {
+            double prob = calculateProbability((interval.first + interval.second) / 2, skuData, i);
+            probabilities.push_back(prob);
+        }
 
-    for (int i = 0; i < daysToSimulate; ++i) {
-        // Calcular probabilidades de transición (puedes ajustar esto según tus necesidades)
-        std::vector<double> transitionProbs(skuData.listProducts.size(), 1.0 / skuData.listProducts.size());
+        std::discrete_distribution<> distribution(probabilities.begin(), probabilities.end());
+        int selectedInterval = distribution(gen);
 
-        // Elegir el siguiente intervalo
-        std::discrete_distribution<> transition(transitionProbs.begin(), transitionProbs.end());
-        currentInterval = transition(gen);
-
-        // Elegir un precio dentro del intervalo
-        std::uniform_real_distribution<> intervalDist(skuData.listProducts[currentInterval].first,
-                                                      skuData.listProducts[currentInterval].second);
+        std::uniform_real_distribution<> intervalDist(skuData.listProducts[selectedInterval].first,
+                                                      skuData.listProducts[selectedInterval].second);
         double price = intervalDist(gen);
 
         futurePrices.push_back(price);
@@ -95,29 +92,60 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
     return futurePrices;
 }
 
-double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices, const SKUData& skuData) {
+double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices, 
+                                    const SKUData& skuData,
+                                    double initialPrice,
+                                    int daysToSimulate) {
     double distance = 0.0;
-    for (const auto& price : simulatedPrices) {
-        double minDist = std::numeric_limits<double>::max();
-        for (const auto& interval : skuData.listProducts) {
-            if (price >= interval.first && price <= interval.second) {
-                minDist = 0;
-                break;
-            }
-            double dist = std::min(std::abs(price - interval.first), std::abs(price - interval.second));
-            minDist = std::min(minDist, dist);
-        }
-        distance += minDist;
+    for (int i = 0; i < daysToSimulate; ++i) {
+        double expectedProbability = calculateProbability(simulatedPrices[i], skuData, i);
+        double actualProbability = 1.0 / skuData.listProducts.size(); // Asumiendo distribución uniforme
+        distance += std::abs(expectedProbability - actualProbability);
     }
-    return distance / simulatedPrices.size();
+    return distance / daysToSimulate;
 }
 
 void ABCMethod::normalizeParameters(std::vector<Parameter>& parameters) {
     double totalProbability = 0.0;
     for (const auto& param : parameters) {
-        totalProbability += param.probability;
+        if (param.name == "total_num_count_products" || param.name == "total_price_products") {
+            totalProbability += param.probability;
+        }
     }
     for (auto& param : parameters) {
-        param.probability /= totalProbability;
+        if (param.name == "total_num_count_products" || param.name == "total_price_products") {
+            param.probability /= totalProbability;
+        }
     }
+}
+
+double ABCMethod::calculateProbability(double price, const SKUData& skuData, int day) {
+    double probability = 0.0;
+
+    // Verificar si el precio está en algún intervalo
+    for (size_t i = 0; i < skuData.listProducts.size(); ++i) {
+        const auto& interval = skuData.listProducts[i];
+        if (price >= interval.first && price <= interval.second) {
+            // Probabilidad base
+            probability = 1.0 / skuData.listProducts.size();
+
+            // Ajustar por la posición en el intervalo
+            double positionInInterval = (price - interval.first) / (interval.second - interval.first);
+            probability *= std::exp(-std::pow(positionInInterval - 0.5, 2) / 0.25);
+
+            // Ajustar por el día (decae con el tiempo)
+            probability *= std::exp(-0.05 * day);
+
+            // Aquí se podrían agregar más factores:
+            // - Tendencia histórica
+            // - Estacionalidad
+            // - Factores externos
+            // - Autocorrelación con precios anteriores
+            // - Volatilidad del producto
+
+            break;
+        }
+    }
+
+    return probability;
 }

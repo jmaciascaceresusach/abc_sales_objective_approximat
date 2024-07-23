@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <numeric>
 #include <limits>
+#include <random>
 
 SimulationEngine::SimulationEngine() {}
 
@@ -46,14 +47,19 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
     int acceptedSimulations = 0;
 
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(skuData.globalMinPrice, skuData.globalMaxPrice);
+
     for (int i = 0; i < numberOfIterations; ++i) {
         logFile << "\nIteration " << i + 1 << " of " << numberOfIterations << std::endl;
 
         abcMethod.refineParameters(parameters, skuData, normalizedFeatures, daysToSimulate, tolerance);
 
-        std::vector<double> simulatedPrices = abcMethod.simulateFuturePrices(skuData, normalizedFeatures, daysToSimulate);
+        double initialPrice = dis(gen);
+        std::vector<double> simulatedPrices = abcMethod.simulateFuturePrices(skuData, normalizedFeatures, daysToSimulate, initialPrice);
 
-        double distance = abcMethod.calculateDistance(simulatedPrices, skuData);
+        double distance = abcMethod.calculateDistance(simulatedPrices, skuData, initialPrice, daysToSimulate);
         double saleValue = std::accumulate(simulatedPrices.begin(), simulatedPrices.end(), 0.0);
 
         double averageSaleValue = saleValue / daysToSimulate;
@@ -78,11 +84,13 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         allSimulatedPrices.push_back(simulatedPrices);
 
         logFile << "  Simulation summary:" << std::endl;
+        logFile << "    Initial price: " << initialPrice << std::endl;
         logFile << "    Average price: " << averageSaleValue << std::endl;
         logFile << "    Min price: " << minSaleValue << std::endl;
         logFile << "    Max price: " << maxSaleValue << std::endl;
 
         std::cout << "Iteration " << i + 1 << ": ";
+        std::cout << "InitialPrice=" << initialPrice << ", ";
         std::cout << "AverageSaleValue=" << averageSaleValue << ", ";
         std::cout << "MinSaleValue=" << minSaleValue << ", ";
         std::cout << "MaxSaleValue=" << maxSaleValue << ", ";

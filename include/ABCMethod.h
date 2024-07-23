@@ -35,13 +35,18 @@ public:
                           
     std::vector<double> simulateFuturePrices(const SKUData& skuData, 
                                              const std::map<std::string, double>& normalizedFeatures,
-                                             int daysToSimulate);
+                                             int daysToSimulate,
+                                             double initialPrice);
 
     double calculateDistance(const std::vector<double>& simulatedPrices, 
-                             const SKUData& skuData);
+                             const SKUData& skuData,
+                             double initialPrice,
+                             int daysToSimulate);
 
 private:
     void normalizeParameters(std::vector<Parameter>& parameters);
+    
+    double calculateProbability(double price, const SKUData& skuData, int day);
 };
 
 #endif // ABCMETHOD_H
