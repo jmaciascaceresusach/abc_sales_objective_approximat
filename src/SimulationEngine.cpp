@@ -5,6 +5,9 @@
 #include <numeric>
 #include <limits>
 #include <random>
+#include <chrono>
+#include <iomanip>
+#include <sstream>
 
 SimulationEngine::SimulationEngine() {}
 
@@ -27,9 +30,20 @@ void SimulationEngine::setNoNormalizedFeatures(const std::map<std::string, doubl
     this->noNormalizedFeatures = features;
 }
 
+std::string getCurrentDate() {
+    auto now = std::chrono::system_clock::now();
+    auto in_time_t = std::chrono::system_clock::to_time_t(now);
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d");
+    return ss.str();
+}
+
 void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate, double tolerance) {
-    std::ofstream logFile("../data/output/simulation_log.txt");
-    std::ofstream statsFile("../data/output/statistics_simulations.txt");
+
+    std::string currentDate = getCurrentDate();
+    
+    std::ofstream logFile("../data/output/simulation_log_" + currentDate + ".txt");
+    std::ofstream statsFile("../data/output/statistics_simulations_" + currentDate + ".txt");
 
     logFile << "Starting simulation with " << numberOfIterations << " iterations, "
             << daysToSimulate << " days to simulate, and tolerance " << tolerance << std::endl;
