@@ -62,7 +62,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(skuData.globalMinPrice, skuData.globalMaxPrice);
 
-    std::cout << "\n*** iterationSimulations ***" << std::endl;
+    std::cout << "*** iterationSimulations ***" << std::endl;
 
     for (int i = 0; i < numberOfIterations; ++i) {
         logFile << "\nIteration " << i + 1 << " of " << numberOfIterations << std::endl;
