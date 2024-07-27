@@ -7,14 +7,25 @@
 #include <limits>
 #include <utility>
 #include <map>
+#include <iomanip>
 #include "../include/Parameter.h"
 #include "../include/SimulationEngine.h"
 #include "../include/DataLoader.h"
+
+std::string getCurrentDate() {
+    auto now = std::chrono::system_clock::now();
+    auto in_time_t = std::chrono::system_clock::to_time_t(now);
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d");
+    return ss.str();
+}
 
 int main(int argc, char* argv[]) {
     auto start = std::chrono::high_resolution_clock::now();
 
     int numberOfIterations = 0, tolerance = 0, daysToSimulate = 0;
+
+    std::string currentDate = getCurrentDate();
 
     loadSimulationConfig("../data/simulation_config_initial.txt", numberOfIterations, tolerance, daysToSimulate);
 
@@ -25,12 +36,12 @@ int main(int argc, char* argv[]) {
 
     SimulationEngine simulationEngine;
 
-    SKUData skuData = loadSKUData("../data/matriz_intervals_df_Z285320_2024-07-23.csv");
+    SKUData skuData = loadSKUData("../data/matriz_intervals_df_Z285320_" + currentDate + ".csv");
     
-    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/df_features_Z285320_sku_norm_2024-07-23.txt");
+    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/df_features_Z285320_sku_norm_" + currentDate + ".csv");
 
     /* No se está utilizando aún dentro del simulationEngine 22072024 */
-    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/df_features_Z285320_sku_2024-07-23.txt");
+    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/df_features_Z285320_sku_" + currentDate + ".csv");
     
     simulationEngine.setProductData(skuData);
     simulationEngine.setNormalizedFeatures(normalizedFeatures);
