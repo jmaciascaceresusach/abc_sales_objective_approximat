@@ -30,10 +30,10 @@ int main(int argc, char* argv[]) {
 
     SKUData skuData = loadSKUData("../data/matriz_intervals_df_Z285320_" + currentDate + ".csv");
     
-    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/df_features_Z285320_sku_norm_" + currentDate + ".csv");
+    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/df_features_Z285320_sku_norm_" + currentDate + ".txt");
 
     /* No se está utilizando aún dentro del simulationEngine 22072024 */
-    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/df_features_Z285320_sku_" + currentDate + ".csv");
+    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/df_features_Z285320_sku_" + currentDate + ".txt");
     
     simulationEngine.setProductData(skuData);
     simulationEngine.setNormalizedFeatures(normalizedFeatures);
