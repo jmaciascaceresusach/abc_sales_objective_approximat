@@ -1,4 +1,5 @@
 #include "../include/SimulationEngine.h"
+#include "../include/DataLoader.h"
 #include <iostream>
 #include <fstream>
 #include <algorithm>
