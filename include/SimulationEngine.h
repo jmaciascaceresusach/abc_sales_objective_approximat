@@ -10,8 +10,6 @@ class SimulationEngine {
 public:
     SimulationEngine();
 
-    std::string getCurrentDate();
-
     void addParameter(const Parameter& parameter);
 
     void setProductData(const SKUData& data);

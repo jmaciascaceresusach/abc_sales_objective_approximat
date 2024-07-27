@@ -14,4 +14,6 @@ std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filena
 
 void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& tolerance, int& daysToSimulate);
 
+std::string getCurrentDate();
+
 #endif // DATALOADER_H
