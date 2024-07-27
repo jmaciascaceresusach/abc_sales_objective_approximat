@@ -57,6 +57,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     }
 
     int acceptedSimulations = 0;
+    int bestNumberSimulation = 0;
 
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -91,7 +92,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         if (distance < bestDistance) {
             bestDistance = distance;
             bestSimulation = simulatedPrices;
-            logFile << "  New best simulation found" << std::endl;
+            bestNumberSimulation = numberOfIterations;            
+            logFile << " -> New best simulation found!! <-" << std::endl;
         }
 
         allSimulatedPrices.push_back(simulatedPrices);
@@ -117,6 +119,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
     logFile << "\nFinal Results:" << std::endl;
     logFile << "Best simulation distance: " << bestDistance << std::endl;
+    logFile << "Best number simulation: " << bestNumberSimulation << std::endl;
     logFile << "Number of accepted simulations: " << acceptedSimulations << std::endl;
     
     if (!bestSimulation.empty()) {
