@@ -1,0 +1,8 @@
+client_numeric: ['441488 (3129.0)']
+vendor_numeric: ['441488 (147.0)']
+year: ['441488 (2022.0)']
+month: ['441488 (12.0)']
+day: ['441488 (16.0)']
+sku_count_products: ['441488 (14.0)']
+total_num_count_products: ['441488 (49.0)']
+total_price_products: ['441488 (191974.0)']
