@@ -1,8 +1,0 @@
-client_numeric: ['411920 (25636.0)']
-vendor_numeric: ['411920 (18.0)']
-year: ['411920 (2021.0)']
-month: ['411920 (5.0)']
-day: ['411920 (5.0)']
-sku_count_products: ['411920 (10.0)']
-total_num_count_products: ['411920 (24.0)']
-total_price_products: ['411920 (51241.0)']

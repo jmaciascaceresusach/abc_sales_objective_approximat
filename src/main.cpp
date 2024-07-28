@@ -17,7 +17,8 @@ int main(int argc, char* argv[]) {
 
     int numberOfIterations = 0, tolerance = 0, daysToSimulate = 0;
 
-    std::string currentDate = getCurrentDate();
+    //std::string currentDate = getCurrentDate();
+    std::string currentDate = "2024-07-28";
 
     loadSimulationConfig("../data/simulation_config_initial.txt", numberOfIterations, tolerance, daysToSimulate);
 
@@ -28,11 +29,11 @@ int main(int argc, char* argv[]) {
 
     SimulationEngine simulationEngine;
 
-    SKUData skuData = loadSKUData("../data/matriz_intervals_df_Z285320_" + currentDate + ".csv");
+    SKUData skuData = loadSKUData("../data/Z285320_matriz_intervals_df_" + currentDate + ".csv");
     
-    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/df_features_Z285320_sku_norm_" + currentDate + ".txt");
+    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/Z285320_df_features_sku_norm_" + currentDate + ".txt");
 
-    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/df_features_Z285320_sku_" + currentDate + ".txt");
+    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/Z285320_df_features_sku_" + currentDate + ".txt");
     
     simulationEngine.setProductData(skuData);
     simulationEngine.setNormalizedFeatures(normalizedFeatures);
