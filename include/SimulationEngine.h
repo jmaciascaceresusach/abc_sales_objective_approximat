@@ -20,6 +20,8 @@ public:
 
     void runSimulations(int numberOfIterations, int daysToSimulate, double tolerance);
 
+    void loadMeanAndStdValues(const std::string& meanFilename, const std::string& stdFilename);
+
 private:
     std::vector<Parameter> parameters;
 
@@ -30,6 +32,10 @@ private:
     std::map<std::string, double> normalizedFeatures;
 
     std::map<std::string, double> noNormalizedFeatures;
+
+    std::map<std::string, double> meanValues;
+    
+    std::map<std::string, double> stdValues;
 };
 
 #endif // SIMULATIONENGINE_H

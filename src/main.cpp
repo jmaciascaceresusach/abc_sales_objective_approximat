@@ -34,6 +34,9 @@ int main(int argc, char* argv[]) {
     std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/Z285320/Z285320_df_features_sku_norm_" + currentDate + ".txt");
 
     std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/Z285320/Z285320_df_features_sku_" + currentDate + ".txt");
+
+    simulationEngine.loadMeanAndStdValues("../data/Z285320/Z285320_mean_values_features_sku_2024-07-28.csv",
+                                          "../data/Z285320/Z285320_std_values_features_sku_2024-07-28.csv");
     
     simulationEngine.setProductData(skuData);
     simulationEngine.setNormalizedFeatures(normalizedFeatures);

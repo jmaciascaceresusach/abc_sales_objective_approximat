@@ -18,6 +18,45 @@ std::string getCurrentDate() {
     return ss.str();
 }
 
+std::map<std::string, double> inverse_z_score(const std::map<std::string, double>& z_score_normalized,
+                                              const std::map<std::string, double>& mean_values,
+                                              const std::map<std::string, double>& std_values) {
+    std::map<std::string, double> original_values;
+    for (const auto& pair : z_score_normalized) {
+        const std::string& column = pair.first;
+        double z_score = pair.second;
+        original_values[column] = z_score * std_values.at(column) + mean_values.at(column);
+    }
+    return original_values;
+}
+
+std::map<std::string, double> loadValues(const std::string& filename) {
+    std::map<std::string, double> values;
+    std::ifstream file(filename);
+    std::string line;
+    std::getline(file, line); // Skip header
+    std::getline(file, line);
+    std::istringstream iss(line);
+    std::string value;
+    int i = 0;
+    while (std::getline(iss, value, ',')) {
+        std::string key;
+        switch(i) {
+            case 0: key = "client_numeric"; break;
+            case 1: key = "vendor_numeric"; break;
+            case 2: key = "year"; break;
+            case 3: key = "month"; break;
+            case 4: key = "day"; break;
+            case 5: key = "sku_count_products"; break;
+            case 6: key = "total_num_count_products"; break;
+            case 7: key = "total_price_products"; break;
+        }
+        values[key] = std::stod(value);
+        i++;
+    }
+    return values;
+}
+
 SKUData loadSKUData(const std::string& filename) {
     SKUData data;
     std::ifstream file(filename);

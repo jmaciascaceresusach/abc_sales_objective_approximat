@@ -31,6 +31,11 @@ void SimulationEngine::setNoNormalizedFeatures(const std::map<std::string, doubl
     this->noNormalizedFeatures = features;
 }
 
+void SimulationEngine::loadMeanAndStdValues(const std::string& meanFilename, const std::string& stdFilename) {
+    meanValues = loadValues(meanFilename);
+    stdValues = loadValues(stdFilename);
+}
+
 void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate, double tolerance) {
 
     //std::string currentDate = getCurrentDate();
@@ -150,6 +155,18 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     logFile << "\nFinal parameters:" << std::endl;
     for (const auto& param : parameters) {
         logFile << "  " << param.name << ": " << param.probability << std::endl;
+    }
+
+    // Calcular y mostrar los parámetros no normalizados
+    std::map<std::string, double> normalizedParams;
+    for (const auto& param : parameters) {
+        normalizedParams[param.name] = param.probability;
+    }
+    std::map<std::string, double> originalParams = inverse_z_score(normalizedParams, meanValues, stdValues);
+
+    logFile << "\nFinal parameters (no normalized features):" << std::endl;
+    for (const auto& param : originalParams) {
+        logFile << "  " << param.first << ": " << param.second << std::endl;
     }
 
     logFile.close();
