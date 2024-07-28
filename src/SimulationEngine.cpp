@@ -33,7 +33,8 @@ void SimulationEngine::setNoNormalizedFeatures(const std::map<std::string, doubl
 
 void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate, double tolerance) {
 
-    std::string currentDate = getCurrentDate();
+    //std::string currentDate = getCurrentDate();
+    std::string currentDate = "2024-07-28";
     
     std::ofstream logFile("../data/output/simulation_log_" + currentDate + ".txt");
     std::ofstream statsFile("../data/output/statistics_simulations_" + currentDate + ".txt");
