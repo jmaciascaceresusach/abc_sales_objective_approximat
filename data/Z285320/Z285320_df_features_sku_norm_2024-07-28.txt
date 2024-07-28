@@ -1,0 +1,8 @@
+client_numeric: ['375727 (-0.142710)']
+vendor_numeric: ['375727 (0.362521)']
+year: ['375727 (-1.137597)']
+month: ['375727 (1.655216)']
+day: ['375727 (0.540602)']
+sku_count_products: ['375727 (0.370130)']
+total_num_count_products: ['375727 (-0.139326)']
+total_price_products: ['375727 (-0.228231)']

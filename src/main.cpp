@@ -29,11 +29,11 @@ int main(int argc, char* argv[]) {
 
     SimulationEngine simulationEngine;
 
-    SKUData skuData = loadSKUData("../data/Z285320_matriz_intervals_df_" + currentDate + ".csv");
+    SKUData skuData = loadSKUData("../data/Z285320/Z285320_matriz_intervals_df_" + currentDate + ".csv");
     
-    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/Z285320_df_features_sku_norm_" + currentDate + ".txt");
+    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/Z285320/Z285320_df_features_sku_norm_" + currentDate + ".txt");
 
-    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/Z285320_df_features_sku_" + currentDate + ".txt");
+    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/Z285320/Z285320_df_features_sku_" + currentDate + ".txt");
     
     simulationEngine.setProductData(skuData);
     simulationEngine.setNormalizedFeatures(normalizedFeatures);

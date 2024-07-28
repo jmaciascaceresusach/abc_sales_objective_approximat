@@ -155,6 +155,6 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     logFile.close();
     statsFile.close();
 
-    std::cout << "\nSimulation completed. Results saved in simulation_log.txt and statistics_simulations.txt" << std::endl;
+    std::cout << "\nSimulation completed. Results saved in simulation_log_" + currentDate + ".txt and statistics_simulations_" + currentDate + ".txt" << std::endl;
     std::cout << "Number of accepted simulations: " << acceptedSimulations << std::endl;
 }
