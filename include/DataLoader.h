@@ -20,6 +20,10 @@ std::map<std::string, double> inverse_z_score(const std::map<std::string, double
                                               const std::map<std::string, double>& mean_values,
                                               const std::map<std::string, double>& std_values);
 
+std::map<std::string, double> calculate_z_score(const std::map<std::string, double>& registro,
+                                                const std::map<std::string, double>& mean_values,
+                                                const std::map<std::string, double>& std_values);
+
 std::map<std::string, double> loadValues(const std::string& filename);
 
 #endif // DATALOADER_H

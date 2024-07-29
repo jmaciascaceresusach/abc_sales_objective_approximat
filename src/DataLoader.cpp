@@ -30,6 +30,38 @@ std::map<std::string, double> inverse_z_score(const std::map<std::string, double
     return original_values;
 }
 
+std::map<std::string, double> calculate_z_score(
+    const std::map<std::string, double>& registro,
+    const std::map<std::string, double>& mean_values,
+    const std::map<std::string, double>& std_values) {
+    
+    std::map<std::string, double> z_scores;
+    
+    for (const auto& pair : registro) {
+        const std::string& column = pair.first;
+        double value = pair.second;
+        
+        // Verificar si la columna existe en mean_values y std_values
+        if (mean_values.find(column) != mean_values.end() && 
+            std_values.find(column) != std_values.end()) {
+            
+            double mean_value = mean_values.at(column);
+            double std_value = std_values.at(column);
+            
+            // Evitar división por cero
+            if (std_value != 0) {
+                z_scores[column] = (value - mean_value) / std_value;
+            } else {
+                // Si la desviación estándar es cero, el z-score es indefinido
+                // Puedes manejar este caso como prefieras, aquí lo dejamos en 0
+                z_scores[column] = 0;
+            }
+        }
+    }
+    
+    return z_scores;
+}
+
 std::map<std::string, double> loadValues(const std::string& filename) {
     std::map<std::string, double> values;
     std::ifstream file(filename);
