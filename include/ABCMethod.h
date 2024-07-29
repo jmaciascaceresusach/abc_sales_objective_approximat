@@ -7,6 +7,16 @@
 #include <map>
 #include "Parameter.h"
 
+/*
+Comentarios generales:
+- Este archivo contiene la definición de la clase ABCMethod, que implementa el método Approximate Bayesian Computation (ABC) para la simulación de precios futuros.
+
+Comentario específicos:
+- PriceInterval y SKUData: Estructuras que contienen información relevante sobre los intervalos de precios y datos del SKU, respectivamente.
+- initializeParameters, refineParameters: Métodos para inicializar y refinar los parámetros del modelo.
+- simulateFuturePrices, calculateDistance, calculateProbability: Métodos principales para la simulación de precios, cálculo de distancias y probabilidades.
+*/
+
 struct PriceInterval {
     double minPrice;
     double maxPrice;

@@ -12,6 +12,15 @@
 #include "../include/SimulationEngine.h"
 #include "../include/DataLoader.h"
 
+/*
+Comentarios generales:
+- Este archivo contiene la función principal del programa.
+
+Comentario específicos:
+- Manejo de la configuración de la simulación y ejecución de SimulationEngine.
+- Generación de logs y estadísticas de la simulación.
+*/
+
 int main(int argc, char* argv[]) {
     auto start = std::chrono::high_resolution_clock::now();
 

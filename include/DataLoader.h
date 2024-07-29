@@ -6,6 +6,15 @@
 #include <map>
 #include "ABCMethod.h" // Para la definición de SKUData
 
+/*
+Comentarios generales:
+- Este archivo contiene funciones auxiliares para cargar datos desde archivos.
+
+Comentario específicos:
+- loadSKUData, loadNormalizedFeatures, loadNoNormalizedFeatures, loadSimulationConfig: Funciones para cargar datos de SKU, características normalizadas y no normalizadas, y la configuración de simulación.
+- getCurrentDate, inverse_z_score, calculate_z_score, loadValues: Funciones para manejar fechas y normalización de datos.
+*/
+
 SKUData loadSKUData(const std::string& filename);
 
 std::map<std::string, double> loadNormalizedFeatures(const std::string& filename);

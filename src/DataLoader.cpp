@@ -10,6 +10,14 @@
 #include <iomanip>
 #include <sstream>
 
+/*
+Comentarios generales:
+- Este archivo implementa las funciones auxiliares para cargar datos desde archivos.
+
+Comentario específicos:
+- Implementación de funciones como loadSKUData, loadNormalizedFeatures, loadNoNormalizedFeatures, loadSimulationConfig, getCurrentDate, inverse_z_score, calculate_z_score, loadValues.
+*/
+
 std::string getCurrentDate() {
     auto now = std::chrono::system_clock::now();
     auto in_time_t = std::chrono::system_clock::to_time_t(now);

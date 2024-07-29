@@ -6,6 +6,15 @@
 #include <fstream>
 #include <sstream>
 
+/*
+Comentarios generales:
+- Este archivo implementa los métodos definidos en ABCMethod.h.
+
+Comentario específicos:
+- Implementación de métodos como initializeParameters, refineParameters, simulateFuturePrices, calculateDistance, normalizeParameters, calculateProbability.
+- calculateProbability: Método que necesita mejoras para incluir factores como tendencia histórica, estacionalidad, factores externos, autocorrelación con precios anteriores y volatilidad del producto.
+*/
+
 ABCMethod::ABCMethod() {}
 
 void ABCMethod::initializeParameters(std::vector<Parameter>& parameters) {
@@ -136,12 +145,30 @@ double ABCMethod::calculateProbability(double price, const SKUData& skuData, int
             // Ajustar por el día (decae con el tiempo)
             probability *= std::exp(-0.05 * day);
 
-            // Aquí se podrían agregar más factores:
-            // - Tendencia histórica
-            // - Estacionalidad
-            // - Factores externos
-            // - Autocorrelación con precios anteriores
-            // - Volatilidad del producto
+            /* Tendencia histórica: Analizar datos históricos de precios y ajustar probabilidades en consecuencia.
+            double historicalTrend = calculateHistoricalTrend(price, day, historicalData);
+            probability *= (1 + historicalTrend);
+            */
+
+            /* Estacionalidad: Incluir factores estacionales en el cálculo de probabilidades.
+            double seasonality = calculateSeasonality(day);
+            probability *= (1 + seasonality);           
+            */
+
+            /* Factores externos: Incorporar variables externas que puedan influir en los precios.
+            double externalFactor = getExternalFactor(day);
+            probability *= (1 + externalFactor);            
+            */
+           
+            /* Autocorrelación: Ajustar probabilidades basadas en la autocorrelación de precios pasados.
+            double autocorrelation = calculateAutocorrelation(price, previousPrices);
+            probability *= (1 + autocorrelation);
+            */
+            
+            /* Volatilidad: Considerar la volatilidad del producto al calcular probabilidades.
+            double volatility = calculateVolatility(historicalData);
+            probability *= std::exp(-volatility * std::abs(price - previousPrice));
+            */
 
             break;
         }

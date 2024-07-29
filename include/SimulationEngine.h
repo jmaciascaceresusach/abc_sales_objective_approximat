@@ -6,6 +6,14 @@
 #include "ABCMethod.h"
 #include "Parameter.h"
 
+/*
+Comentarios generales:
+- Este archivo contiene la definición de la clase SimulationEngine, que gestiona la ejecución de las simulaciones.
+
+Comentario específicos:
+- SimulationEngine: Clase principal para manejar la simulación, incluyendo la configuración de parámetros y la ejecución de simulaciones.
+*/
+
 class SimulationEngine {
 public:
     SimulationEngine();

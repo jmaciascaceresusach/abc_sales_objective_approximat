@@ -10,6 +10,14 @@
 #include <iomanip>
 #include <sstream>
 
+/*
+Comentarios generales:
+- Este archivo implementa la clase SimulationEngine.
+
+Comentario específicos:
+- Implementación de métodos como addParameter, setProductData, setNormalizedFeatures, setNoNormalizedFeatures, loadMeanAndStdValues, runSimulations.
+*/
+
 SimulationEngine::SimulationEngine() {}
 
 void SimulationEngine::addParameter(const Parameter& parameter) {
