@@ -1,0 +1,8 @@
+client_numeric: ['417187 (7903.0)']
+vendor_numeric: ['417187 (92.0)']
+year: ['417187 (2022.0)']
+month: ['417187 (11.0)']
+day: ['417187 (29.0)']
+sku_count_products: ['417187 (13.0)']
+total_num_count_products: ['417187 (33.0)']
+total_price_products: ['417187 (84631.0)']

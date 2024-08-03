@@ -1,0 +1,8 @@
+client_numeric: ['344164 (1.639647)']
+vendor_numeric: ['344164 (-0.017444)']
+year: ['344164 (-1.058493)']
+month: ['344164 (1.308784)']
+day: ['344164 (1.677588)']
+sku_count_products: ['344164 (2.540423)']
+total_num_count_products: ['344164 (-0.044707)']
+total_price_products: ['344164 (0.458837)']

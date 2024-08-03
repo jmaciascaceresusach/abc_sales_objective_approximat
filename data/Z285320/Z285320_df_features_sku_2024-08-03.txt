@@ -1,0 +1,8 @@
+client_numeric: ['365523 (570.0)']
+vendor_numeric: ['365523 (20.0)']
+year: ['365523 (2020.0)']
+month: ['365523 (4.0)']
+day: ['365523 (2.0)']
+sku_count_products: ['365523 (4.0)']
+total_num_count_products: ['365523 (8.0)']
+total_price_products: ['365523 (29694.0)']

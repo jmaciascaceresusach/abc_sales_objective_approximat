@@ -1,8 +1,0 @@
-client_numeric: ['396486 (1486.0)']
-vendor_numeric: ['396486 (291.0)']
-year: ['396486 (2019.0)']
-month: ['396486 (5.0)']
-day: ['396486 (10.0)']
-sku_count_products: ['396486 (22.0)']
-total_num_count_products: ['396486 (37.0)']
-total_price_products: ['396486 (71111.0)']
