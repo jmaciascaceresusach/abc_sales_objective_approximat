@@ -1,3 +1,5 @@
 numberOfIterations=50
 tolerance=13
 daysToSimulate=30
+dayForSimulate=2024-08-03
+skuForSimulate=All
