@@ -11,534 +11,534 @@ Initial parameters:
   year: 0.255184
 
 Iteration 1 of 50
-  Distance: 0.023884
+  Distance: 0.0260019
   -> New best simulation found!! (info: the distance value has decreased)
   Simulation summary:
-    Initial price: 8115.94
-    Average price: 5321.42
-    Min price: 2132.72
-    Max price: 8115.94
+    Initial price: 4533.39
+    Average price: 4474.62
+    Min price: 1941.14
+    Max price: 7507.57
   Satisfactory simulation found.
 
 Iteration 2 of 50
-  Distance: 0.0221341
-  -> New best simulation found!! (info: the distance value has decreased)
+  Distance: 0.0281012
   Simulation summary:
-    Initial price: 6317.6
-    Average price: 5383.25
-    Min price: 2129.76
-    Max price: 8226.18
+    Initial price: 5869.17
+    Average price: 5547.7
+    Min price: 2267.74
+    Max price: 8202.88
   Satisfactory simulation found.
 
 Iteration 3 of 50
-  Distance: 0.0224849
+  Distance: 0.0207979
+  -> New best simulation found!! (info: the distance value has decreased)
   Simulation summary:
-    Initial price: 5024.15
-    Average price: 5224.03
-    Min price: 2100.01
-    Max price: 8203.48
+    Initial price: 5006.36
+    Average price: 4697.23
+    Min price: 1948.94
+    Max price: 7917.51
   Satisfactory simulation found.
 
 Iteration 4 of 50
-  Distance: 0.022743
+  Distance: 0.0257447
   Simulation summary:
-    Initial price: 5221.44
-    Average price: 5054.52
-    Min price: 2241.1
-    Max price: 8159.1
+    Initial price: 8176.87
+    Average price: 5291.68
+    Min price: 2087.51
+    Max price: 8228.07
   Satisfactory simulation found.
 
 Iteration 5 of 50
-  Distance: 0.0234144
+  Distance: 0.0229315
   Simulation summary:
-    Initial price: 2211.97
-    Average price: 4629.53
-    Min price: 1899
-    Max price: 8107.77
+    Initial price: 6684.21
+    Average price: 5195.91
+    Min price: 2001.51
+    Max price: 7996.09
   Satisfactory simulation found.
 
 Iteration 6 of 50
-  Distance: 0.0231146
+  Distance: 0.0275604
   Simulation summary:
-    Initial price: 5843.44
-    Average price: 5448.99
-    Min price: 2165.82
-    Max price: 8174.4
+    Initial price: 4908.74
+    Average price: 5371.5
+    Min price: 1913.87
+    Max price: 8155.43
   Satisfactory simulation found.
 
 Iteration 7 of 50
-  Distance: 0.0232441
+  Distance: 0.0220657
   Simulation summary:
-    Initial price: 3605.2
-    Average price: 4839.38
-    Min price: 2075.12
-    Max price: 8175.53
+    Initial price: 5206.37
+    Average price: 4446.52
+    Min price: 1955.49
+    Max price: 8019.11
   Satisfactory simulation found.
 
 Iteration 8 of 50
-  Distance: 0.0224954
+  Distance: 0.0241306
   Simulation summary:
-    Initial price: 6599.95
-    Average price: 5323.71
-    Min price: 2140.28
-    Max price: 8172.13
+    Initial price: 5557.91
+    Average price: 4636.26
+    Min price: 1910.71
+    Max price: 8201.44
   Satisfactory simulation found.
 
 Iteration 9 of 50
-  Distance: 0.0234503
+  Distance: 0.0277833
   Simulation summary:
-    Initial price: 6075.01
-    Average price: 5209.81
-    Min price: 2254.81
-    Max price: 8058.1
+    Initial price: 2754.67
+    Average price: 5108.19
+    Min price: 2035.06
+    Max price: 8159.49
   Satisfactory simulation found.
 
 Iteration 10 of 50
-  Distance: 0.0225272
+  Distance: 0.0333229
   Simulation summary:
-    Initial price: 2925.04
-    Average price: 4636.57
-    Min price: 1946.86
-    Max price: 8170.88
+    Initial price: 5652.24
+    Average price: 5190.83
+    Min price: 1902.15
+    Max price: 8190.22
   Satisfactory simulation found.
 
 Iteration 11 of 50
-  Distance: 0.0239106
+  Distance: 0.0240386
   Simulation summary:
-    Initial price: 7243.23
-    Average price: 4865.3
-    Min price: 1910.73
-    Max price: 8243.42
+    Initial price: 3055.8
+    Average price: 4888.6
+    Min price: 1936.84
+    Max price: 7973.26
   Satisfactory simulation found.
 
 Iteration 12 of 50
-  Distance: 0.0235378
+  Distance: 0.0263651
   Simulation summary:
-    Initial price: 5658.19
-    Average price: 4628.04
-    Min price: 2019.61
-    Max price: 8102.52
+    Initial price: 3395.85
+    Average price: 4754.16
+    Min price: 2000.14
+    Max price: 8224.52
   Satisfactory simulation found.
 
 Iteration 13 of 50
-  Distance: 0.0227862
+  Distance: 0.0228241
   Simulation summary:
-    Initial price: 5924.31
-    Average price: 5542.25
-    Min price: 2791.19
-    Max price: 8202.02
+    Initial price: 7786.98
+    Average price: 4551.15
+    Min price: 1941.48
+    Max price: 8243.52
   Satisfactory simulation found.
 
 Iteration 14 of 50
-  Distance: 0.023287
+  Distance: 0.0264818
   Simulation summary:
-    Initial price: 4600.27
-    Average price: 4709.5
-    Min price: 2000.88
-    Max price: 8246.81
+    Initial price: 3606.1
+    Average price: 4671.43
+    Min price: 1987.86
+    Max price: 7851.45
   Satisfactory simulation found.
 
 Iteration 15 of 50
-  Distance: 0.0230991
+  Distance: 0.0217158
   Simulation summary:
-    Initial price: 3753.97
-    Average price: 4814.99
-    Min price: 1921.58
-    Max price: 8209.24
+    Initial price: 5415.52
+    Average price: 5396.49
+    Min price: 1960.65
+    Max price: 8059.97
   Satisfactory simulation found.
 
 Iteration 16 of 50
-  Distance: 0.0215578
-  -> New best simulation found!! (info: the distance value has decreased)
+  Distance: 0.0235305
   Simulation summary:
-    Initial price: 5836.59
-    Average price: 5354.98
-    Min price: 2207.93
-    Max price: 8194.35
+    Initial price: 7053.04
+    Average price: 5280.97
+    Min price: 2023.08
+    Max price: 8166.31
   Satisfactory simulation found.
 
 Iteration 17 of 50
-  Distance: 0.0231039
+  Distance: 0.022631
   Simulation summary:
-    Initial price: 5793.75
-    Average price: 5180.75
-    Min price: 2415.21
-    Max price: 8241.95
+    Initial price: 4346.59
+    Average price: 5687.8
+    Min price: 2035.83
+    Max price: 8173.95
   Satisfactory simulation found.
 
 Iteration 18 of 50
-  Distance: 0.0234316
+  Distance: 0.0226746
   Simulation summary:
-    Initial price: 6386.11
-    Average price: 5318.07
-    Min price: 2720.21
-    Max price: 8207.68
+    Initial price: 3024.91
+    Average price: 4846.29
+    Min price: 1974.89
+    Max price: 8217.56
   Satisfactory simulation found.
 
 Iteration 19 of 50
-  Distance: 0.0227941
+  Distance: 0.0259564
   Simulation summary:
-    Initial price: 2720.45
-    Average price: 4965.89
-    Min price: 1929.61
-    Max price: 8151.44
+    Initial price: 2885.35
+    Average price: 5429.57
+    Min price: 2361.65
+    Max price: 8247.52
   Satisfactory simulation found.
 
 Iteration 20 of 50
-  Distance: 0.0243788
+  Distance: 0.0279117
   Simulation summary:
-    Initial price: 3535.51
-    Average price: 5472.62
-    Min price: 2005.32
-    Max price: 8244.07
+    Initial price: 1977.12
+    Average price: 4815.32
+    Min price: 1977.12
+    Max price: 7887.82
   Satisfactory simulation found.
 
 Iteration 21 of 50
-  Distance: 0.0216691
+  Distance: 0.0198848
+  -> New best simulation found!! (info: the distance value has decreased)
   Simulation summary:
-    Initial price: 4101.42
-    Average price: 5306.74
-    Min price: 2345.32
-    Max price: 8234.1
+    Initial price: 2327.14
+    Average price: 4174.73
+    Min price: 1990
+    Max price: 8166.6
   Satisfactory simulation found.
 
 Iteration 22 of 50
-  Distance: 0.0233775
+  Distance: 0.0233722
   Simulation summary:
-    Initial price: 7597.13
-    Average price: 5386.65
-    Min price: 1996.02
-    Max price: 8085.4
+    Initial price: 6325.34
+    Average price: 4904.86
+    Min price: 1944.13
+    Max price: 7825.02
   Satisfactory simulation found.
 
 Iteration 23 of 50
-  Distance: 0.0226062
+  Distance: 0.0262352
   Simulation summary:
-    Initial price: 6299.44
-    Average price: 4767.57
-    Min price: 1990.1
-    Max price: 8107.33
+    Initial price: 6480.12
+    Average price: 4906.18
+    Min price: 1990.6
+    Max price: 8023.18
   Satisfactory simulation found.
 
 Iteration 24 of 50
-  Distance: 0.0209877
-  -> New best simulation found!! (info: the distance value has decreased)
+  Distance: 0.0280884
   Simulation summary:
-    Initial price: 6250.06
-    Average price: 5508.8
-    Min price: 2375.79
-    Max price: 8219.42
+    Initial price: 5168.61
+    Average price: 4961
+    Min price: 1941.49
+    Max price: 8221.91
   Satisfactory simulation found.
 
 Iteration 25 of 50
-  Distance: 0.0241232
+  Distance: 0.0246547
   Simulation summary:
-    Initial price: 3796.54
-    Average price: 4741.73
-    Min price: 1932.09
-    Max price: 8135.52
+    Initial price: 8186.08
+    Average price: 4910.76
+    Min price: 1904.4
+    Max price: 8186.08
   Satisfactory simulation found.
 
 Iteration 26 of 50
-  Distance: 0.0213842
+  Distance: 0.0192726
+  -> New best simulation found!! (info: the distance value has decreased)
   Simulation summary:
-    Initial price: 4806.63
-    Average price: 5175.59
-    Min price: 2006.34
-    Max price: 7757.3
+    Initial price: 6233
+    Average price: 5432.29
+    Min price: 1986.57
+    Max price: 8115.31
   Satisfactory simulation found.
 
 Iteration 27 of 50
-  Distance: 0.024032
+  Distance: 0.0265265
   Simulation summary:
-    Initial price: 7668.97
-    Average price: 5079.46
-    Min price: 2072.66
-    Max price: 8149.88
+    Initial price: 7827.54
+    Average price: 4826.34
+    Min price: 1907.94
+    Max price: 7921.72
   Satisfactory simulation found.
 
 Iteration 28 of 50
-  Distance: 0.0220675
+  Distance: 0.0272911
   Simulation summary:
-    Initial price: 8070.28
-    Average price: 5369.76
-    Min price: 2492.78
-    Max price: 8070.28
+    Initial price: 8135.29
+    Average price: 4936.91
+    Min price: 1899.49
+    Max price: 8178.21
   Satisfactory simulation found.
 
 Iteration 29 of 50
-  Distance: 0.0241903
+  Distance: 0.0211914
   Simulation summary:
-    Initial price: 2220.23
-    Average price: 4916.51
-    Min price: 2220.23
-    Max price: 8138.53
+    Initial price: 2420.96
+    Average price: 4457.26
+    Min price: 1939.8
+    Max price: 7758.52
   Satisfactory simulation found.
 
 Iteration 30 of 50
-  Distance: 0.0230923
+  Distance: 0.0230657
   Simulation summary:
-    Initial price: 5908.11
-    Average price: 5100.74
-    Min price: 2213.69
-    Max price: 8173.16
+    Initial price: 6518.04
+    Average price: 5143.18
+    Min price: 2097.48
+    Max price: 7947.68
   Satisfactory simulation found.
 
 Iteration 31 of 50
-  Distance: 0.0221501
+  Distance: 0.0220375
   Simulation summary:
-    Initial price: 3004.62
-    Average price: 5234.18
-    Min price: 2552.14
-    Max price: 7552.99
+    Initial price: 2397.04
+    Average price: 4789.56
+    Min price: 1931.39
+    Max price: 7815.92
   Satisfactory simulation found.
 
 Iteration 32 of 50
-  Distance: 0.0227546
+  Distance: 0.0276859
   Simulation summary:
-    Initial price: 7392.64
-    Average price: 5204.5
-    Min price: 2180.12
-    Max price: 8180.32
+    Initial price: 2252.61
+    Average price: 4441.15
+    Min price: 1900.53
+    Max price: 7537.92
   Satisfactory simulation found.
 
 Iteration 33 of 50
-  Distance: 0.0223507
+  Distance: 0.0237021
   Simulation summary:
-    Initial price: 5878.88
-    Average price: 5556.88
-    Min price: 2449.29
-    Max price: 8215.62
+    Initial price: 2941.15
+    Average price: 4920.58
+    Min price: 2085.28
+    Max price: 8211.23
   Satisfactory simulation found.
 
 Iteration 34 of 50
-  Distance: 0.023985
+  Distance: 0.0267954
   Simulation summary:
-    Initial price: 4498.21
-    Average price: 4183.03
-    Min price: 1901.62
-    Max price: 8190.44
+    Initial price: 2836.04
+    Average price: 4880.23
+    Min price: 1902.85
+    Max price: 8224.22
   Satisfactory simulation found.
 
 Iteration 35 of 50
-  Distance: 0.0217271
+  Distance: 0.029896
   Simulation summary:
-    Initial price: 7816.65
-    Average price: 5036.34
-    Min price: 1912.5
-    Max price: 8160.69
+    Initial price: 6953.15
+    Average price: 5005.26
+    Min price: 1930.95
+    Max price: 8034.73
   Satisfactory simulation found.
 
 Iteration 36 of 50
-  Distance: 0.0238848
+  Distance: 0.0303232
   Simulation summary:
-    Initial price: 2680.55
-    Average price: 5228.4
-    Min price: 2055.86
-    Max price: 7818.33
+    Initial price: 1962.18
+    Average price: 5085.25
+    Min price: 1958.28
+    Max price: 8130.62
   Satisfactory simulation found.
 
 Iteration 37 of 50
-  Distance: 0.0220992
+  Distance: 0.0246466
   Simulation summary:
-    Initial price: 2822.26
-    Average price: 5536.1
-    Min price: 2088.69
-    Max price: 8182.45
+    Initial price: 7013.85
+    Average price: 5515.7
+    Min price: 1946.02
+    Max price: 8231.68
   Satisfactory simulation found.
 
 Iteration 38 of 50
-  Distance: 0.022324
+  Distance: 0.0253481
   Simulation summary:
-    Initial price: 5535.02
-    Average price: 5572.22
-    Min price: 2513.78
-    Max price: 8244.11
+    Initial price: 8044.49
+    Average price: 5553.93
+    Min price: 2075.64
+    Max price: 8193.23
   Satisfactory simulation found.
 
 Iteration 39 of 50
-  Distance: 0.0241574
+  Distance: 0.0253263
   Simulation summary:
-    Initial price: 5604.61
-    Average price: 5431.37
-    Min price: 2009.09
-    Max price: 8196.95
+    Initial price: 3212.07
+    Average price: 5269.64
+    Min price: 2036.87
+    Max price: 8215.34
   Satisfactory simulation found.
 
 Iteration 40 of 50
-  Distance: 0.0219998
+  Distance: 0.0244074
   Simulation summary:
-    Initial price: 5234.08
-    Average price: 4978.28
-    Min price: 1936.28
-    Max price: 8214.15
+    Initial price: 4633.18
+    Average price: 4858.15
+    Min price: 2007.2
+    Max price: 8195.96
   Satisfactory simulation found.
 
 Iteration 41 of 50
-  Distance: 0.0231298
+  Distance: 0.0231663
   Simulation summary:
-    Initial price: 5686.32
-    Average price: 5730.75
-    Min price: 1970.24
-    Max price: 8211.53
+    Initial price: 5501
+    Average price: 5362.63
+    Min price: 1963
+    Max price: 8207.53
   Satisfactory simulation found.
 
 Iteration 42 of 50
-  Distance: 0.023796
+  Distance: 0.0240918
   Simulation summary:
-    Initial price: 2425.32
-    Average price: 4479.62
-    Min price: 2012.41
-    Max price: 8180.04
+    Initial price: 2916.12
+    Average price: 4927.47
+    Min price: 2009.29
+    Max price: 8205.34
   Satisfactory simulation found.
 
 Iteration 43 of 50
-  Distance: 0.0225284
+  Distance: 0.0303013
   Simulation summary:
-    Initial price: 6314.89
-    Average price: 5142.52
-    Min price: 1991.44
-    Max price: 8127.26
+    Initial price: 6783.4
+    Average price: 4977.87
+    Min price: 1918.02
+    Max price: 8120.08
   Satisfactory simulation found.
 
 Iteration 44 of 50
-  Distance: 0.0244242
+  Distance: 0.0265398
   Simulation summary:
-    Initial price: 6680.49
-    Average price: 4972.82
-    Min price: 2138.47
-    Max price: 8233.13
+    Initial price: 3423.85
+    Average price: 5389.78
+    Min price: 2081.86
+    Max price: 8219.26
   Satisfactory simulation found.
 
 Iteration 45 of 50
-  Distance: 0.0225108
+  Distance: 0.0265473
   Simulation summary:
-    Initial price: 4496.73
-    Average price: 5214.57
-    Min price: 2438.92
-    Max price: 8108.2
+    Initial price: 5789.68
+    Average price: 5297.47
+    Min price: 1940.18
+    Max price: 8187.23
   Satisfactory simulation found.
 
 Iteration 46 of 50
-  Distance: 0.0239743
+  Distance: 0.0226586
   Simulation summary:
-    Initial price: 6344.96
-    Average price: 4808.39
-    Min price: 2027.29
-    Max price: 7722.08
+    Initial price: 4912.79
+    Average price: 4789.73
+    Min price: 1988.93
+    Max price: 8170.9
   Satisfactory simulation found.
 
 Iteration 47 of 50
-  Distance: 0.0233728
+  Distance: 0.0299345
   Simulation summary:
-    Initial price: 4691.21
-    Average price: 4951.46
-    Min price: 1901.77
-    Max price: 8185.41
+    Initial price: 3260.32
+    Average price: 4814.37
+    Min price: 2046.37
+    Max price: 8154.55
   Satisfactory simulation found.
 
 Iteration 48 of 50
-  Distance: 0.0235057
+  Distance: 0.0270306
   Simulation summary:
-    Initial price: 2745.22
-    Average price: 5508.4
-    Min price: 2228.57
-    Max price: 8036.75
+    Initial price: 7646.19
+    Average price: 5104.84
+    Min price: 2009.5
+    Max price: 8152.53
   Satisfactory simulation found.
 
 Iteration 49 of 50
-  Distance: 0.0238758
+  Distance: 0.0277907
   Simulation summary:
-    Initial price: 4830.99
-    Average price: 5643.37
-    Min price: 1968.47
-    Max price: 8249.14
+    Initial price: 1903.49
+    Average price: 4287.94
+    Min price: 1903.49
+    Max price: 7987.58
   Satisfactory simulation found.
 
 Iteration 50 of 50
-  Distance: 0.023636
+  Distance: 0.0222574
   Simulation summary:
-    Initial price: 6327.7
-    Average price: 5286.12
-    Min price: 2053.16
-    Max price: 8231.51
+    Initial price: 4458.37
+    Average price: 5577.3
+    Min price: 2251.55
+    Max price: 8250.34
   Satisfactory simulation found.
 
 Final Results:
-Best simulation distance: 0.0209877
+Best simulation distance: 0.0192726
 Best number simulation (#): 4
 Number of accepted simulations: 50
 Best simulation prices:
-  Day 1: 6250.06
-  Day 2: 7737.12
-  Day 3: 8087.84
-  Day 4: 5258.27
-  Day 5: 3867.27
-  Day 6: 4238.84
-  Day 7: 3206.07
-  Day 8: 8013.64
-  Day 9: 4340.94
-  Day 10: 5785.47
-  Day 11: 4337.4
-  Day 12: 7733.93
-  Day 13: 8042.05
-  Day 14: 3712.79
-  Day 15: 6772.78
-  Day 16: 5552.83
-  Day 17: 3737.28
-  Day 18: 7276.64
-  Day 19: 3874.23
-  Day 20: 4550.98
-  Day 21: 2375.79
-  Day 22: 4805.49
-  Day 23: 2494.95
-  Day 24: 7907.62
-  Day 25: 8219.42
-  Day 26: 6828.07
-  Day 27: 2778.86
-  Day 28: 6539.74
-  Day 29: 7493.38
-  Day 30: 3444.37
+  Day 1: 6233
+  Day 2: 5046.85
+  Day 3: 1986.57
+  Day 4: 4740.96
+  Day 5: 4621.41
+  Day 6: 5640.66
+  Day 7: 5594.68
+  Day 8: 7764.54
+  Day 9: 4567.11
+  Day 10: 5670.64
+  Day 11: 2202.13
+  Day 12: 2857.18
+  Day 13: 4507.65
+  Day 14: 2116.47
+  Day 15: 5609.3
+  Day 16: 7695
+  Day 17: 5672.22
+  Day 18: 8115.31
+  Day 19: 8009.69
+  Day 20: 7773.67
+  Day 21: 7576.32
+  Day 22: 7198.01
+  Day 23: 6925.28
+  Day 24: 4214.04
+  Day 25: 3816.32
+  Day 26: 5482.4
+  Day 27: 4740.68
+  Day 28: 4262.86
+  Day 29: 7079.17
+  Day 30: 5248.51
 
 Average prices across all simulations:
-  Day 1: 5222.44
-  Day 2: 5449.45
-  Day 3: 5163.45
-  Day 4: 5622.48
-  Day 5: 4815.21
-  Day 6: 5061.17
-  Day 7: 5122.63
-  Day 8: 5388.65
-  Day 9: 4928.68
-  Day 10: 5555.35
-  Day 11: 4753.97
-  Day 12: 5810.39
-  Day 13: 5229.27
-  Day 14: 4813.69
-  Day 15: 5166.8
-  Day 16: 4567.41
-  Day 17: 4664.53
-  Day 18: 5083.83
-  Day 19: 5262.68
-  Day 20: 4948.71
-  Day 21: 4844.66
-  Day 22: 5221.75
-  Day 23: 5004.92
-  Day 24: 5698.71
-  Day 25: 5281.3
-  Day 26: 4933.71
-  Day 27: 5051.06
-  Day 28: 5074.49
-  Day 29: 5071.72
-  Day 30: 5372.79
+  Day 1: 4907.21
+  Day 2: 5110.09
+  Day 3: 2933.3
+  Day 4: 4724.52
+  Day 5: 4941.04
+  Day 6: 5195.59
+  Day 7: 5199.06
+  Day 8: 4825.99
+  Day 9: 4795.2
+  Day 10: 5209.47
+  Day 11: 4950.47
+  Day 12: 4764.52
+  Day 13: 5631.94
+  Day 14: 4994.15
+  Day 15: 4993.2
+  Day 16: 4796.96
+  Day 17: 5104.25
+  Day 18: 5793.56
+  Day 19: 5321.11
+  Day 20: 5029.51
+  Day 21: 5292.49
+  Day 22: 5104.99
+  Day 23: 5235.17
+  Day 24: 5169.66
+  Day 25: 4820.38
+  Day 26: 5139.11
+  Day 27: 4659.21
+  Day 28: 5160.16
+  Day 29: 4838.63
+  Day 30: 5229.81
 
 Final parameters:
   client_numeric: -0.901096
   day: -1.48998
   month: -0.678251
   sku_count_products: -1.23468
-  total_num_count_products: 0.521566
-  total_price_products: 0.478434
+  total_num_count_products: 0.541274
+  total_price_products: 0.458726
   vendor_numeric: -0.970038
   year: 0.255184
 
@@ -547,7 +547,7 @@ Final parameters (no normalized features):
   day: 2
   month: 4
   sku_count_products: 4
-  total_num_count_products: 206.562
-  total_price_products: 293770
+  total_num_count_products: 210.843
+  total_price_products: 288018
   vendor_numeric: 20
   year: 2020
