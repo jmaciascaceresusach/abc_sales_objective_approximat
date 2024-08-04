@@ -17,7 +17,7 @@ Comentario específicos:
 
 class SimulationEngine; // 04-08-2024 1810
 
-class HistoricalData { // 04-08-2024 1714 (v2)
+class HistoricalData { // 04-08-2024 1820
 public:
     std::vector<std::string> features;
 
