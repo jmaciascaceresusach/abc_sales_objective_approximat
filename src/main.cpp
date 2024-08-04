@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     //std::string currentDate = getCurrentDate();
     std::string currentDate = "2024-08-03";
 
-    loadSimulationConfig("../data/simulation_config_initial.txt", numberOfIterations, tolerance, daysToSimulate);
+    loadSimulationConfig("../data/input/simulation_config_initial.txt", numberOfIterations, tolerance, daysToSimulate);
 
     if (numberOfIterations == 0 || tolerance == 0 || daysToSimulate == 0) {
         std::cerr << "Failed to load simulation configuration correctly." << std::endl;
@@ -38,14 +38,14 @@ int main(int argc, char* argv[]) {
 
     SimulationEngine simulationEngine;
 
-    SKUData skuData = loadSKUData("../data/sku_Z285320/" + currentDate + "/Z285320_matriz_intervals_df_" + currentDate + ".csv");
+    SKUData skuData = loadSKUData("../data/input/sku_Z285320/" + currentDate + "/Z285320_matriz_intervals_df_" + currentDate + ".csv");
     
-    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/sku_Z285320/" + currentDate + "/Z285320_df_features_sku_norm_" + currentDate + ".txt");
+    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/input/sku_Z285320/" + currentDate + "/Z285320_df_features_sku_norm_" + currentDate + ".txt");
 
-    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/sku_Z285320/" + currentDate + "/Z285320_df_features_sku_" + currentDate + ".txt");
+    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/input/sku_Z285320/" + currentDate + "/Z285320_df_features_sku_" + currentDate + ".txt");
 
-    simulationEngine.loadMeanAndStdValues("../data/sku_Z285320/" + currentDate + "/Z285320_mean_values_features_sku_" + currentDate + ".csv",
-                                          "../data/sku_Z285320/" + currentDate + "/Z285320_std_values_features_sku_" + currentDate + ".csv");
+    simulationEngine.loadMeanAndStdValues("../data/input/sku_Z285320/" + currentDate + "/Z285320_mean_values_features_sku_" + currentDate + ".csv",
+                                          "../data/input/sku_Z285320/" + currentDate + "/Z285320_std_values_features_sku_" + currentDate + ".csv");
     
     simulationEngine.setProductData(skuData);
     simulationEngine.setNormalizedFeatures(normalizedFeatures);

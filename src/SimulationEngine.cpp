@@ -49,8 +49,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     //std::string currentDate = getCurrentDate();
     std::string currentDate = "2024-08-03";
     
-    std::ofstream logFile("../data/output/simulation_log_" + currentDate + ".txt");
-    std::ofstream statsFile("../data/output/statistics_simulations_" + currentDate + ".txt");
+    std::ofstream logFile("../data/output/sku_Z285320/" + currentDate + "/simulation_log_" + currentDate + ".txt");
+    std::ofstream statsFile("../data/output/sku_Z285320/" + currentDate + "/statistics_simulations_" + currentDate + ".txt");
 
     logFile << "Starting simulation with " << numberOfIterations << " iterations, "
             << daysToSimulate << " days to simulate, and tolerance " << tolerance << std::endl;
