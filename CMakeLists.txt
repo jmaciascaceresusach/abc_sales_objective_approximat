@@ -14,6 +14,7 @@ add_executable(ABC_SALES_OBJECTIVE_APPROXIMAT
     src/Parameter.cpp
     src/SimulationEngine.cpp
     src/DataLoader.cpp
+    src/Simulation.cpp
 )
 
 target_link_libraries(ABC_SALES_OBJECTIVE_APPROXIMAT pthread)

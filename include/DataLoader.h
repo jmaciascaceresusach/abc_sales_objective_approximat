@@ -15,6 +15,8 @@ Comentario específicos:
 - getCurrentDate, inverse_z_score, calculate_z_score, loadValues: Funciones para manejar fechas y normalización de datos.
 */
 
+class SimulationEngine; // 04-08-2024 1810
+
 class HistoricalData { // 04-08-2024 1714 (v2)
 public:
     std::vector<std::string> features;
@@ -40,7 +42,7 @@ std::map<std::string, std::vector<std::pair<double, double>>> loadSKUIntervals(c
 
 std::vector<std::string> getAllSKUs(); // 04-08-2024 1714
 
-void runSimulationForSKU(SimulationEngine& simulationEngine, const std::string& sku, const std::string& dayForSimulate, int numberOfIterations, int daysToSimulate, double tolerance); // 04-08-2024 1714
+//void runSimulationForSKU(SimulationEngine& simulationEngine, const std::string& sku, const std::string& dayForSimulate, int numberOfIterations, int daysToSimulate, double tolerance); // 04-08-2024 1810
 
 std::string getCurrentDate();
 

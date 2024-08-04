@@ -9,7 +9,7 @@
 #include <map>
 #include <iomanip>
 #include "../include/Parameter.h"
-#include "../include/SimulationEngine.h"
+#include "../include/Simulation.h"
 #include "../include/DataLoader.h"
 
 /*
