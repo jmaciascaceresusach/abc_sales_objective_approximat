@@ -38,14 +38,14 @@ int main(int argc, char* argv[]) {
 
     SimulationEngine simulationEngine;
 
-    SKUData skuData = loadSKUData("../data/Z285320/Z285320_matriz_intervals_df_" + currentDate + ".csv");
+    SKUData skuData = loadSKUData("../data/sku_Z285320/" + currentDate + "/Z285320_matriz_intervals_df_" + currentDate + ".csv");
     
-    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/Z285320/Z285320_df_features_sku_norm_" + currentDate + ".txt");
+    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/sku_Z285320/" + currentDate + "/Z285320_df_features_sku_norm_" + currentDate + ".txt");
 
-    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/Z285320/Z285320_df_features_sku_" + currentDate + ".txt");
+    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/sku_Z285320/" + currentDate + "/Z285320_df_features_sku_" + currentDate + ".txt");
 
-    simulationEngine.loadMeanAndStdValues("../data/Z285320/Z285320_mean_values_features_sku_" + currentDate + ".csv",
-                                          "../data/Z285320/Z285320_std_values_features_sku_" + currentDate + ".csv");
+    simulationEngine.loadMeanAndStdValues("../data/sku_Z285320/" + currentDate + "/Z285320_mean_values_features_sku_" + currentDate + ".csv",
+                                          "../data/sku_Z285320/" + currentDate + "/Z285320_std_values_features_sku_" + currentDate + ".csv");
     
     simulationEngine.setProductData(skuData);
     simulationEngine.setNormalizedFeatures(normalizedFeatures);
