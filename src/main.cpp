@@ -45,10 +45,10 @@ int main(int argc, char* argv[]) {
         std::vector<std::string> allSKUs = getAllSKUs();  // Nueva función para obtener todos los SKUs
         for (const auto& sku : allSKUs) {
             std::cout << "Running simulation for SKU: " << sku << std::endl;
-            void runSimulationForSKU(SimulationEngine& simulationEngine, const std::string& sku, const std::string& dayForSimulate, int numberOfIterations, int daysToSimulate, double tolerance);
+            runSimulationForSKU(simulationEngine, skuForSimulate, dayForSimulate, numberOfIterations, daysToSimulate, tolerance);
         }
     } else {
-        void runSimulationForSKU(SimulationEngine& simulationEngine, const std::string& sku, const std::string& dayForSimulate, int numberOfIterations, int daysToSimulate, double tolerance);
+        runSimulationForSKU(simulationEngine, skuForSimulate, dayForSimulate, numberOfIterations, daysToSimulate, tolerance);
     }
 
     // 04-08-2024 1714

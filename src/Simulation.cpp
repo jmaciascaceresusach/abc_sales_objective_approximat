@@ -2,8 +2,10 @@
 #include "DataLoader.h"
 #include <iostream> // 04-08-2024 1810
 
-// 04-08-2024 1810
+// 04-08-2024 1941
 void runSimulationForSKU(SimulationEngine& simulationEngine, const std::string& sku, const std::string& dayForSimulate, int numberOfIterations, int daysToSimulate, double tolerance) {
+    std::cout << "Starting simulation for SKU: " << sku << std::endl;
+
     std::string basePath = "../data/input/sku_" + sku + "/" + dayForSimulate + "/";
     
     SKUData skuData = loadSKUData(basePath + sku + "_matriz_intervals_df_" + dayForSimulate + ".csv");

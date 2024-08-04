@@ -78,6 +78,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     logFile << "Starting simulation with " << numberOfIterations << " iterations, "
             << daysToSimulate << " days to simulate, and tolerance " << tolerance << std::endl;
 
+    std::cout << "Running simulations with " << numberOfIterations << " iterations, "
+            << daysToSimulate << " days to simulate, and tolerance " << tolerance << std::endl;
+
     statsFile << "Iteration,AverageSaleValue,MinSaleValue,MaxSaleValue,Distance,Tolerance";
     for (const auto& param : parameters) {
         statsFile << "," << param.name;
