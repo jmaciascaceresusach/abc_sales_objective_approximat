@@ -24,40 +24,41 @@ Comentario específicos:
 int main(int argc, char* argv[]) {
     auto start = std::chrono::high_resolution_clock::now();
 
-    int numberOfIterations = 0, tolerance = 0, daysToSimulate = 0;
-
     //std::string currentDate = getCurrentDate();
-    std::string currentDate = "2024-08-03";
+    int numberOfIterations = 0, tolerance = 0, daysToSimulate = 0;
+    
+    // 04-08-2024 1714
+    std::string dayForSimulate, skuForSimulate;
 
-    loadSimulationConfig("../data/input/simulation_config_initial.txt", numberOfIterations, tolerance, daysToSimulate);
+    // 04-08-2024 1714
+    loadSimulationConfig("../data/input/simulation_config_initial.txt", numberOfIterations, tolerance, daysToSimulate, dayForSimulate, skuForSimulate);
 
-    if (numberOfIterations == 0 || tolerance == 0 || daysToSimulate == 0) {
+    if (numberOfIterations == 0 || tolerance == 0 || daysToSimulate == 0 || dayForSimulate.empty() || skuForSimulate.empty()) {
         std::cerr << "Failed to load simulation configuration correctly." << std::endl;
         return 1;
     }
 
     SimulationEngine simulationEngine;
 
-    SKUData skuData = loadSKUData("../data/input/sku_Z285320/" + currentDate + "/Z285320_matriz_intervals_df_" + currentDate + ".csv");
-    
-    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures("../data/input/sku_Z285320/" + currentDate + "/Z285320_df_features_sku_norm_" + currentDate + ".txt");
+    // 04-08-2024 1714
+    if (skuForSimulate == "All") {
+        std::vector<std::string> allSKUs = getAllSKUs();  // Nueva función para obtener todos los SKUs
+        for (const auto& sku : allSKUs) {
+            std::cout << "Running simulation for SKU: " << sku << std::endl;
+            void runSimulationForSKU(SimulationEngine& simulationEngine, const std::string& sku, const std::string& dayForSimulate, int numberOfIterations, int daysToSimulate, double tolerance);
+        }
+    } else {
+        void runSimulationForSKU(SimulationEngine& simulationEngine, const std::string& sku, const std::string& dayForSimulate, int numberOfIterations, int daysToSimulate, double tolerance);
+    }
 
-    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures("../data/input/sku_Z285320/" + currentDate + "/Z285320_df_features_sku_" + currentDate + ".txt");
-
-    simulationEngine.loadMeanAndStdValues("../data/input/sku_Z285320/" + currentDate + "/Z285320_mean_values_features_sku_" + currentDate + ".csv",
-                                          "../data/input/sku_Z285320/" + currentDate + "/Z285320_std_values_features_sku_" + currentDate + ".csv");
-    
-    simulationEngine.setProductData(skuData);
-    simulationEngine.setNormalizedFeatures(normalizedFeatures);
-    simulationEngine.setNoNormalizedFeatures(noNormalizedFeatures);
-    
-    simulationEngine.runSimulations(numberOfIterations, daysToSimulate, tolerance);
-
+    // 04-08-2024 1714
     std::cout << "\n";
     std::cout << "*** Configurations ***" << std::endl;
     std::cout << "numberOfIterations: " << numberOfIterations << std::endl;
     std::cout << "tolerance: " << tolerance << std::endl;
     std::cout << "daysToSimulate: " << daysToSimulate << std::endl;
+    std::cout << "dayForSimulate: " << dayForSimulate << std::endl;
+    std::cout << "skuForSimulate: " << skuForSimulate << std::endl;
     std::cout << "\n";
 
     auto end = std::chrono::high_resolution_clock::now();

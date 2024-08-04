@@ -44,10 +44,33 @@ void SimulationEngine::loadMeanAndStdValues(const std::string& meanFilename, con
     stdValues = loadValues(stdFilename);
 }
 
+// 04-08-2024 1714
+double SimulationEngine::normalize(double value, const std::string& feature) {
+    return (value - meanValues[feature]) / stdValues[feature];
+}
+
+// 04-08-2024 1714
+double SimulationEngine::denormalize(double normalizedValue, const std::string& feature) {
+    return normalizedValue * stdValues[feature] + meanValues[feature];
+}
+
+// 04-08-2024 1714
+void SimulationEngine::loadHistoricalData(const std::string& filename) {
+    historicalData.loadFromCSV(filename);
+}
+
+// 04-08-2024 1714
 void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate, double tolerance) {
 
     //std::string currentDate = getCurrentDate();
     std::string currentDate = "2024-08-03";
+
+    attributeWeights = loadAttributeWeights("../data/input/attribute_weights.csv");
+    skuIntervals = loadSKUIntervals("../data/input/matriz_intervals_df_prodx5_maxlp20.csv");
+    loadHistoricalData("../data/input/sku_" + skuData.sku + "/" + getCurrentDate() + "/" + skuData.sku + "_filtered_df_features_sku_" + getCurrentDate() + ".csv");
+
+    // Pasar los datos históricos al método ABC
+    abcMethod.setHistoricalData(historicalData.records);
     
     std::ofstream logFile("../data/output/sku_Z285320/" + currentDate + "/simulation_log_" + currentDate + ".txt");
     std::ofstream statsFile("../data/output/sku_Z285320/" + currentDate + "/statistics_simulations_" + currentDate + ".txt");

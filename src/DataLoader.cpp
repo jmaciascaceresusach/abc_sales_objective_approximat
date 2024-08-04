@@ -1,4 +1,6 @@
 #include "../include/DataLoader.h"
+#include "../include/SimulationEngine.h"
+#include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -17,6 +19,57 @@ Comentarios generales:
 Comentario específicos:
 - Implementación de funciones como loadSKUData, loadNormalizedFeatures, loadNoNormalizedFeatures, loadSimulationConfig, getCurrentDate, inverse_z_score, calculate_z_score, loadValues.
 */
+
+// 04-08-2024 1714 (v2)
+void HistoricalData::loadFromCSV(const std::string& filename) { 
+    std::ifstream file(filename);
+    std::string line;
+    std::getline(file, line);
+    std::istringstream headerStream(line);
+    std::string feature;
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string token;
+        std::map<std::string, double> record;
+        int i = 0;
+        while (std::getline(headerStream, feature, ';')) {
+            features.push_back(feature);
+        }
+        records.push_back(record);
+    }
+}
+
+// 04-08-2024 1714
+std::vector<std::string> getAllSKUs() {
+    std::vector<std::string> skus;
+    std::string basePath = "../data/input/";
+    
+    for (const auto& entry : std::filesystem::directory_iterator(basePath)) {
+        if (entry.is_directory() && entry.path().filename().string().substr(0, 4) == "sku_") {
+            skus.push_back(entry.path().filename().string().substr(4));
+        }
+    }
+    
+    return skus;
+}
+
+void runSimulationForSKU(SimulationEngine& simulationEngine, const std::string& sku, const std::string& dayForSimulate, int numberOfIterations, int daysToSimulate, double tolerance) {
+    std::string basePath = "../data/input/sku_" + sku + "/" + dayForSimulate + "/";
+    
+    SKUData skuData = loadSKUData(basePath + sku + "_matriz_intervals_df_" + dayForSimulate + ".csv");
+    std::map<std::string, double> normalizedFeatures = loadNormalizedFeatures(basePath + sku + "_df_features_sku_norm_" + dayForSimulate + ".txt");
+    std::map<std::string, double> noNormalizedFeatures = loadNoNormalizedFeatures(basePath + sku + "_df_features_sku_" + dayForSimulate + ".txt");
+
+    simulationEngine.loadMeanAndStdValues(basePath + sku + "_mean_values_features_sku_" + dayForSimulate + ".csv",
+                                          basePath + sku + "_std_values_features_sku_" + dayForSimulate + ".csv");
+
+    simulationEngine.setProductData(skuData);
+    simulationEngine.setNormalizedFeatures(normalizedFeatures);
+    simulationEngine.setNoNormalizedFeatures(noNormalizedFeatures);
+    simulationEngine.runSimulations(numberOfIterations, daysToSimulate, tolerance);
+    
+    std::cout << "Simulation completed for SKU: " << sku << std::endl;
+}
 
 std::string getCurrentDate() {
     auto now = std::chrono::system_clock::now();
@@ -239,16 +292,10 @@ std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filena
     return features;
 }
 
-void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& tolerance, int& daysToSimulate) {
+// 04-08-2024 1714 (v2)
+void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& tolerance, int& daysToSimulate, std::string& dayForSimulate, std::string& skuForSimulate) {
     std::ifstream file(filename);
     std::string line;
-
-    if (!file.is_open()) {
-        std::cerr << "Error: Could not open file " << filename << std::endl;
-        return;
-    }
-
-    std::cout << "\n*** loadSimulationConfig ***" << std::endl;
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
@@ -260,24 +307,57 @@ void loadSimulationConfig(const std::string& filename, int& numberOfIterations, 
             value.erase(0, value.find_first_not_of(" \t"));
             value.erase(value.find_last_not_of(" \t") + 1);
 
-            try {
-                if (key == "numberOfIterations") {
-                    numberOfIterations = std::stoi(value);
-                    std::cout << "numberOfIterations set to " << numberOfIterations << std::endl; // Depuración
-                } else if (key == "tolerance") {
-                    tolerance = std::stoi(value);
-                    std::cout << "tolerance set to " << tolerance << std::endl; // Depuración
-                } else if (key == "daysToSimulate") {
-                    daysToSimulate = std::stoi(value);
-                    std::cout << "daysToSimulate set to " << daysToSimulate << std::endl; // Depuración
-                }
-            } catch (const std::invalid_argument& e) {
-                std::cerr << "Invalid argument for key " << key << ": " << value << std::endl;
-            } catch (const std::out_of_range& e) {
-                std::cerr << "Out of range value for key " << key << ": " << value << std::endl;
-            }
+            if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
+            else if (key == "tolerance") tolerance = std::stoi(value);
+            else if (key == "daysToSimulate") daysToSimulate = std::stoi(value);
+            else if (key == "dayForSimulate") dayForSimulate = value;
+            else if (key == "skuForSimulate") skuForSimulate = value;
         }
     }
 
-    file.close();
+    std::cout << "\n*** loadSimulationConfig ***" << std::endl;
+    std::cout << "numberOfIterations set to " << numberOfIterations << std::endl;
+    std::cout << "tolerance set to " << tolerance << std::endl;
+    std::cout << "daysToSimulate set to " << daysToSimulate << std::endl;
+    std::cout << "dayForSimulate set to " << dayForSimulate << std::endl;
+    std::cout << "skuForSimulate set to " << skuForSimulate << std::endl;
+}
+
+// 04-08-2024 1714
+std::map<std::string, double> loadAttributeWeights(const std::string& filename) {
+    std::map<std::string, double> weights;
+    std::ifstream file(filename);
+    std::string line;
+    std::getline(file, line); // Skip header
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string feature, weight;
+        std::getline(iss, feature, ',');
+        std::getline(iss, weight);
+        weights[feature] = std::stod(weight);
+    }
+    return weights;
+}
+
+// 04-08-2024 1714
+std::map<std::string, std::vector<std::pair<double, double>>> loadSKUIntervals(const std::string& filename) {
+    std::map<std::string, std::vector<std::pair<double, double>>> intervals;
+    std::ifstream file(filename);
+    std::string line;
+    std::getline(file, line); // Skip header
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string sku, interval;
+        std::getline(iss, sku, ';');
+        std::vector<std::pair<double, double>> skuIntervals;
+        while (std::getline(iss, interval, ';')) {
+            if (interval.find("list_products_") != std::string::npos) {
+                double min, max;
+                sscanf(interval.c_str(), "(%lf, %lf)", &min, &max);
+                skuIntervals.push_back({min, max});
+            }
+        }
+        intervals[sku] = skuIntervals;
+    }
+    return intervals;
 }

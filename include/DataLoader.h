@@ -15,13 +15,32 @@ Comentario específicos:
 - getCurrentDate, inverse_z_score, calculate_z_score, loadValues: Funciones para manejar fechas y normalización de datos.
 */
 
+class HistoricalData { // 04-08-2024 1714 (v2)
+public:
+    std::vector<std::string> features;
+
+    std::vector<std::map<std::string, double>> records;
+    
+    void loadFromCSV(const std::string& filename);
+};
+
 SKUData loadSKUData(const std::string& filename);
 
 std::map<std::string, double> loadNormalizedFeatures(const std::string& filename);
 
 std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filename);
 
-void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& tolerance, int& daysToSimulate);
+void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& tolerance, int& daysToSimulate, std::string& dayForSimulate, std::string& skuForSimulate); // 04-08-2024 1714
+
+std::map<std::string, double> loadValues(const std::string& filename); // 04-08-2024 1714
+
+std::map<std::string, double> loadAttributeWeights(const std::string& filename); // 04-08-2024 1714
+
+std::map<std::string, std::vector<std::pair<double, double>>> loadSKUIntervals(const std::string& filename); // 04-08-2024 1714
+
+std::vector<std::string> getAllSKUs(); // 04-08-2024 1714
+
+void runSimulationForSKU(SimulationEngine& simulationEngine, const std::string& sku, const std::string& dayForSimulate, int numberOfIterations, int daysToSimulate, double tolerance); // 04-08-2024 1714
 
 std::string getCurrentDate();
 

@@ -5,6 +5,7 @@
 #include <map>
 #include "ABCMethod.h"
 #include "Parameter.h"
+#include "DataLoader.h"
 
 /*
 Comentarios generales:
@@ -44,6 +45,18 @@ private:
     std::map<std::string, double> meanValues;
     
     std::map<std::string, double> stdValues;
+
+    std::map<std::string, double> attributeWeights; // 04-08-2024 1714
+
+    std::map<std::string, std::vector<std::pair<double, double>>> skuIntervals; // 04-08-2024 1714
+
+    double normalize(double value, const std::string& feature); // 04-08-2024 1714
+
+    double denormalize(double normalizedValue, const std::string& feature); // 04-08-2024 1714
+
+    HistoricalData historicalData; // 04-08-2024 1714
+
+    void loadHistoricalData(const std::string& filename); // 04-08-2024 1714
 };
 
 #endif // SIMULATIONENGINE_H

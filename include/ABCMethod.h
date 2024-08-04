@@ -53,10 +53,26 @@ public:
                              double initialPrice,
                              int daysToSimulate);
 
+    void setHistoricalData(const std::vector<std::map<std::string, double>>& data);
+
 private:
     void normalizeParameters(std::vector<Parameter>& parameters);
     
     double calculateProbability(double price, const SKUData& skuData, int day);
+
+    double calculateHistoricalTrend(double price, int day, const std::vector<std::map<std::string, double>>& historicalData); // 04-08-2024 1714
+
+    double calculateSeasonality(int day); // 04-08-2024 1714
+
+    double getExternalFactor(int day); // 04-08-2024 1714
+
+    double calculateAutocorrelation(double price, const std::vector<double>& previousPrices); // 04-08-2024 1714
+
+    double calculateVolatility(const std::vector<std::map<std::string, double>>& historicalData); // 04-08-2024 1714
+
+    std::vector<double> previousPrices; // 04-08-2024 1714
+
+    std::vector<std::map<std::string, double>> historicalData; // 04-08-2024 1714
 };
 
 #endif // ABCMETHOD_H

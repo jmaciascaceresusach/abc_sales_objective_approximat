@@ -70,7 +70,8 @@
         "thread": "cpp",
         "mutex": "cpp",
         "stop_token": "cpp",
-        "numeric": "cpp"
+        "numeric": "cpp",
+        "filesystem": "cpp"
     },
     "cmake.configureOnOpen": true
 }
