@@ -37,8 +37,6 @@ private:
     std::vector<Parameter> parameters;
 
     ABCMethod abcMethod;
-
-    SKUData skuData;
     
     std::map<std::string, double> normalizedFeatures;
 
