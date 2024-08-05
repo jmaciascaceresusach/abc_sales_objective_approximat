@@ -87,6 +87,15 @@ std::vector<std::string> getAllSKUs() {
     return skus;
 }
 
+// 05-08-2024 1434
+std::string getCurrentDateTime() {
+    auto now = std::chrono::system_clock::now();
+    auto in_time_t = std::chrono::system_clock::to_time_t(now);
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d %H:%M:%S");
+    return ss.str();
+}
+
 std::string getCurrentDate() {
     auto now = std::chrono::system_clock::now();
     auto in_time_t = std::chrono::system_clock::to_time_t(now);
@@ -332,8 +341,8 @@ void loadSimulationConfig(const std::string& filename, int& numberOfIterations, 
         }
     }
 
-    std::string currentDate = getCurrentDate();
-    std::cout << "\n*** Creation date: " << currentDate <<  " ***" << std::endl;
+    std::string currentDateTime = getCurrentDateTime();
+    std::cout << "*** Creation date: " << currentDateTime <<  " ***" << std::endl;
 
     std::cout << "\n*** loadSimulationConfig ***" << std::endl;
     std::cout << "numberOfIterations set to " << numberOfIterations << std::endl;

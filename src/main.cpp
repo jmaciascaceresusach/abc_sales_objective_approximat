@@ -24,8 +24,6 @@ Comentario específicos:
 int main(int argc, char* argv[]) {
     auto start = std::chrono::high_resolution_clock::now();
 
-    //std::string currentDate = getCurrentDate();
-
     // 05-08-2024 1008
     int numberOfIterations = 0, numberOfRefinements = 0, tolerance = 0, daysToSimulate = 0;
     std::string dayForSimulate, skuForSimulate;
@@ -72,8 +70,8 @@ int main(int argc, char* argv[]) {
     std::cout << "Time: " << duration.count() << " milliseconds" << std::endl;
     std::cout << "\n";
 
-    std::string currentDate = getCurrentDate();
-    std::cout << "\n*** Finalization date: " << currentDate <<  " ***" << std::endl;
-    
+    std::string currentDateTime = getCurrentDateTime();
+    std::cout << "*** Finalization date: " << currentDateTime <<  " ***" << std::endl;
+
     return 0;
 }

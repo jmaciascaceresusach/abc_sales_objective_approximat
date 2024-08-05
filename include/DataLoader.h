@@ -12,7 +12,7 @@ Comentarios generales:
 
 Comentario específicos:
 - loadSKUData, loadNormalizedFeatures, loadNoNormalizedFeatures, loadSimulationConfig: Funciones para cargar datos de SKU, características normalizadas y no normalizadas, y la configuración de simulación.
-- getCurrentDate, inverse_z_score, calculate_z_score, loadValues: Funciones para manejar fechas y normalización de datos.
+- getCurrentDate, getCurrentDateTime, inverse_z_score, calculate_z_score, loadValues: Funciones para manejar fechas y normalización de datos.
 */
 
 class SimulationEngine; // 04-08-2024 1810
@@ -40,11 +40,11 @@ std::map<std::string, double> loadAttributeWeights(const std::string& filename);
 
 std::map<std::string, std::vector<std::pair<double, double>>> loadSKUIntervals(const std::string& filename); // 04-08-2024 1714
 
-std::vector<std::string> getAllSKUs(); // 04-08-2024 1714
-
-//void runSimulationForSKU(SimulationEngine& simulationEngine, const std::string& sku, const std::string& dayForSimulate, int numberOfIterations, int daysToSimulate, double tolerance); // 04-08-2024 1810
+std::vector<std::string> getAllSKUs();
 
 std::string getCurrentDate();
+
+std::string getCurrentDateTime(); // 05-08-2024 1434
 
 std::map<std::string, double> inverse_z_score(const std::map<std::string, double>& z_score_normalized,
                                               const std::map<std::string, double>& mean_values,

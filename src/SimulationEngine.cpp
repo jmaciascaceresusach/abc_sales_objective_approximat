@@ -157,7 +157,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     std::cout << "\n*** iterationSimulations ***" << std::endl;
 
     std::cout << "Starting main simulation loop..." << std::endl;
-    logFile << "\nStarting main simulation loop:" << std::endl;
+    logFile << "\n---Starting main simulation loop---" << std::endl;
 
     for (int i = 0; i < numberOfIterations; ++i) {
         std::cout << "\nStarting main simulation iteration " << i + 1 << " of " << numberOfIterations << std::endl;
@@ -228,7 +228,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     }
 
     std::cout << "Exiting runSimulations function" << std::endl;
-    logFile << "\nFinishing main simulation loop:" << std::endl;
+    logFile << "\n--- Finishing main simulation loop ---" << std::endl;
 
     logFile << "\nFinal Results:" << std::endl;
     logFile << "Best simulation distance: " << bestDistance << std::endl;
