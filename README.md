@@ -35,6 +35,9 @@ Now, to test the project, you would have to use the following statements:
 
 The simulation_config_initial.txt file, can be modified according to:
 
-- numberOfIterations=50
+- numberOfIterations=4
+- numberOfRefinements=5
 - tolerance=13
-- daysToSimulate=30
+- daysToSimulate=5
+- dayForSimulate=2024-08-03
+- skuForSimulate=Z285320
