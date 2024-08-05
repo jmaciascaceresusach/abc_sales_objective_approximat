@@ -72,5 +72,8 @@ int main(int argc, char* argv[]) {
     std::cout << "Time: " << duration.count() << " milliseconds" << std::endl;
     std::cout << "\n";
 
+    std::string currentDate = getCurrentDate();
+    std::cout << "\n*** Finalization date: " << currentDate <<  " ***" << std::endl;
+    
     return 0;
 }

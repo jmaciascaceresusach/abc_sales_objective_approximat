@@ -38,7 +38,9 @@ void HistoricalData::loadFromCSV(const std::string& filename) {
         while (std::getline(iss, feature, ';')) {
             features.push_back(feature);
         }
-        std::cout << "Headers read: " << features.size() << std::endl;
+
+        std::cout << "\n*** verification of historical information ***" << std::endl;
+        std::cout << "\nHeaders read: " << features.size() << std::endl;
         for (const auto& f : features) {
             std::cout << f << ", ";
         }
@@ -329,6 +331,9 @@ void loadSimulationConfig(const std::string& filename, int& numberOfIterations, 
             else if (key == "skuForSimulate") skuForSimulate = value;
         }
     }
+
+    std::string currentDate = getCurrentDate();
+    std::cout << "\n*** Creation date: " << currentDate <<  " ***" << std::endl;
 
     std::cout << "\n*** loadSimulationConfig ***" << std::endl;
     std::cout << "numberOfIterations set to " << numberOfIterations << std::endl;

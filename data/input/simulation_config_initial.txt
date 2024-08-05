@@ -1,6 +1,6 @@
-numberOfIterations=8
-numberOfRefinements=11
+numberOfIterations=4
+numberOfRefinements=5
 tolerance=13
-daysToSimulate=10
+daysToSimulate=5
 dayForSimulate=2024-08-03
 skuForSimulate=Z285320

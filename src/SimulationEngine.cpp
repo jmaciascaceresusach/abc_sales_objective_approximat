@@ -79,6 +79,7 @@ void SimulationEngine::loadHistoricalData(const std::string& filename) {
             std::cout << std::endl;
         }
     }
+    std::cout << "\n" << std::endl;
     //abcMethod.setHistoricalData(historicalData);
 }
 
@@ -153,23 +154,24 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(skuData.globalMinPrice, skuData.globalMaxPrice);
 
-    std::cout << "*** iterationSimulations ***" << std::endl;
+    std::cout << "\n*** iterationSimulations ***" << std::endl;
 
-    std::cout << "Starting main simulation loop" << std::endl;
+    std::cout << "Starting main simulation loop..." << std::endl;
+    logFile << "\nStarting main simulation loop:" << std::endl;
 
     for (int i = 0; i < numberOfIterations; ++i) {
         std::cout << "\nStarting main simulation iteration " << i + 1 << " of " << numberOfIterations << std::endl;
 
         logFile << "\nIteration " << i + 1 << " of " << numberOfIterations << std::endl;
 
-        std::cout << "Refining parameters" << std::endl;
+        std::cout << "Refining parameters..." << std::endl;
 
         // 05-08-2024 1026
         abcMethod.refineParameters(parameters, skuData, normalizedFeatures, daysToSimulate, tolerance, numberOfRefinements);
 
-        std::cout << "Generating initial price" << std::endl;
+        std::cout << "Generating initial price..." << std::endl;
         double initialPrice = dis(gen);
-        std::cout << "Simulating future prices" << std::endl;
+        std::cout << "Simulating future prices..." << std::endl;
         std::vector<double> simulatedPrices = abcMethod.simulateFuturePrices(skuData, normalizedFeatures, daysToSimulate, initialPrice);
 
         std::cout << "Calculating distance" << std::endl;
@@ -212,20 +214,21 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         std::cout << "MaxSaleValue=" << maxSaleValue << ", ";
         std::cout << "Distance=" << distance << std::endl;
 
-        // 05-08-2024 1022
+        // 05-08-2024 1410
         if (distance <= tolerance) {
             acceptedSimulations++;
             logFile << "  Satisfactory simulation found." << std::endl;
-            logFile << "  Simulation accepted: " << acceptedSimulations++ << std::endl;
+            logFile << "  Simulation accepted: " << acceptedSimulations << std::endl;
         } else {
             rejectedSimulations++;
-            logFile << "  Simulation rejected." << rejectedSimulations++ << std::endl;
+            logFile << "  Simulation rejected." << rejectedSimulations << std::endl;
         }
 
         std::cout << "Completed main simulation iteration " << i + 1 << " of " << numberOfIterations << std::endl;
     }
 
     std::cout << "Exiting runSimulations function" << std::endl;
+    logFile << "\nFinishing main simulation loop:" << std::endl;
 
     logFile << "\nFinal Results:" << std::endl;
     logFile << "Best simulation distance: " << bestDistance << std::endl;
