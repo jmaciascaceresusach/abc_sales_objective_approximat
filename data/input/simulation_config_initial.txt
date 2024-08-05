@@ -2,4 +2,4 @@ numberOfIterations=50
 tolerance=13
 daysToSimulate=30
 dayForSimulate=2024-08-03
-skuForSimulate=Z285320
+skuForSimulate=U391805
