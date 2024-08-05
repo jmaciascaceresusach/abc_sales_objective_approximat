@@ -157,60 +157,6 @@ double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices,
     return distance / daysToSimulate;
 }
 
-double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices, 
-                                    const SKUData& skuData,
-                                    double initialPrice,
-                                    int daysToSimulate) {
-
-    std::cout << "\n-> Entering calculateDistance function" << std::endl;
-
-    double distance = 0.0;
-    std::vector<double> observedPrices;
-    
-    // Obtener precios observados del SKUData
-    for (const auto& interval : skuData.listProducts) {
-        observedPrices.push_back((interval.first + interval.second) / 2);
-    }
-
-    // Asegurar que tenemos suficientes precios observados
-    while (observedPrices.size() < daysToSimulate) {
-        observedPrices.push_back(observedPrices.back());
-    }
-
-    // Calcular distancia euclidiana normalizada
-    for (int i = 0; i < daysToSimulate; ++i) {
-        double simPrice = simulatedPrices[i];
-        double obsPrice = observedPrices[i];
-        
-        // Usar calculateProbability para obtener una medida de probabilidad
-        double simProb = calculateProbability(simPrice, skuData, i);
-        double obsProb = calculateProbability(obsPrice, skuData, i);
-        
-        double diff = (simProb - obsProb) / obsProb;
-        distance += diff * diff;
-    }
-    distance = std::sqrt(distance / daysToSimulate);
-
-    // Añadir penalización por diferencia en estadísticas resumen
-    double simMean = std::accumulate(simulatedPrices.begin(), simulatedPrices.end(), 0.0) / simulatedPrices.size();
-    double obsMean = std::accumulate(observedPrices.begin(), observedPrices.end(), 0.0) / observedPrices.size();
-    
-    double simStd = std::sqrt(std::inner_product(simulatedPrices.begin(), simulatedPrices.end(), simulatedPrices.begin(), 0.0) / simulatedPrices.size() - simMean * simMean);
-    double obsStd = std::sqrt(std::inner_product(observedPrices.begin(), observedPrices.end(), observedPrices.begin(), 0.0) / observedPrices.size() - obsMean * obsMean);
-
-    distance += std::abs(simMean - obsMean) / obsMean;
-    distance += std::abs(simStd - obsStd) / obsStd;
-
-    // Incorporar autocorrelación
-    double simAutocorr = calculateAutocorrelation(simulatedPrices.back(), simulatedPrices);
-    double obsAutocorr = calculateAutocorrelation(observedPrices.back(), observedPrices);
-    distance += std::abs(simAutocorr - obsAutocorr);
-
-    std::cout << "\n-> Exiting calculateDistance function\n" << std::endl;
-
-    return distance;
-}
-
 void ABCMethod::normalizeParameters(std::vector<Parameter>& parameters) {
     double totalProbability = 0.0;
     for (const auto& param : parameters) {
