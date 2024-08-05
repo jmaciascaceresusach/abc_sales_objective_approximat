@@ -114,7 +114,7 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
 
     for (int i = 1; i < daysToSimulate; ++i) {
 
-        std::cout << "\n** Simulating day " << i << " of " << daysToSimulate << std::endl;
+        std::cout << "\n** Simulating day " << i << " of " << daysToSimulate << " **";
 
         std::vector<double> probabilities;
         double prob = 0.0;
@@ -135,7 +135,7 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
         previousPrices.push_back(price);
     }
 
-    std::cout << "Exiting simulateFuturePrices function" << std::endl;
+    std::cout << "\nExiting simulateFuturePrices function" << std::endl;
     return futurePrices;
 }
 
@@ -214,10 +214,12 @@ bool ABCMethod::verifyInputData(const SKUData& skuData) {
     return true;
 }
 
-// 05-08-2024 1054
+// 05-08-2024 1555
 double ABCMethod::calculateProbability(double price, const SKUData& skuData, int day) {
     double probability = 0.0;
     std::stringstream log;
+
+    std::cout << "\n** Log calculateProbability **" << std::endl;
 
     // Verificar si el precio está en algún intervalo
     for (size_t i = 0; i < skuData.listProducts.size(); ++i) {
@@ -230,11 +232,8 @@ double ABCMethod::calculateProbability(double price, const SKUData& skuData, int
             double positionInInterval = (price - interval.first) / (interval.second - interval.first);
             double intervalAdjustment = std::exp(-std::pow(positionInInterval - 0.5, 2) / 0.25);
             probability *= intervalAdjustment;
-
-            std::cout << "\n** Log calculateProbability **" << std::endl;
-            std::cout << "\ncalculateProbability (case 4)\n" << std::endl;
-
-            log << "-> Day: " << day << ", Price: " << price << std::endl;            
+            
+            log << "-> Day: " << day++ << ", Price: " << price << std::endl;            
             log << "-> Base probability: " << probability << std::endl;
 
             log << "-> Interval adjustment: " << intervalAdjustment << std::endl;

@@ -126,7 +126,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     std::ofstream statsFile("../data/output/sku_" + skuData.sku + "/" + currentDate + "/statistics_simulations_" + currentDate + ".txt");
 
     std::string currentDateTime = getCurrentDateTime();
-    logFile << "*** Starting date: " << currentDateTime <<  " ***" << std::endl;
+    logFile << "*** Starting date: " << currentDateTime <<  " ***\n" << std::endl;
 
     logFile << "Starting simulation for SKU " << skuData.sku << " with " << numberOfIterations << " iterations, "
             << daysToSimulate << " days to simulate, and tolerance " << tolerance << std::endl;
@@ -285,7 +285,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         logFile << "  " << param.first << ": " << param.second << std::endl;
     }
 
-    logFile << "*** Finishing date: " << currentDateTime <<  " ***" << std::endl;
+    logFile << "\n*** Finishing date: " << currentDateTime <<  " ***" << std::endl;
 
     logFile.close();
     statsFile.close();
