@@ -268,10 +268,10 @@ double ABCMethod::calculateProbability(double price, const SKUData& skuData, int
             // 05-08-2024 1033
             log << "-> volatility adjustment: " << volatility << " and previousPrice adjustment: " << previousPrice << std::endl;
 
-            log << "Final probability: " << probability << std::endl;
-
             break;
         }
+
+        log << "Final probability: " << probability << std::endl;
     }
 
     // Normalización: Al final, aseguramos que la probabilidad esté en el rango [0, 1].
