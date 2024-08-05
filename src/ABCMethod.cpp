@@ -198,12 +198,16 @@ double ABCMethod::calculateHistoricalTrend(double price, int day, const std::vec
     int daysToAnalyze = std::min(30, static_cast<int>(historicalData.size()));
     std::vector<double> recentPrices;
 
+    bool warnedAboutMissingData = false;
     for (int i = 0; i < daysToAnalyze; ++i) {
         if (historicalData[historicalData.size() - 1 - i].count("total_price_products") > 0) {
             recentPrices.push_back(historicalData[historicalData.size() - 1 - i].at("total_price_products"));
         } else {
-            std::cout << "Warning: 'total_price_products' not found in historical data for day " << i << std::endl;
-            return 0.0;  // O manejar de otra manera apropiada
+            if (!warnedAboutMissingData) {
+                std::cout << "Warning: 'total_price_products' not found in historical data. Check data format." << std::endl;
+                warnedAboutMissingData = true;
+            }
+            return 0.0;  // Salir de la función si falta el dato
         }
     }
 
@@ -284,11 +288,13 @@ double ABCMethod::calculateAutocorrelation(double price, const std::vector<doubl
     return autocorrelation;
 }
 
-// 04-08-2024 2023. La volatilidad se calcula como la desviación estándar de los retornos diarios, anualizada.
+// 04-08-2024 2034. La volatilidad se calcula como la desviación estándar de los retornos diarios, anualizada.
 double ABCMethod::calculateVolatility(const std::vector<std::map<std::string, double>>& historicalData) {
     if (historicalData.size() < 2) return 0.0;
 
-    std::vector<double> returns;
+    std::vector<double> returns;  // Declara el vector returns aquí
+    bool warnedAboutMissingData = false;
+
     for (size_t i = 1; i < historicalData.size(); ++i) {
         if (historicalData[i-1].count("total_price_products") > 0 && historicalData[i].count("total_price_products") > 0) {
             double prevPrice = historicalData[i-1].at("total_price_products");
@@ -296,10 +302,15 @@ double ABCMethod::calculateVolatility(const std::vector<std::map<std::string, do
             double dailyReturn = (currPrice - prevPrice) / prevPrice;
             returns.push_back(dailyReturn);
         } else {
-            std::cout << "Warning: 'total_price_products' not found in historical data for day " << i-1 << " or " << i << std::endl;
-            // Manejar este caso según sea apropiado para tu aplicación
+            if (!warnedAboutMissingData) {
+                std::cout << "Warning: 'total_price_products' not found in historical data. Check data format." << std::endl;
+                warnedAboutMissingData = true;
+            }
+            return 0.0;  // Salir de la función si falta el dato
         }
     }
+
+    if (returns.empty()) return 0.0;  // Añade esta línea para manejar el caso de que no haya retornos
 
     double mean = std::accumulate(returns.begin(), returns.end(), 0.0) / returns.size();
     double sqSum = std::inner_product(returns.begin(), returns.end(), returns.begin(), 0.0);

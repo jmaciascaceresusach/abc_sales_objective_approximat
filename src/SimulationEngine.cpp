@@ -54,15 +54,24 @@ double SimulationEngine::denormalize(double normalizedValue, const std::string& 
     return normalizedValue * stdValues[feature] + meanValues[feature];
 }
 
-// 04-08-2024 2024
+// 04-08-2024 2030
 void SimulationEngine::loadHistoricalData(const std::string& filename) {
     historicalData.loadFromCSV(filename);
+    std::cout << "Attempting to load historical data from: " << filename << std::endl;
     if (historicalData.records.empty()) {
         std::cout << "Warning: No historical data loaded from " << filename << std::endl;
     } else {
         std::cout << "Loaded " << historicalData.records.size() << " records of historical data" << std::endl;
+        std::cout << "Columns found: ";
+        if (!historicalData.records.empty()) {
+            for (const auto& pair : historicalData.records[0]) {
+                std::cout << pair.first << ", ";
+            }
+        }
+        std::cout << std::endl;
         // Imprimir las primeras filas para verificar
         for (int i = 0; i < std::min(5, static_cast<int>(historicalData.records.size())); ++i) {
+            std::cout << "Record " << i << ": ";
             for (const auto& pair : historicalData.records[i]) {
                 std::cout << pair.first << ": " << pair.second << ", ";
             }
@@ -85,6 +94,12 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     abcMethod.setHistoricalData(historicalData.records);
     if (historicalData.records.empty()) {
         std::cout << "Error: No historical data available. Cannot proceed with simulation." << std::endl;
+        return;
+    }
+
+    // Verificar si 'total_price_products' existe en los datos históricos
+    if (!historicalData.records.empty() && historicalData.records[0].count("total_price_products") == 0) {
+        std::cout << "Error: 'total_price_products' not found in historical data. Check data format." << std::endl;
         return;
     }
     
