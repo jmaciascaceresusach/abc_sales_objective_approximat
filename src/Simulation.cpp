@@ -2,9 +2,9 @@
 #include "DataLoader.h"
 #include <iostream> // 04-08-2024 1810
 
-// 04-08-2024 1941
+// 04-08-2024 2014
 void runSimulationForSKU(SimulationEngine& simulationEngine, const std::string& sku, const std::string& dayForSimulate, int numberOfIterations, int daysToSimulate, double tolerance) {
-    std::cout << "Starting simulation for SKU: " << sku << std::endl;
+    std::cout << "Preparing simulation for SKU: " << sku << std::endl;
 
     std::string basePath = "../data/input/sku_" + sku + "/" + dayForSimulate + "/";
     
@@ -18,7 +18,6 @@ void runSimulationForSKU(SimulationEngine& simulationEngine, const std::string& 
     simulationEngine.setProductData(skuData);
     simulationEngine.setNormalizedFeatures(normalizedFeatures);
     simulationEngine.setNoNormalizedFeatures(noNormalizedFeatures);
+    simulationEngine.setDayForSimulate(dayForSimulate);
     simulationEngine.runSimulations(numberOfIterations, daysToSimulate, tolerance);
-    
-    std::cout << "Simulation completed for SKU: " << sku << std::endl;
 }

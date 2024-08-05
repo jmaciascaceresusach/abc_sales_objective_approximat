@@ -59,26 +59,25 @@ void SimulationEngine::loadHistoricalData(const std::string& filename) {
     historicalData.loadFromCSV(filename);
 }
 
-// 04-08-2024 1714
+// 04-08-2024 2011
 void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate, double tolerance) {
+    std::string currentDate = dayForSimulate;  // Asume que dayForSimulate es un miembro de la clase
 
-    //std::string currentDate = getCurrentDate();
-    std::string currentDate = "2024-08-03";
+    std::cout << "Running simulations for SKU: " << skuData.sku << ", Date: " << currentDate << std::endl;
 
     attributeWeights = loadAttributeWeights("../data/input/attribute_weights.csv");
     skuIntervals = loadSKUIntervals("../data/input/matriz_intervals_df_prodx5_maxlp20.csv");
-    loadHistoricalData("../data/input/sku_" + skuData.sku + "/" + getCurrentDate() + "/" + skuData.sku + "_filtered_df_features_sku_" + getCurrentDate() + ".csv");
+    loadHistoricalData("../data/input/sku_" + skuData.sku + "/" + currentDate + "/" + skuData.sku + "_filtered_df_features_sku_" + currentDate + ".csv");
 
-    // Pasar los datos históricos al método ABC
     abcMethod.setHistoricalData(historicalData.records);
     
-    std::ofstream logFile("../data/output/sku_Z285320/" + currentDate + "/simulation_log_" + currentDate + ".txt");
-    std::ofstream statsFile("../data/output/sku_Z285320/" + currentDate + "/statistics_simulations_" + currentDate + ".txt");
+    std::ofstream logFile("../data/output/sku_" + skuData.sku + "/" + currentDate + "/simulation_log_" + currentDate + ".txt");
+    std::ofstream statsFile("../data/output/sku_" + skuData.sku + "/" + currentDate + "/statistics_simulations_" + currentDate + ".txt");
 
-    logFile << "Starting simulation with " << numberOfIterations << " iterations, "
+    logFile << "Starting simulation for SKU " << skuData.sku << " with " << numberOfIterations << " iterations, "
             << daysToSimulate << " days to simulate, and tolerance " << tolerance << std::endl;
 
-    std::cout << "Running simulations with " << numberOfIterations << " iterations, "
+    std::cout << "Starting simulation for SKU " << skuData.sku << " with " << numberOfIterations << " iterations, "
             << daysToSimulate << " days to simulate, and tolerance " << tolerance << std::endl;
 
     statsFile << "Iteration,AverageSaleValue,MinSaleValue,MaxSaleValue,Distance,Tolerance";
@@ -206,6 +205,6 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     logFile.close();
     statsFile.close();
 
-    std::cout << "\nSimulation completed. Results saved in simulation_log_" + currentDate + ".txt and statistics_simulations_" + currentDate + ".txt" << std::endl;
+    std::cout << "\nSimulation completed for SKU: " << skuData.sku << ". Results saved in simulation_log_" + currentDate + ".txt and statistics_simulations_" + currentDate + ".txt" << std::endl;
     std::cout << "Number of accepted simulations: " << acceptedSimulations << std::endl;
 }

@@ -31,6 +31,8 @@ public:
 
     void loadMeanAndStdValues(const std::string& meanFilename, const std::string& stdFilename);
 
+    void setDayForSimulate(const std::string& day) { dayForSimulate = day; } // 04-08-2024 2012
+
 private:
     std::vector<Parameter> parameters;
 
@@ -57,6 +59,10 @@ private:
     HistoricalData historicalData; // 04-08-2024 1714
 
     void loadHistoricalData(const std::string& filename); // 04-08-2024 1714
+
+    std::string dayForSimulate; // 04-08-2024 2013
+
+    SKUData skuData; // 04-08-2024 2013
 };
 
 #endif // SIMULATIONENGINE_H
