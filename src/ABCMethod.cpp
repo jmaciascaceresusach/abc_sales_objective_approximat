@@ -120,6 +120,7 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
         double prob = 0.0;
 
         for (const auto& interval : skuData.listProducts) {
+            std::cout << "\ncalculateProbability (case 1)\n" << std::endl;
             double prob = calculateProbability((interval.first + interval.second) / 2, skuData, i);
             probabilities.push_back(prob);
         }
@@ -144,16 +145,17 @@ double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices,
                                     double initialPrice,
                                     int daysToSimulate) {
 
-    std::cout << "Entering calculateDistance function" << std::endl;
+    std::cout << "\n-> Entering calculateDistance function" << std::endl;
 
     double distance = 0.0;
     for (int i = 0; i < daysToSimulate; ++i) {
+        std::cout << "\ncalculateProbability (case 2)\n" << std::endl;
         double expectedProbability = calculateProbability(simulatedPrices[i], skuData, i);
         double actualProbability = 1.0 / skuData.listProducts.size(); // Asumiendo distribución uniforme
         distance += std::abs(expectedProbability - actualProbability);
     }
 
-    std::cout << "Exiting calculateDistance function" << std::endl;
+    std::cout << "\n-> Exiting calculateDistance function\n" << std::endl;
     return distance / daysToSimulate;
 }
 
@@ -178,6 +180,7 @@ void ABCMethod::sensitivityAnalysis(const SKUData& skuData) {
 
     for (double price : testPrices) {
         for (int day : testDays) {
+            std::cout << "\ncalculateProbability (case 3)\n" << std::endl;
             double prob = calculateProbability(price, skuData, day);
             std::cout << "Price: " << price << ", Day: " << day << ", Probability: " << prob << std::endl;
         }
@@ -232,6 +235,7 @@ double ABCMethod::calculateProbability(double price, const SKUData& skuData, int
             probability *= intervalAdjustment;
 
             std::cout << "\n** Log calculateProbability **" << std::endl;
+            std::cout << "\ncalculateProbability (case 4)\n" << std::endl;
 
             log << "-> Day: " << day << ", Price: " << price << std::endl;            
             log << "-> Base probability: " << probability << std::endl;
