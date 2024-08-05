@@ -54,9 +54,21 @@ double SimulationEngine::denormalize(double normalizedValue, const std::string& 
     return normalizedValue * stdValues[feature] + meanValues[feature];
 }
 
-// 04-08-2024 1714
+// 04-08-2024 2024
 void SimulationEngine::loadHistoricalData(const std::string& filename) {
     historicalData.loadFromCSV(filename);
+    if (historicalData.records.empty()) {
+        std::cout << "Warning: No historical data loaded from " << filename << std::endl;
+    } else {
+        std::cout << "Loaded " << historicalData.records.size() << " records of historical data" << std::endl;
+        // Imprimir las primeras filas para verificar
+        for (int i = 0; i < std::min(5, static_cast<int>(historicalData.records.size())); ++i) {
+            for (const auto& pair : historicalData.records[i]) {
+                std::cout << pair.first << ": " << pair.second << ", ";
+            }
+            std::cout << std::endl;
+        }
+    }
 }
 
 // 04-08-2024 2011
@@ -67,9 +79,14 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
     attributeWeights = loadAttributeWeights("../data/input/attribute_weights.csv");
     skuIntervals = loadSKUIntervals("../data/input/matriz_intervals_df_prodx5_maxlp20.csv");
+
     loadHistoricalData("../data/input/sku_" + skuData.sku + "/" + currentDate + "/" + skuData.sku + "_filtered_df_features_sku_" + currentDate + ".csv");
 
     abcMethod.setHistoricalData(historicalData.records);
+    if (historicalData.records.empty()) {
+        std::cout << "Error: No historical data available. Cannot proceed with simulation." << std::endl;
+        return;
+    }
     
     std::ofstream logFile("../data/output/sku_" + skuData.sku + "/" + currentDate + "/simulation_log_" + currentDate + ".txt");
     std::ofstream statsFile("../data/output/sku_" + skuData.sku + "/" + currentDate + "/statistics_simulations_" + currentDate + ".txt");

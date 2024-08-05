@@ -191,16 +191,20 @@ double ABCMethod::calculateProbability(double price, const SKUData& skuData, int
     return probability;
 }
 
-// 04-08-2024 1714 (v2). La tendencia histórica se calcula usando una regresión lineal simple sobre los últimos 30 días de datos.
+// 04-08-2024 2023. La tendencia histórica se calcula usando una regresión lineal simple sobre los últimos 30 días de datos.
 double ABCMethod::calculateHistoricalTrend(double price, int day, const std::vector<std::map<std::string, double>>& historicalData) {
     if (historicalData.empty()) return 0.0;
 
-    // Calcular la tendencia de los últimos 30 días (o menos si no hay suficientes datos)
     int daysToAnalyze = std::min(30, static_cast<int>(historicalData.size()));
     std::vector<double> recentPrices;
 
     for (int i = 0; i < daysToAnalyze; ++i) {
-        recentPrices.push_back(historicalData[historicalData.size() - 1 - i].at("total_price_products"));
+        if (historicalData[historicalData.size() - 1 - i].count("total_price_products") > 0) {
+            recentPrices.push_back(historicalData[historicalData.size() - 1 - i].at("total_price_products"));
+        } else {
+            std::cout << "Warning: 'total_price_products' not found in historical data for day " << i << std::endl;
+            return 0.0;  // O manejar de otra manera apropiada
+        }
     }
 
     // Calcular la pendiente de la línea de tendencia
@@ -280,16 +284,21 @@ double ABCMethod::calculateAutocorrelation(double price, const std::vector<doubl
     return autocorrelation;
 }
 
-// 04-08-2024 1714 (v3). La volatilidad se calcula como la desviación estándar de los retornos diarios, anualizada.
+// 04-08-2024 2023. La volatilidad se calcula como la desviación estándar de los retornos diarios, anualizada.
 double ABCMethod::calculateVolatility(const std::vector<std::map<std::string, double>>& historicalData) {
     if (historicalData.size() < 2) return 0.0;
 
     std::vector<double> returns;
     for (size_t i = 1; i < historicalData.size(); ++i) {
-        double prevPrice = historicalData[i-1].at("total_price_products");
-        double currPrice = historicalData[i].at("total_price_products");
-        double dailyReturn = (currPrice - prevPrice) / prevPrice;
-        returns.push_back(dailyReturn);
+        if (historicalData[i-1].count("total_price_products") > 0 && historicalData[i].count("total_price_products") > 0) {
+            double prevPrice = historicalData[i-1].at("total_price_products");
+            double currPrice = historicalData[i].at("total_price_products");
+            double dailyReturn = (currPrice - prevPrice) / prevPrice;
+            returns.push_back(dailyReturn);
+        } else {
+            std::cout << "Warning: 'total_price_products' not found in historical data for day " << i-1 << " or " << i << std::endl;
+            // Manejar este caso según sea apropiado para tu aplicación
+        }
     }
 
     double mean = std::accumulate(returns.begin(), returns.end(), 0.0) / returns.size();
