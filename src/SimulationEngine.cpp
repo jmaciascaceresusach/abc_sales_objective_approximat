@@ -285,7 +285,6 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         logFile << "  " << param.first << ": " << param.second << std::endl;
     }
 
-    std::string currentDateTime = getCurrentDateTime();
     logFile << "*** Finishing date: " << currentDateTime <<  " ***" << std::endl;
 
     logFile.close();
