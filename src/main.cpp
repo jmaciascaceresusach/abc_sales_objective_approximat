@@ -58,6 +58,7 @@ int main(int argc, char* argv[]) {
     std::cout << "\n";
     std::cout << "*** Configurations ***" << std::endl;
     std::cout << "numberOfIterations: " << numberOfIterations << std::endl;
+    std::cout << "numberOfRefinements: " << numberOfRefinements << std::endl;
     std::cout << "tolerance: " << tolerance << std::endl;
     std::cout << "daysToSimulate: " << daysToSimulate << std::endl;
     std::cout << "dayForSimulate: " << dayForSimulate << std::endl;

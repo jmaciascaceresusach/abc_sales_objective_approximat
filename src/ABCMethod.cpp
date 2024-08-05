@@ -113,7 +113,7 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
 
     for (int i = 1; i < daysToSimulate; ++i) {
 
-        std::cout << "Simulating day " << i << " of " << daysToSimulate << std::endl;
+        std::cout << "\n** Simulating day " << i << " of " << daysToSimulate << std::endl;
 
         std::vector<double> probabilities;
         for (const auto& interval : skuData.listProducts) {
@@ -270,12 +270,12 @@ double ABCMethod::calculateProbability(double price, const SKUData& skuData, int
 
             break;
         }
-
-        log << "Final probability: " << probability << std::endl;
     }
 
     // Normalización: Al final, aseguramos que la probabilidad esté en el rango [0, 1].
     probability = std::max(0.0, std::min(1.0, probability));
+
+    log << "Final probability: " << probability << std::endl;
 
     // Agregar el log al archivo de salida y a la consola
     std::cout << log.str();
