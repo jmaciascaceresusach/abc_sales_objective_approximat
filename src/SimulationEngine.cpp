@@ -54,7 +54,7 @@ double SimulationEngine::denormalize(double normalizedValue, const std::string& 
     return normalizedValue * stdValues[feature] + meanValues[feature];
 }
 
-// 04-08-2024 2030
+// 04-08-2024 2039
 void SimulationEngine::loadHistoricalData(const std::string& filename) {
     historicalData.loadFromCSV(filename);
     std::cout << "Attempting to load historical data from: " << filename << std::endl;
@@ -91,7 +91,6 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
     loadHistoricalData("../data/input/sku_" + skuData.sku + "/" + currentDate + "/" + skuData.sku + "_filtered_df_features_sku_" + currentDate + ".csv");
 
-    abcMethod.setHistoricalData(historicalData.records);
     if (historicalData.records.empty()) {
         std::cout << "Error: No historical data available. Cannot proceed with simulation." << std::endl;
         return;
@@ -99,9 +98,15 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
     // Verificar si 'total_price_products' existe en los datos históricos
     if (!historicalData.records.empty() && historicalData.records[0].count("total_price_products") == 0) {
-        std::cout << "Error: 'total_price_products' not found in historical data. Check data format." << std::endl;
+        std::cout << "Error: 'total_price_products' not found in historical data. Available columns are: ";
+        for (const auto& feature : historicalData.features) {
+            std::cout << feature << ", ";
+        }
+        std::cout << std::endl;
         return;
     }
+
+    abcMethod.setHistoricalData(historicalData.records);
     
     std::ofstream logFile("../data/output/sku_" + skuData.sku + "/" + currentDate + "/simulation_log_" + currentDate + ".txt");
     std::ofstream statsFile("../data/output/sku_" + skuData.sku + "/" + currentDate + "/statistics_simulations_" + currentDate + ".txt");

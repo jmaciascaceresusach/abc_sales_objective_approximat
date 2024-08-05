@@ -20,23 +20,55 @@ Comentario específicos:
 - Implementación de funciones como loadSKUData, loadNormalizedFeatures, loadNoNormalizedFeatures, loadSimulationConfig, getCurrentDate, inverse_z_score, calculate_z_score, loadValues.
 */
 
-// 04-08-2024 1714 (v2)
-void HistoricalData::loadFromCSV(const std::string& filename) { 
+// 04-08-2024 2051
+void HistoricalData::loadFromCSV(const std::string& filename) {
     std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error: Unable to open file " << filename << std::endl;
+        return;
+    }
+
     std::string line;
-    std::getline(file, line);
-    std::istringstream headerStream(line);
-    std::string feature;
-    while (std::getline(file, line)) {
+    int lineCount = 0;
+
+    // Leer encabezados
+    if (std::getline(file, line)) {
         std::istringstream iss(line);
-        std::string token;
-        std::map<std::string, double> record;
-        int i = 0;
-        while (std::getline(headerStream, feature, ';')) {
+        std::string feature;
+        while (std::getline(iss, feature, ';')) {
             features.push_back(feature);
         }
-        records.push_back(record);
+        std::cout << "Headers read: " << features.size() << std::endl;
+        for (const auto& f : features) {
+            std::cout << f << ", ";
+        }
+        std::cout << std::endl;
     }
+
+    // Leer datos
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string value;
+        std::map<std::string, double> record;
+        int fieldCount = 0;
+        for (size_t i = 0; i < features.size() && std::getline(iss, value, ';'); ++i) {
+            try {
+                record[features[i]] = std::stod(value);
+                fieldCount++;
+            } catch (const std::exception& e) {
+                std::cerr << "Error converting value '" << value << "' to double on line " << lineCount + 2 << ", field " << i + 1 << std::endl;
+            }
+        }
+        if (fieldCount == features.size()) {
+            records.push_back(record);
+        } else {
+            std::cerr << "Mismatch in field count on line " << lineCount + 2 << ": Expected " << features.size() << ", got " << fieldCount << std::endl;
+        }
+        lineCount++;
+    }
+
+    std::cout << "Total lines read: " << lineCount << std::endl;
+    std::cout << "Total records stored: " << records.size() << std::endl;
 }
 
 // 04-08-2024 1714
