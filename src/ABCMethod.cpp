@@ -139,7 +139,24 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
     return futurePrices;
 }
 
-// 05-08-2024 1807
+double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices, 
+                                    const SKUData& skuData,
+                                    double initialPrice,
+                                    int daysToSimulate) {
+
+    std::cout << "\n-> Entering calculateDistance function" << std::endl;
+
+    double distance = 0.0;
+    for (int i = 0; i < daysToSimulate; ++i) {
+        double expectedProbability = calculateProbability(simulatedPrices[i], skuData, i); // Se mostrará en el log de consola
+        double actualProbability = 1.0 / skuData.listProducts.size(); // Asumiendo distribución uniforme
+        distance += std::abs(expectedProbability - actualProbability);
+    }
+
+    std::cout << "\n-> Exiting calculateDistance function\n" << std::endl;
+    return distance / daysToSimulate;
+}
+
 double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices, 
                                     const SKUData& skuData,
                                     double initialPrice,
