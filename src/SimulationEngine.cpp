@@ -79,6 +79,7 @@ void SimulationEngine::loadHistoricalData(const std::string& filename) {
             std::cout << std::endl;
         }
     }
+    //abcMethod.setHistoricalData(historicalData);
 }
 
 // 04-08-2024 2114
@@ -93,6 +94,15 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     skuIntervals = loadSKUIntervals("../data/input/matriz_intervals_df_prodx5_maxlp20.csv");
 
     loadHistoricalData("../data/input/sku_" + skuData.sku + "/" + currentDate + "/" + skuData.sku + "_filtered_df_features_sku_" + currentDate + ".csv");
+
+    // 05-08-2024 1128
+    // Verificar los datos de entrada
+    if (!abcMethod.verifyInputData(skuData)) {
+        std::cerr << "Error: Input data verification failed. Aborting simulation." << std::endl;
+        return; // Salir de la función si la verificación falla
+    }
+
+    std::cout << "Input data verification passed. Proceeding with simulation." << std::endl;
 
     if (historicalData.records.empty()) {
         std::cout << "Error: No historical data available. Cannot proceed with simulation." << std::endl;

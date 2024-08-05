@@ -57,6 +57,10 @@ public:
 
     void setHistoricalData(const std::vector<std::map<std::string, double>>& data);
 
+    void sensitivityAnalysis(const SKUData& skuData); // 05-08-2024 1105
+
+    bool verifyInputData(const SKUData& skuData); // 05-08-2024 1105
+
 private:
     void normalizeParameters(std::vector<Parameter>& parameters);
     
