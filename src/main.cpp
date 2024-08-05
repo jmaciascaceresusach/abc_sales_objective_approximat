@@ -25,13 +25,13 @@ int main(int argc, char* argv[]) {
     auto start = std::chrono::high_resolution_clock::now();
 
     //std::string currentDate = getCurrentDate();
-    int numberOfIterations = 0, tolerance = 0, daysToSimulate = 0;
-    
-    // 04-08-2024 1714
+
+    // 05-08-2024 1008
+    int numberOfIterations = 0, numberOfRefinements = 0, tolerance = 0, daysToSimulate = 0;
     std::string dayForSimulate, skuForSimulate;
 
-    // 04-08-2024 1714
-    loadSimulationConfig("../data/input/simulation_config_initial.txt", numberOfIterations, tolerance, daysToSimulate, dayForSimulate, skuForSimulate);
+    // 05-08-2024 1009
+    loadSimulationConfig("../data/input/simulation_config_initial.txt", numberOfIterations, numberOfRefinements, tolerance, daysToSimulate, dayForSimulate, skuForSimulate);
 
     if (numberOfIterations == 0 || tolerance == 0 || daysToSimulate == 0 || dayForSimulate.empty() || skuForSimulate.empty()) {
         std::cerr << "Failed to load simulation configuration correctly." << std::endl;
@@ -39,6 +39,9 @@ int main(int argc, char* argv[]) {
     }
 
     SimulationEngine simulationEngine;
+
+    // 05-08-2024 1009
+    simulationEngine.numberOfRefinements = numberOfRefinements;
 
     // 04-08-2024 1714
     if (skuForSimulate == "All") {

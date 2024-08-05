@@ -18,7 +18,8 @@ Comentario específicos:
 - Implementación de métodos como addParameter, setProductData, setNormalizedFeatures, setNoNormalizedFeatures, loadMeanAndStdValues, runSimulations.
 */
 
-SimulationEngine::SimulationEngine() {}
+// 05-08-2024 1027
+SimulationEngine::SimulationEngine() : numberOfRefinements(10) {} // Valor por defecto
 
 void SimulationEngine::addParameter(const Parameter& parameter) {
     this->parameters.push_back(parameter);
@@ -136,6 +137,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
     int acceptedSimulations = 0;
     int bestNumberSimulation = 0;
+    int rejectedSimulations = 0; // 05-08-2024 1021
 
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -151,7 +153,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         logFile << "\nIteration " << i + 1 << " of " << numberOfIterations << std::endl;
 
         std::cout << "Refining parameters" << std::endl;
-        abcMethod.refineParameters(parameters, skuData, normalizedFeatures, daysToSimulate, tolerance);
+
+        // 05-08-2024 1026
+        abcMethod.refineParameters(parameters, skuData, normalizedFeatures, daysToSimulate, tolerance, numberOfRefinements);
 
         std::cout << "Generating initial price" << std::endl;
         double initialPrice = dis(gen);
@@ -198,9 +202,14 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         std::cout << "MaxSaleValue=" << maxSaleValue << ", ";
         std::cout << "Distance=" << distance << std::endl;
 
+        // 05-08-2024 1022
         if (distance <= tolerance) {
             acceptedSimulations++;
             logFile << "  Satisfactory simulation found." << std::endl;
+            logFile << "  Simulation accepted: " << acceptedSimulations++ << std::endl;
+        } else {
+            rejectedSimulations++;
+            logFile << "  Simulation rejected." << rejectedSimulations++ << std::endl;
         }
 
         std::cout << "Completed main simulation iteration " << i + 1 << " of " << numberOfIterations << std::endl;
@@ -221,6 +230,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     } else {
         logFile << "No satisfactory simulation found." << std::endl;
     }
+
+    logFile << "Total accepted simulations: " << acceptedSimulations << std::endl;
+    logFile << "Total rejected simulations: " << rejectedSimulations << std::endl;
 
     std::vector<double> averagePrices(daysToSimulate, 0.0);
     for (const auto& simulation : allSimulatedPrices) {

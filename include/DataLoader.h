@@ -32,7 +32,7 @@ std::map<std::string, double> loadNormalizedFeatures(const std::string& filename
 
 std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filename);
 
-void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& tolerance, int& daysToSimulate, std::string& dayForSimulate, std::string& skuForSimulate); // 04-08-2024 1714
+void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& numberOfRefinements, int& tolerance, int& daysToSimulate, std::string& dayForSimulate, std::string& skuForSimulate); // 05-08-2024 1004
 
 std::map<std::string, double> loadValues(const std::string& filename); // 04-08-2024 1714
 

@@ -37,11 +37,13 @@ public:
 
     void initializeParameters(std::vector<Parameter>& parameters);
 
+    // 05-08-2024 1025
     void refineParameters(std::vector<Parameter>& parameters, 
-                          const SKUData& skuData,
-                          const std::map<std::string, double>& normalizedFeatures,
-                          int daysToSimulate,
-                          double tolerance);
+                        const SKUData& skuData,
+                        const std::map<std::string, double>& normalizedFeatures,
+                        int daysToSimulate,
+                        double tolerance,
+                        int numberOfRefinements);
                           
     std::vector<double> simulateFuturePrices(const SKUData& skuData, 
                                              const std::map<std::string, double>& normalizedFeatures,

@@ -306,8 +306,8 @@ std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filena
     return features;
 }
 
-// 04-08-2024 1714 (v2)
-void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& tolerance, int& daysToSimulate, std::string& dayForSimulate, std::string& skuForSimulate) {
+// 05-08-2024 1005
+void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& numberOfRefinements, int& tolerance, int& daysToSimulate, std::string& dayForSimulate, std::string& skuForSimulate) {
     std::ifstream file(filename);
     std::string line;
 
@@ -322,6 +322,7 @@ void loadSimulationConfig(const std::string& filename, int& numberOfIterations, 
             value.erase(value.find_last_not_of(" \t") + 1);
 
             if (key == "numberOfIterations") numberOfIterations = std::stoi(value);
+            else if (key == "numberOfRefinements") numberOfRefinements = std::stoi(value);
             else if (key == "tolerance") tolerance = std::stoi(value);
             else if (key == "daysToSimulate") daysToSimulate = std::stoi(value);
             else if (key == "dayForSimulate") dayForSimulate = value;
@@ -331,6 +332,7 @@ void loadSimulationConfig(const std::string& filename, int& numberOfIterations, 
 
     std::cout << "\n*** loadSimulationConfig ***" << std::endl;
     std::cout << "numberOfIterations set to " << numberOfIterations << std::endl;
+    std::cout << "numberOfRefinements set to " << numberOfRefinements << std::endl;
     std::cout << "tolerance set to " << tolerance << std::endl;
     std::cout << "daysToSimulate set to " << daysToSimulate << std::endl;
     std::cout << "dayForSimulate set to " << dayForSimulate << std::endl;

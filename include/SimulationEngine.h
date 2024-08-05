@@ -31,7 +31,12 @@ public:
 
     void loadMeanAndStdValues(const std::string& meanFilename, const std::string& stdFilename);
 
-    void setDayForSimulate(const std::string& day) { dayForSimulate = day; } // 04-08-2024 2012
+    // 04-08-2024 2012
+    void setDayForSimulate(const std::string& day) { 
+        dayForSimulate = day; 
+    }
+
+    int numberOfRefinements; // 05-08-2024 1006
 
 private:
     std::vector<Parameter> parameters;
