@@ -1,5 +1,5 @@
-numberOfIterations=50
+numberOfIterations=10
 tolerance=13
-daysToSimulate=30
+daysToSimulate=10
 dayForSimulate=2024-08-03
 skuForSimulate=Z285320
