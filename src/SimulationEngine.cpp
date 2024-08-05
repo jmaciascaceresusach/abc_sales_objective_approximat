@@ -80,7 +80,7 @@ void SimulationEngine::loadHistoricalData(const std::string& filename) {
     }
 }
 
-// 04-08-2024 2011
+// 04-08-2024 2114
 void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate, double tolerance) {
     std::string currentDate = dayForSimulate;  // Asume que dayForSimulate es un miembro de la clase
 
@@ -146,8 +146,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     std::cout << "Starting main simulation loop" << std::endl;
 
     for (int i = 0; i < numberOfIterations; ++i) {
+        std::cout << "\nStarting main simulation iteration " << i + 1 << " of " << numberOfIterations << std::endl;
 
-        std::cout << "Starting iteration " << i + 1 << " of " << numberOfIterations << std::endl;
         logFile << "\nIteration " << i + 1 << " of " << numberOfIterations << std::endl;
 
         std::cout << "Refining parameters" << std::endl;
@@ -203,10 +203,10 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
             logFile << "  Satisfactory simulation found." << std::endl;
         }
 
-        std::cout << "Iteration " << i + 1 << " completed" << std::endl;
+        std::cout << "Completed main simulation iteration " << i + 1 << " of " << numberOfIterations << std::endl;
     }
 
-    std::cout << "Simulation loop completed" << std::endl;
+    std::cout << "Exiting runSimulations function" << std::endl;
 
     logFile << "\nFinal Results:" << std::endl;
     logFile << "Best simulation distance: " << bestDistance << std::endl;

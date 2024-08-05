@@ -27,6 +27,7 @@ void ABCMethod::initializeParameters(std::vector<Parameter>& parameters) {
     }
 }
 
+// 04-08-2024 2114
 void ABCMethod::refineParameters(std::vector<Parameter>& parameters, 
                                  const SKUData& skuData,
                                  const std::map<std::string, double>& normalizedFeatures,
@@ -36,15 +37,18 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
     std::cout << "Entering refineParameters function" << std::endl;
 
     std::vector<std::vector<Parameter>> acceptedParameters;
-    int numberOfSimulations = 1000;
+    int numberOfRefinements = 10;
     
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(0.0, 1.0);
 
-    for (int i = 0; i < numberOfSimulations; ++i) {
+    for (int i = 0; i < numberOfRefinements; ++i) {
 
-        std::cout << "Refinement iteration " << i + 1 << " of " << numberOfSimulations << std::endl;
+        /*if (i % 10 == 0) { // Imprimir solo cada 10 iteraciones para reducir el output
+            std::cout << "Refinement iteration " << i + 1 << " of " << numberOfRefinements << std::endl;
+        }*/
+        std::cout << "Refinement iteration " << i + 1 << " of " << numberOfRefinements << std::endl;
 
         std::vector<Parameter> proposedParameters = parameters;
         
@@ -143,7 +147,7 @@ double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices,
         double actualProbability = 1.0 / skuData.listProducts.size(); // Asumiendo distribución uniforme
         distance += std::abs(expectedProbability - actualProbability);
     }
-    
+
     std::cout << "Exiting calculateDistance function" << std::endl;
     return distance / daysToSimulate;
 }
