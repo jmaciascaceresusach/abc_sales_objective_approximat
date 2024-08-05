@@ -124,9 +124,6 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
             probabilities.push_back(prob);
         }
 
-        log << "Final probability (after calculateProbability): " << prob << std::endl;
-        std::cout << "Final probability (after calculateProbability): " << prob << std::endl;
-
         std::discrete_distribution<> distribution(probabilities.begin(), probabilities.end());
         int selectedInterval = distribution(gen);
 

@@ -171,6 +171,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
         std::cout << "Generating initial price..." << std::endl;
         double initialPrice = dis(gen);
+        
         std::cout << "Simulating future prices..." << std::endl;
         std::vector<double> simulatedPrices = abcMethod.simulateFuturePrices(skuData, normalizedFeatures, daysToSimulate, initialPrice);
 
