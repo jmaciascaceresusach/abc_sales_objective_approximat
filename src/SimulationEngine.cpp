@@ -84,6 +84,8 @@ void SimulationEngine::loadHistoricalData(const std::string& filename) {
 void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate, double tolerance) {
     std::string currentDate = dayForSimulate;  // Asume que dayForSimulate es un miembro de la clase
 
+    std::cout << "Entering runSimulations function" << std::endl;
+
     std::cout << "Running simulations for SKU: " << skuData.sku << ", Date: " << currentDate << std::endl;
 
     attributeWeights = loadAttributeWeights("../data/input/attribute_weights.csv");
@@ -141,15 +143,24 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
     std::cout << "*** iterationSimulations ***" << std::endl;
 
+    std::cout << "Starting main simulation loop" << std::endl;
+
     for (int i = 0; i < numberOfIterations; ++i) {
+
+        std::cout << "Starting iteration " << i + 1 << " of " << numberOfIterations << std::endl;
         logFile << "\nIteration " << i + 1 << " of " << numberOfIterations << std::endl;
 
+        std::cout << "Refining parameters" << std::endl;
         abcMethod.refineParameters(parameters, skuData, normalizedFeatures, daysToSimulate, tolerance);
 
+        std::cout << "Generating initial price" << std::endl;
         double initialPrice = dis(gen);
+        std::cout << "Simulating future prices" << std::endl;
         std::vector<double> simulatedPrices = abcMethod.simulateFuturePrices(skuData, normalizedFeatures, daysToSimulate, initialPrice);
 
+        std::cout << "Calculating distance" << std::endl;
         double distance = abcMethod.calculateDistance(simulatedPrices, skuData, initialPrice, daysToSimulate);
+
         double saleValue = std::accumulate(simulatedPrices.begin(), simulatedPrices.end(), 0.0);
 
         double averageSaleValue = saleValue / daysToSimulate;
@@ -191,7 +202,11 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
             acceptedSimulations++;
             logFile << "  Satisfactory simulation found." << std::endl;
         }
+
+        std::cout << "Iteration " << i + 1 << " completed" << std::endl;
     }
+
+    std::cout << "Simulation loop completed" << std::endl;
 
     logFile << "\nFinal Results:" << std::endl;
     logFile << "Best simulation distance: " << bestDistance << std::endl;

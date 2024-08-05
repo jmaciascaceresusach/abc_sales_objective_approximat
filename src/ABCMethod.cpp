@@ -32,6 +32,9 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
                                  const std::map<std::string, double>& normalizedFeatures,
                                  int daysToSimulate,
                                  double tolerance) {
+
+    std::cout << "Entering refineParameters function" << std::endl;
+
     std::vector<std::vector<Parameter>> acceptedParameters;
     int numberOfSimulations = 1000;
     
@@ -40,6 +43,9 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
     std::uniform_real_distribution<> dis(0.0, 1.0);
 
     for (int i = 0; i < numberOfSimulations; ++i) {
+
+        std::cout << "Refinement iteration " << i + 1 << " of " << numberOfSimulations << std::endl;
+
         std::vector<Parameter> proposedParameters = parameters;
         
         // Solo ajustamos los parámetros dinámicos
@@ -58,6 +64,8 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
             acceptedParameters.push_back(proposedParameters);
         }
     }
+
+    std::cout << "Exiting refineParameters function" << std::endl;
 
     if (!acceptedParameters.empty()) {  
         for (size_t i = 0; i < parameters.size(); ++i) {
@@ -86,6 +94,9 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
                                                     const std::map<std::string, double>& normalizedFeatures,
                                                     int daysToSimulate,
                                                     double initialPrice) {
+
+    std::cout << "Entering simulateFuturePrices function" << std::endl;                                                 
+
     std::vector<double> futurePrices;
     futurePrices.push_back(initialPrice);
     previousPrices.clear();
@@ -95,6 +106,9 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
     std::mt19937 gen(rd());
 
     for (int i = 1; i < daysToSimulate; ++i) {
+
+        std::cout << "Simulating day " << i << " of " << daysToSimulate << std::endl;
+
         std::vector<double> probabilities;
         for (const auto& interval : skuData.listProducts) {
             double prob = calculateProbability((interval.first + interval.second) / 2, skuData, i);
@@ -112,6 +126,7 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
         previousPrices.push_back(price);
     }
 
+    std::cout << "Exiting simulateFuturePrices function" << std::endl;
     return futurePrices;
 }
 
@@ -119,12 +134,17 @@ double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices,
                                     const SKUData& skuData,
                                     double initialPrice,
                                     int daysToSimulate) {
+
+    std::cout << "Entering calculateDistance function" << std::endl;
+
     double distance = 0.0;
     for (int i = 0; i < daysToSimulate; ++i) {
         double expectedProbability = calculateProbability(simulatedPrices[i], skuData, i);
         double actualProbability = 1.0 / skuData.listProducts.size(); // Asumiendo distribución uniforme
         distance += std::abs(expectedProbability - actualProbability);
     }
+    
+    std::cout << "Exiting calculateDistance function" << std::endl;
     return distance / daysToSimulate;
 }
 
