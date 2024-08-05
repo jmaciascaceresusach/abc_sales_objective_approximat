@@ -125,6 +125,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     std::ofstream logFile("../data/output/sku_" + skuData.sku + "/" + currentDate + "/simulation_log_" + currentDate + ".txt");
     std::ofstream statsFile("../data/output/sku_" + skuData.sku + "/" + currentDate + "/statistics_simulations_" + currentDate + ".txt");
 
+    std::string currentDateTime = getCurrentDateTime();
+    logFile << "*** Starting date: " << currentDateTime <<  " ***" << std::endl;
+
     logFile << "Starting simulation for SKU " << skuData.sku << " with " << numberOfIterations << " iterations, "
             << daysToSimulate << " days to simulate, and tolerance " << tolerance << std::endl;
 
@@ -208,13 +211,14 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         logFile << "    Min price: " << minSaleValue << std::endl;
         logFile << "    Max price: " << maxSaleValue << std::endl;
 
-        std::cout << "\nResults:\n";
+        std::cout << "Results:\n";
         std::cout << "Iteration " << i + 1 << ": ";
         std::cout << "InitialPrice=" << initialPrice << ", ";
         std::cout << "AverageSaleValue=" << averageSaleValue << ", ";
         std::cout << "MinSaleValue=" << minSaleValue << ", ";
         std::cout << "MaxSaleValue=" << maxSaleValue << ", ";
         std::cout << "Distance=" << distance << std::endl;
+        std::cout << "\n";
 
         // 05-08-2024 1410
         if (distance <= tolerance) {
@@ -280,6 +284,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     for (const auto& param : originalParams) {
         logFile << "  " << param.first << ": " << param.second << std::endl;
     }
+
+    std::string currentDateTime = getCurrentDateTime();
+    logFile << "*** Finishing date: " << currentDateTime <<  " ***" << std::endl;
 
     logFile.close();
     statsFile.close();

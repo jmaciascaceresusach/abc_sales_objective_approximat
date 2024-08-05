@@ -17,7 +17,7 @@ Comentarios generales:
 - Este archivo implementa los métodos definidos en ABCMethod.h.
 
 Comentario específicos:
-- Implementación de métodos como initializeParameters, refineParameters, simulateFuturePrices, calculateDistance, normalizeParameters, calculateProbability.
+- Implementación de métodos como initializeParameters, refineParameters, simulateFuturePrices, calculateDistance, normalizeParameters, calculateProbability, calculateProbabilityNoLog.
 - calculateProbability: Método que necesita mejoras para incluir factores como tendencia histórica, estacionalidad, factores externos, autocorrelación con precios anteriores y volatilidad del producto.
 */
 
@@ -120,8 +120,7 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
         double prob = 0.0;
 
         for (const auto& interval : skuData.listProducts) {
-            std::cout << "\ncalculateProbability (case 1)\n" << std::endl;
-            double prob = calculateProbability((interval.first + interval.second) / 2, skuData, i);
+            double prob = calculateProbabilityNoLog((interval.first + interval.second) / 2, skuData, i);
             probabilities.push_back(prob);
         }
 
@@ -149,8 +148,7 @@ double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices,
 
     double distance = 0.0;
     for (int i = 0; i < daysToSimulate; ++i) {
-        std::cout << "\ncalculateProbability (case 2)\n" << std::endl;
-        double expectedProbability = calculateProbability(simulatedPrices[i], skuData, i);
+        double expectedProbability = calculateProbability(simulatedPrices[i], skuData, i); // Se mostrará en el log de consola
         double actualProbability = 1.0 / skuData.listProducts.size(); // Asumiendo distribución uniforme
         distance += std::abs(expectedProbability - actualProbability);
     }
@@ -180,8 +178,7 @@ void ABCMethod::sensitivityAnalysis(const SKUData& skuData) {
 
     for (double price : testPrices) {
         for (int day : testDays) {
-            std::cout << "\ncalculateProbability (case 3)\n" << std::endl;
-            double prob = calculateProbability(price, skuData, day);
+            double prob = calculateProbabilityNoLog(price, skuData, day);
             std::cout << "Price: " << price << ", Day: " << day << ", Probability: " << prob << std::endl;
         }
     }
@@ -274,6 +271,61 @@ double ABCMethod::calculateProbability(double price, const SKUData& skuData, int
 
             // 05-08-2024 1033
             log << "-> volatility adjustment: " << volatility << " and previousPrice adjustment: " << previousPrice << std::endl;
+
+            break;
+        }
+    }
+
+    // Normalización: Al final, aseguramos que la probabilidad esté en el rango [0, 1].
+    probability = std::max(0.0, std::min(1.0, probability));
+
+    // Agregar el log al archivo de salida y a la consola
+    std::cout << log.str();
+
+    return probability;
+}
+
+// 05-08-2024 1533
+double ABCMethod::calculateProbabilityNoLog(double price, const SKUData& skuData, int day) {
+    double probability = 0.0;
+    std::stringstream log;
+
+    // Verificar si el precio está en algún intervalo
+    for (size_t i = 0; i < skuData.listProducts.size(); ++i) {
+        const auto& interval = skuData.listProducts[i];
+        if (price >= interval.first && price <= interval.second) {
+            // Probabilidad base
+            probability = 1.0 / skuData.listProducts.size();
+
+            // Ajustar por la posición en el intervalo
+            double positionInInterval = (price - interval.first) / (interval.second - interval.first);
+            double intervalAdjustment = std::exp(-std::pow(positionInInterval - 0.5, 2) / 0.25);
+            probability *= intervalAdjustment;
+
+            // Ajustar por el día (decae con el tiempo)
+            double dayAdjustment = std::exp(-0.05 * day);
+            probability *= dayAdjustment;
+
+            // Tendencia histórica: Multiplicamos la probabilidad por (1 + historicalTrend). Esto aumenta la probabilidad si hay una tendencia positiva y la disminuye si es negativa. 
+            double historicalTrend = calculateHistoricalTrend(price, day, historicalData);
+            probability *= (1 + historicalTrend);
+
+            // Estacionalidad: Similar a la tendencia, multiplicamos por (1 + seasonality). Esto ajusta la probabilidad basándose en patrones estacionales.
+            double seasonality = calculateSeasonality(day);
+            probability *= (1 + seasonality);
+
+            // Factores externos: Multiplicamos por (1 + externalFactor) para incorporar eventos externos que puedan afectar el precio.
+            double externalFactor = getExternalFactor(day);
+            probability *= (1 + externalFactor);
+
+            // Autocorrelación: Multiplicamos por (1 + autocorrelation). Una autocorrelación positiva aumentará la probabilidad de que el precio se mueva en la misma dirección que los precios recientes.
+            double autocorrelation = calculateAutocorrelation(price, previousPrices);
+            probability *= (1 + autocorrelation);
+
+            // Volatilidad: Usamos una función exponencial para ajustar la probabilidad basada en la volatilidad y la diferencia entre el precio actual y el anterior. Una alta volatilidad y una gran diferencia de precio reducirán la probabilidad.
+            double volatility = calculateVolatility(historicalData);
+            double previousPrice = previousPrices.empty() ? price : previousPrices.back();
+            probability *= std::exp(-volatility * std::abs(price - previousPrice));
 
             break;
         }

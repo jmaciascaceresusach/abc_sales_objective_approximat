@@ -14,7 +14,7 @@ Comentarios generales:
 Comentario específicos:
 - PriceInterval y SKUData: Estructuras que contienen información relevante sobre los intervalos de precios y datos del SKU, respectivamente.
 - initializeParameters, refineParameters: Métodos para inicializar y refinar los parámetros del modelo.
-- simulateFuturePrices, calculateDistance, calculateProbability: Métodos principales para la simulación de precios, cálculo de distancias y probabilidades.
+- simulateFuturePrices, calculateDistance, calculateProbabilityNoLog, calculateProbability: Métodos principales para la simulación de precios, cálculo de distancias y probabilidades.
 */
 
 struct PriceInterval {
@@ -65,6 +65,8 @@ private:
     void normalizeParameters(std::vector<Parameter>& parameters);
     
     double calculateProbability(double price, const SKUData& skuData, int day);
+
+    double calculateProbabilityNoLog(double price, const SKUData& skuData, int day); // 05-08-2024 1532
 
     double calculateHistoricalTrend(double price, int day, const std::vector<std::map<std::string, double>>& historicalData); // 04-08-2024 1714
 
