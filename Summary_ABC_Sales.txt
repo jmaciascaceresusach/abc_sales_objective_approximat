@@ -1,0 +1,21 @@
+- Estructura del proyecto: El proyecto tiene una estructura organizada con directorios separados para el código fuente (src), archivos de encabezado (include), datos de entrada (data/input) y datos de salida (data/output).
+- Implementación del método ABC: El proyecto implementa el método de Computación Bayesiana Aproximada (ABC) para simular y predecir precios de productos. La clase ABCMethod en ABCMethod.cpp contiene la lógica principal para refinar parámetros, simular precios futuros y calcular probabilidades.
+- Manejo de datos: El proyecto utiliza varias estructuras de datos como SKUData para almacenar información sobre los productos y sus intervalos de precios. La clase DataLoader se encarga de cargar datos desde archivos CSV y de texto.
+- Simulación: La clase SimulationEngine en SimulationEngine.cpp es responsable de ejecutar las simulaciones. Maneja la preparación de datos, la ejecución de múltiples iteraciones de simulación y el registro de resultados.
+- Configuración flexible: El proyecto permite configurar parámetros de simulación como el número de iteraciones, tolerancia y días a simular a través de un archivo de configuración (simulation_config_initial.txt).
+- Salidas detalladas: El programa genera archivos de registro detallados (simulation_log) y estadísticas (statistics_simulations) para cada simulación, lo que permite un análisis posterior de los resultados.
+- Manejo de múltiples SKUs: El proyecto puede simular para un SKU específico o para todos los SKUs disponibles, lo que lo hace flexible para diferentes escenarios de uso.
+- Uso de técnicas estadísticas avanzadas: El código implementa cálculos de tendencias históricas, estacionalidad, autocorrelación y volatilidad para ajustar las probabilidades de precios futuros.
+- Gestión de errores: El código incluye verificaciones de datos de entrada y manejo de errores para asegurar la robustez del programa.
+- Herramientas de compilación: El proyecto utiliza CMake y tiene un Makefile, lo que facilita la compilación en diferentes entornos.
+
+- Project Structure: The project has an organized structure with separate directories for source code (src), header files (include), input data (data/input), and output data (data/output).
+- ABC Method Implementation: The project implements the Approximate Bayesian Computation (ABC) method to simulate and predict product prices. The ABCMethod class in ABCMethod.cpp contains the main logic for refining parameters, simulating future prices, and calculating probabilities.
+- Data Handling: The project uses various data structures such as SKUData to store information about products and their price ranges. The DataLoader class is responsible for loading data from CSV and text files.
+- Simulation: The SimulationEngine class in SimulationEngine.cpp is responsible for running the simulations. It handles data preparation, running multiple simulation iterations, and logging results.
+- Flexible configuration: The project allows configuring simulation parameters such as the number of iterations, tolerance, and days to simulate through a configuration file (simulation_config_initial.txt).
+- Detailed outputs: The program generates detailed log files (simulation_log) and statistics (statistics_simulations) for each simulation, allowing for later analysis of the results.
+- Handling multiple SKUs: The project can simulate for a specific SKU or for all available SKUs, making it flexible for different usage scenarios.
+- Use of advanced statistical techniques: The code implements calculations of historical trends, seasonality, autocorrelation, and volatility to adjust future price probabilities.
+- Error handling: The code includes input data checks and error handling to ensure program robustness.
+- Build tools: The project uses CMake and has a Makefile, making it easy to compile in different environments.

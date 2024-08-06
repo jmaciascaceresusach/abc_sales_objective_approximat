@@ -8,7 +8,7 @@ Below are the statements for the build of the project.
 
 ## Build
 
-This is the v0.2 repository of the application of the ABC (Approximate Bayesian Computation) method in a pricing case study.
+This is the v0.3 repository of the application of the ABC (Approximate Bayesian Computation) method in a pricing case study.
 
 Below are the statements for the build of the project.
 
