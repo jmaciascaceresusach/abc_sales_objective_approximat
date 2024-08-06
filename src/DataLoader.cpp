@@ -13,14 +13,30 @@
 #include <sstream>
 
 /*
-Comentarios generales:
-- Este archivo implementa las funciones auxiliares para cargar datos desde archivos.
+filesystem: para manejar el sistema de archivos.
+fstream: para operaciones de archivo.
+sstream: para manipulación de cadenas a través de streams.
+iostream: para operaciones de entrada/salida.
+limits: para obtener propiedades de los tipos aritméticos.
+string: para manipulación de cadenas.
+algorithm: para algoritmos estándar como std::max y std::min.
+stdexcept: para manejar excepciones estándar.
+chrono: para mediciones de tiempo.
+iomanip: para manipulación de la salida formateada.
+*/
 
-Comentario específicos:
-- Implementación de funciones como loadSKUData, loadNormalizedFeatures, loadNoNormalizedFeatures, loadSimulationConfig, getCurrentDate, inverse_z_score, calculate_z_score, loadValues.
+/*
+Comentarios generales:
+- El archivo implementa varias funciones auxiliares para cargar y manejar datos desde archivos. Estas funciones permiten leer datos históricos, 
+configuraciones de simulación, características normalizadas y no normalizadas, pesos de atributos e intervalos de SKU. Cada función maneja la 
+lectura de archivos, la conversión de datos y el manejo de errores de manera adecuada para asegurar que los datos se carguen y procesen correctamente.
 */
 
 // 04-08-2024 2051
+// Abre el archivo y verifica que se haya abierto correctamente.
+// Lee la primera línea para obtener los encabezados de las columnas.
+// Lee el resto de las líneas, conviertiendo los valores a double y almacenándolos en un mapa de registros.
+// Maneja errores de conversión y verifica que el número de campos leídos coincida con el número de encabezados.
 void HistoricalData::loadFromCSV(const std::string& filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
@@ -74,6 +90,8 @@ void HistoricalData::loadFromCSV(const std::string& filename) {
 }
 
 // 04-08-2024 1714
+// Esta función obtiene todos los SKU desde un directorio específico. Busca subdirectorios cuyos nombres comiencen con "sku_" y extrae la parte restante 
+// del nombre del directorio.
 std::vector<std::string> getAllSKUs() {
     std::vector<std::string> skus;
     std::string basePath = "../data/input/";
@@ -88,6 +106,7 @@ std::vector<std::string> getAllSKUs() {
 }
 
 // 05-08-2024 1434
+// Estas funciones obtienen la fecha y la hora actual en un formato específico utilizando la biblioteca chrono y formatean la salida con put_time.
 std::string getCurrentDateTime() {
     auto now = std::chrono::system_clock::now();
     auto in_time_t = std::chrono::system_clock::to_time_t(now);
@@ -104,6 +123,8 @@ std::string getCurrentDate() {
     return ss.str();
 }
 
+// Estas funciones calculan y revierten los valores de z-score para normalizar datos. calculate_z_score convierte los valores a z-scores basados en la media 
+// y la desviación estándar. inverse_z_score realiza la operación inversa, devolviendo los valores originales.
 std::map<std::string, double> inverse_z_score(const std::map<std::string, double>& z_score_normalized,
                                               const std::map<std::string, double>& mean_values,
                                               const std::map<std::string, double>& std_values) {
@@ -148,6 +169,7 @@ std::map<std::string, double> calculate_z_score(
     return z_scores;
 }
 
+// Esta función carga valores de un archivo CSV, asignando los valores a claves específicas en un mapa.
 std::map<std::string, double> loadValues(const std::string& filename) {
     std::map<std::string, double> values;
     std::ifstream file(filename);
@@ -175,6 +197,7 @@ std::map<std::string, double> loadValues(const std::string& filename) {
     return values;
 }
 
+// Esta función carga datos de SKU desde un archivo, extrayendo información sobre intervalos de precios y el rango de precios global.
 SKUData loadSKUData(const std::string& filename) {
     SKUData data;
     std::ifstream file(filename);
@@ -231,6 +254,7 @@ SKUData loadSKUData(const std::string& filename) {
     return data;
 }
 
+// Estas funciones cargan características normalizadas y no normalizadas desde archivos de configuración, extrayendo y almacenando valores en un mapa.
 std::map<std::string, double> loadNormalizedFeatures(const std::string& filename) {
     std::map<std::string, double> features;
     std::ifstream file(filename);
@@ -318,6 +342,7 @@ std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filena
 }
 
 // 05-08-2024 1005
+// Esta función carga la configuración de la simulación desde un archivo, asignando valores a las variables de referencia proporcionadas.
 void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& numberOfRefinements, int& tolerance, int& daysToSimulate, std::string& dayForSimulate, std::string& skuForSimulate) {
     std::ifstream file(filename);
     std::string line;
@@ -354,6 +379,7 @@ void loadSimulationConfig(const std::string& filename, int& numberOfIterations, 
 }
 
 // 04-08-2024 1714
+// Esta función carga pesos de atributos desde un archivo, asignando los pesos a las características en un mapa.
 std::map<std::string, double> loadAttributeWeights(const std::string& filename) {
     std::map<std::string, double> weights;
     std::ifstream file(filename);
@@ -370,6 +396,7 @@ std::map<std::string, double> loadAttributeWeights(const std::string& filename) 
 }
 
 // 04-08-2024 1714
+// Esta función carga intervalos de SKU desde un archivo, asignando los intervalos a los SKU correspondientes en un mapa.
 std::map<std::string, std::vector<std::pair<double, double>>> loadSKUIntervals(const std::string& filename) {
     std::map<std::string, std::vector<std::pair<double, double>>> intervals;
     std::ifstream file(filename);

@@ -11,24 +11,40 @@
 #include <sstream>
 
 /*
-Comentarios generales:
-- Este archivo implementa la clase SimulationEngine.
+iostream: para operaciones de entrada/salida.
+fstream: para operaciones de archivo.
+algorithm: para algoritmos estándar como std::min y std::max.
+numeric: para funciones numéricas como std::accumulate.
+limits: para obtener límites de tipos de datos.
+random: para generación de números aleatorios.
+chrono: para mediciones de tiempo.
+iomanip: para manipulación de la salida formateada.
+sstream: para manipulación de cadenas a través de streams.
+*/
 
-Comentario específicos:
-- Implementación de métodos como addParameter, setProductData, setNormalizedFeatures, setNoNormalizedFeatures, loadMeanAndStdValues, runSimulations.
+/*
+Comentarios generales:
+- El archivo implementa la clase SimulationEngine, que es responsable de realizar simulaciones para predecir precios futuros de productos basados en datos 
+históricos y características específicas. La clase incluye métodos para agregar y establecer parámetros, normalizar y desnormalizar datos, cargar datos históricos 
+y ejecutar las simulaciones. El método runSimulations es el núcleo de la clase, gestionando todo el proceso de simulación desde la preparación de datos hasta el 
+registro de los resultados.
 */
 
 // 05-08-2024 1027
+// Inicializa el objeto SimulationEngine con un valor por defecto para numberOfRefinements.
 SimulationEngine::SimulationEngine() : numberOfRefinements(10) {} // Valor por defecto
 
+// Añade un parámetro a la lista de parámetros de la simulación.
 void SimulationEngine::addParameter(const Parameter& parameter) {
     this->parameters.push_back(parameter);
 }
 
+// Establece los datos del producto (SKUData) para la simulación.
 void SimulationEngine::setProductData(const SKUData& data) {
     this->skuData = data;
 }
 
+// Establece las características normalizadas y las añade a los parámetros de la simulación.
 void SimulationEngine::setNormalizedFeatures(const std::map<std::string, double>& features) {
     this->normalizedFeatures = features;
     for (const auto& feature : features) {
@@ -36,16 +52,19 @@ void SimulationEngine::setNormalizedFeatures(const std::map<std::string, double>
     }
 }
 
+// Establece las características no normalizadas.
 void SimulationEngine::setNoNormalizedFeatures(const std::map<std::string, double>& features) {
     this->noNormalizedFeatures = features;
 }
 
+// Carga los valores medios y las desviaciones estándar desde archivos.
 void SimulationEngine::loadMeanAndStdValues(const std::string& meanFilename, const std::string& stdFilename) {
     meanValues = loadValues(meanFilename);
     stdValues = loadValues(stdFilename);
 }
 
 // 04-08-2024 1714
+// Normaliza y desnormaliza valores utilizando los valores medios y las desviaciones estándar.
 double SimulationEngine::normalize(double value, const std::string& feature) {
     return (value - meanValues[feature]) / stdValues[feature];
 }
@@ -56,6 +75,7 @@ double SimulationEngine::denormalize(double normalizedValue, const std::string& 
 }
 
 // 04-08-2024 2039
+// Carga datos históricos desde un archivo CSV y muestra un resumen de los datos cargados.
 void SimulationEngine::loadHistoricalData(const std::string& filename) {
     historicalData.loadFromCSV(filename);
     std::cout << "Attempting to load historical data from: " << filename << std::endl;
@@ -84,6 +104,31 @@ void SimulationEngine::loadHistoricalData(const std::string& filename) {
 }
 
 // 04-08-2024 2114
+/*
+Preparación y Carga de Datos:
+- Carga los pesos de los atributos y los intervalos de SKU desde archivos.
+- Carga los datos históricos específicos del SKU y la fecha.
+
+Verificación de Datos:
+- Verifica que los datos históricos estén disponibles y que contengan la columna total_price_products.
+
+Preparación para la Simulación:
+- Abre archivos para registrar los logs y las estadísticas de la simulación.
+- Inicializa las variables y los generadores de números aleatorios.
+
+Ejecución del Bucle de Simulación:
+- Para cada iteración, refina los parámetros, genera un precio inicial y simula los precios futuros.
+- Calcula la distancia entre los precios simulados y los datos históricos.
+- Registra los resultados en los archivos de log y estadísticas.
+
+Post-procesamiento de Resultados:
+- Calcula los precios promedio a lo largo de todas las simulaciones.
+- Registra los parámetros finales, tanto normalizados como no normalizados.
+- Cierra los archivos de log y estadísticas.
+
+Resumen Final:
+- Muestra un resumen de los resultados de la simulación en la consola.
+*/
 void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate, double tolerance) {
     std::string currentDate = dayForSimulate;  // Asume que dayForSimulate es un miembro de la clase
 
@@ -125,8 +170,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     std::ofstream logFile("../data/output/sku_" + skuData.sku + "/" + currentDate + "/simulation_log_" + currentDate + ".txt");
     std::ofstream statsFile("../data/output/sku_" + skuData.sku + "/" + currentDate + "/statistics_simulations_" + currentDate + ".txt");
 
-    std::string currentDateTime = getCurrentDateTime();
-    logFile << "*** Starting date: " << currentDateTime <<  " ***\n" << std::endl;
+    std::string currentDateTimeInitial = getCurrentDateTime();
+    logFile << "*** Starting date: " << currentDateTimeInitial <<  " ***\n" << std::endl;
 
     logFile << "Starting simulation for SKU " << skuData.sku << " with " << numberOfIterations << " iterations, "
             << daysToSimulate << " days to simulate, and tolerance " << tolerance << std::endl;
@@ -285,7 +330,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         logFile << "  " << param.first << ": " << param.second << std::endl;
     }
 
-    logFile << "\n*** Finishing date: " << currentDateTime <<  " ***" << std::endl;
+    std::string currentDateTimeFinal = getCurrentDateTime();
+    logFile << "\n*** Finishing date: " << currentDateTimeFinal <<  " ***" << std::endl;
 
     logFile.close();
     statsFile.close();

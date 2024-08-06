@@ -14,15 +14,14 @@
 
 /*
 Comentarios generales:
-- Este archivo implementa los métodos definidos en ABCMethod.h.
-
-Comentario específicos:
-- Implementación de métodos como initializeParameters, refineParameters, simulateFuturePrices, calculateDistance, normalizeParameters, calculateProbability, calculateProbabilityNoLog.
-- calculateProbability: Método que necesita mejoras para incluir factores como tendencia histórica, estacionalidad, factores externos, autocorrelación con precios anteriores y volatilidad del producto.
+- Este archivo implementa métodos avanzados para refinar parámetros, simular precios futuros y calcular diversas métricas probabilísticas y estadísticas. 
+El código utiliza técnicas estadísticas y probabilísticas para ajustar y evaluar parámetros, asegurando que los modelos sean precisos y útiles para la predicción de precios futuros.
 */
 
+// Constructor por defecto para la clase ABCMethod.
 ABCMethod::ABCMethod() {}
 
+// Inicializa los parámetros ajustando su probabilidad a 0.5.
 void ABCMethod::initializeParameters(std::vector<Parameter>& parameters) {
     for (auto& param : parameters) {
         param.adjustProbability(0.5);
@@ -30,6 +29,8 @@ void ABCMethod::initializeParameters(std::vector<Parameter>& parameters) {
 }
 
 // 05-08-2024 1011
+// Refinar los parámetros utilizando un proceso iterativo.
+// Se definen varios componentes como random_device, mt19937, y uniform_real_distribution para generar números aleatorios.
 void ABCMethod::refineParameters(std::vector<Parameter>& parameters, 
                                  const SKUData& skuData,
                                  const std::map<std::string, double>& normalizedFeatures,
@@ -39,6 +40,10 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
 
     std::cout << "Entering refineParameters function" << std::endl;
 
+    // La función ajusta los parámetros dinámicos utilizando una distribución normal.
+    // Genera precios simulados y calcula la distancia entre los precios simulados y los datos reales.
+    // Si la distancia está por debajo de un umbral de tolerancia, se aceptan los parámetros.
+    // Normaliza los parámetros aceptados y ajusta la tolerancia si no se aceptaron parámetros.
     std::vector<std::vector<Parameter>> acceptedParameters;
     
     std::random_device rd;
@@ -91,11 +96,14 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
 }
 
 // 04-08-2024 1714
+// Establece los datos históricos para el objeto ABCMethod.
 void ABCMethod::setHistoricalData(const std::vector<std::map<std::string, double>>& data) {
     this->historicalData = data;
 }
 
 // 04-08-2024 1714
+// Simula los precios futuros de los productos.
+// Utiliza la distribución discreta para seleccionar intervalos de precios y una distribución uniforme para generar precios dentro de esos intervalos.
 std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData, 
                                                     const std::map<std::string, double>& normalizedFeatures,
                                                     int daysToSimulate,
@@ -104,6 +112,7 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
 
     std::cout << "Entering simulateFuturePrices function" << std::endl;                                                 
 
+    // La función genera una serie de precios futuros basados en los parámetros del SKU y las características normalizadas.
     std::vector<double> futurePrices;
     futurePrices.push_back(initialPrice);
     previousPrices.clear();
@@ -139,6 +148,7 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
     return futurePrices;
 }
 
+// Calcula la distancia entre los precios simulados y los datos reales utilizando la diferencia absoluta de las probabilidades.
 double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices, 
                                     const SKUData& skuData,
                                     double initialPrice,
@@ -157,6 +167,7 @@ double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices,
     return distance / daysToSimulate;
 }
 
+// Normaliza las probabilidades de los parámetros para que su suma sea igual a 1.
 void ABCMethod::normalizeParameters(std::vector<Parameter>& parameters) {
     double totalProbability = 0.0;
     for (const auto& param : parameters) {
@@ -172,6 +183,7 @@ void ABCMethod::normalizeParameters(std::vector<Parameter>& parameters) {
 }
 
 // 05-08-2024 1057. Análisis de sensibilidad: función de prueba que varíe los parámetros de entrada.
+// Realiza un análisis de sensibilidad variando los parámetros de entrada y calculando las probabilidades para diferentes precios y días.
 void ABCMethod::sensitivityAnalysis(const SKUData& skuData) {
     std::vector<double> testPrices = {1000, 2000, 3000, 4000, 5000};
     std::vector<int> testDays = {1, 30, 90, 180, 365};
@@ -185,6 +197,7 @@ void ABCMethod::sensitivityAnalysis(const SKUData& skuData) {
 }
 
 // 05-08-2024 1057. 
+// Verifica los datos de entrada, asegurándose de que no estén vacíos y que los precios históricos estén dentro de un rango razonable.
 bool ABCMethod::verifyInputData(const SKUData& skuData) {
     if (historicalData.empty()) {
         std::cerr << "Error: Historical data is empty" << std::endl;
@@ -215,6 +228,8 @@ bool ABCMethod::verifyInputData(const SKUData& skuData) {
 }
 
 // 05-08-2024 1555
+// Calcula la probabilidad de un precio dado para un SKU en un día específico. Ajusta la probabilidad basada en la posición en el intervalo, el día, la tendencia histórica, 
+// la estacionalidad, factores externos, autocorrelación y volatilidad.
 double ABCMethod::calculateProbability(double price, const SKUData& skuData, int day) {
     double probability = 0.0;
     std::stringstream log;
@@ -285,6 +300,7 @@ double ABCMethod::calculateProbability(double price, const SKUData& skuData, int
 }
 
 // 05-08-2024 1533
+// Similar al método anterior, pero sin logs adicionales.
 double ABCMethod::calculateProbabilityNoLog(double price, const SKUData& skuData, int day) {
     double probability = 0.0;
     std::stringstream log;
@@ -340,6 +356,7 @@ double ABCMethod::calculateProbabilityNoLog(double price, const SKUData& skuData
 }
 
 // 05-08-2024 1050. La tendencia histórica se calcula usando una regresión lineal simple sobre los últimos 30 días de datos.
+// Calcula la tendencia histórica utilizando una regresión lineal simple sobre los últimos 30 días de datos.
 double ABCMethod::calculateHistoricalTrend(double price, int day, const std::vector<std::map<std::string, double>>& historicalData) {
     if (historicalData.empty()) return 0.0;
 
@@ -375,6 +392,7 @@ double ABCMethod::calculateHistoricalTrend(double price, int day, const std::vec
 }
 
 // 05-08-2024 1051. La estacionalidad usa un patrón anual simplificado.
+// Calcula la estacionalidad utilizando un patrón anual simplificado.
 double ABCMethod::calculateSeasonality(int day) {
     // Asumimos un ciclo anual de 365 días
     const int annualCycle = 365;
@@ -393,6 +411,7 @@ double ABCMethod::calculateSeasonality(int day) {
 }
 
 // 05-08-2024 1053. Los factores externos son eventos discretos en días específicos.
+// Calcula factores externos basados en eventos específicos en días particulares.
 double ABCMethod::getExternalFactor(int day) {
     // Simulamos eventos aleatorios
     std::vector<std::pair<int, double>> events = {
@@ -416,6 +435,7 @@ double ABCMethod::getExternalFactor(int day) {
 }
 
 // 05-08-2024 1053. La autocorrelación se calcula utilizando el coeficiente de correlación de Pearson con un retraso de 1 día.
+// Calcula la autocorrelación utilizando el coeficiente de correlación de Pearson con un retraso de 1 día.
 double ABCMethod::calculateAutocorrelation(double price, const std::vector<double>& previousPrices) {
     if (previousPrices.size() < 2) return 0.0;
 
@@ -441,6 +461,7 @@ double ABCMethod::calculateAutocorrelation(double price, const std::vector<doubl
 }
 
 // 05-08-2024 1053. La volatilidad se calcula como la desviación estándar de los retornos diarios, anualizada.
+// Calcula la volatilidad como la desviación estándar de los retornos diarios, anualizada.
 double ABCMethod::calculateVolatility(const std::vector<std::map<std::string, double>>& historicalData) {
     if (historicalData.size() < 2) return 0.0;
 

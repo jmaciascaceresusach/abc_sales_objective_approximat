@@ -1,6 +1,6 @@
 **ABC_SALES_OBJECTIVE_APPROXIMAT**
 
-This is the v0.2 repository of the application of the ABC method in a pricing case study.
+This is the v0.3 repository of the application of the ABC method in a pricing case study.
 
 Below are the statements for the build of the project.
 
@@ -41,3 +41,12 @@ The simulation_config_initial.txt file, can be modified according to:
 - daysToSimulate=5
 - dayForSimulate=2024-08-03
 - skuForSimulate=Z285320
+
+ó
+
+- numberOfIterations=4
+- numberOfRefinements=5
+- tolerance=13
+- daysToSimulate=5
+- dayForSimulate=2024-08-03
+- skuForSimulate=All
