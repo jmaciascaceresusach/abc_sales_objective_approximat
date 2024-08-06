@@ -1,101 +1,102 @@
-*** Starting date: 2024-08-05 20:00:02 ***
+*** Starting date: 2024-08-05 21:03:40 ***
 
-Starting simulation for SKU Z285320 with 4 iterations, 5 days to simulate, and tolerance 13
+Starting simulation for SKU H401391 with 4 iterations, 5 days to simulate, and tolerance 13
 
 Initial parameters:
-  client_numeric: -0.901096
-  day: -1.48998
-  month: -0.678251
-  sku_count_products: -1.23468
-  total_num_count_products: -0.39252
-  total_price_products: -0.426485
-  vendor_numeric: -0.970038
-  year: 0.255184
+  client_numeric: -0.500643
+  day: -0.714593
+  month: -0.730724
+  sku_count_products: -0.761513
+  total_num_count_products: -0.167031
+  total_price_products: -0.097598
+  vendor_numeric: -0.811805
+  year: 0.67019
 
 ---Starting main simulation loop---
 
 Iteration 1 of 4
-  Distance: 0.0325926
+  Distance: 0.0360321
   -> New best simulation found!! (info: the distance value has decreased)
   Simulation summary:
-    Initial price: 3940.98
-    Average price: 2433.39
-    Min price: 1971.86
-    Max price: 3940.98
+    Initial price: 5588.06
+    Average price: 1368.26
+    Min price: 231.651
+    Max price: 5588.06
   Satisfactory simulation found.
   Simulation accepted: 1
 
 Iteration 2 of 4
-  Distance: 0.0324929
+  Distance: 0.0341918
   -> New best simulation found!! (info: the distance value has decreased)
   Simulation summary:
-    Initial price: 3653.08
-    Average price: 2362.81
-    Min price: 1931.06
-    Max price: 3653.08
+    Initial price: 3763.67
+    Average price: 1015.02
+    Min price: 292.74
+    Max price: 3763.67
   Satisfactory simulation found.
   Simulation accepted: 2
 
 Iteration 3 of 4
-  Distance: 0.0355096
+  Distance: 0.0364582
   Simulation summary:
-    Initial price: 3244.08
-    Average price: 2287.42
-    Min price: 1921.54
-    Max price: 3244.08
+    Initial price: 5083.99
+    Average price: 1280.22
+    Min price: 230.288
+    Max price: 5083.99
   Satisfactory simulation found.
   Simulation accepted: 3
 
 Iteration 4 of 4
-  Distance: 0.0348209
+  Distance: 0.0341107
+  -> New best simulation found!! (info: the distance value has decreased)
   Simulation summary:
-    Initial price: 7883.7
-    Average price: 3177.89
-    Min price: 1918.47
-    Max price: 7883.7
+    Initial price: 1597.55
+    Average price: 567.826
+    Min price: 293.964
+    Max price: 1597.55
   Satisfactory simulation found.
   Simulation accepted: 4
 
 --- Finishing main simulation loop ---
 
 Final Results:
-Best simulation distance: 0.0324929
-Best number simulation (#): 2
+Best simulation distance: 0.0341107
+Best number simulation (#): 3
 Number of accepted simulations: 4
 Best simulation prices:
-  Day 1: 3653.08
-  Day 2: 2128.7
-  Day 3: 1931.06
-  Day 4: 2071.62
-  Day 5: 2029.59
+  Day 1: 1597.55
+  Day 2: 316.496
+  Day 3: 326.607
+  Day 4: 304.508
+  Day 5: 293.964
 Total accepted simulations: 4
 Total rejected simulations: 0
 
 Average prices across all simulations:
-  Day 1: 4680.46
-  Day 2: 2063.53
-  Day 3: 2004.98
-  Day 4: 2096
-  Day 5: 1981.92
+  Day 1: 4008.32
+  Day 2: 293.684
+  Day 3: 348.712
+  Day 4: 316.998
+  Day 5: 321.448
 
 Final parameters:
-  client_numeric: -0.901096
-  day: -1.48998
-  month: -0.678251
-  sku_count_products: -1.23468
-  total_num_count_products: 0.524321
-  total_price_products: 0.475679
-  vendor_numeric: -0.970038
-  year: 0.255184
+  client_numeric: -0.500643
+  day: -0.714593
+  month: -0.730724
+  sku_count_products: -0.761513
+  total_num_count_products: 0.555429
+  total_price_products: 0.444571
+  vendor_numeric: -0.811805
+  year: 0.67019
 
 Final parameters (no normalized features):
-  client_numeric: 570.001
-  day: 2
+  client_numeric: 4810
+  day: 9
   month: 4
-  sku_count_products: 4
-  total_num_count_products: 207.161
-  total_price_products: 292966
-  vendor_numeric: 20
-  year: 2020
+  sku_count_products: 5
+  total_num_count_products: 376.083
+  total_price_products: 550138
+  vendor_numeric: 30
+  year: 2021
 
-*** Finishing date: 2024-08-05 20:00:02 ***
+*** Finishing date: 2024-08-05 21:03:40 ***
