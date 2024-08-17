@@ -304,7 +304,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         logFile << "  Day " << i + 1 << ": " << averagePrices[i] << std::endl;
     }
 
-    logFile << "\nFinal parameters:" << std::endl;
+    logFile << "\nFinal parameters (normalized features):" << std::endl;
     for (const auto& param : parameters) {
         logFile << "  " << param.name << ": " << param.probability << std::endl;
     }

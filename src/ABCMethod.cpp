@@ -123,7 +123,7 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
 
     for (int i = 1; i < daysToSimulate; ++i) {
 
-        std::cout << "\n** Simulating day " << i << " of " << daysToSimulate << " **";
+        std::cout << "\n** Simulating day " << i << " of " << daysToSimulate << " **\n";
 
         std::vector<double> probabilities;
         double prob = 0.0;
