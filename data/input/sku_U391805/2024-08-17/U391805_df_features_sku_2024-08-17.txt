@@ -1,0 +1,8 @@
+client_numeric: ['441006 (773.0)']
+vendor_numeric: ['441006 (181.0)']
+year: ['441006 (2019.0)']
+month: ['441006 (6.0)']
+day: ['441006 (11.0)']
+sku_count_products: ['441006 (12.0)']
+total_num_count_products: ['441006 (165.0)']
+total_price_products: ['441006 (73847.0)']

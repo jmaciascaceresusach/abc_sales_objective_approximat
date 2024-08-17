@@ -1,0 +1,8 @@
+client_numeric: ['224575 (-0.734567)']
+vendor_numeric: ['224575 (-0.057018)']
+year: ['224575 (-1.597235)']
+month: ['224575 (0.674257)']
+day: ['224575 (-0.619444)']
+sku_count_products: ['224575 (-0.137836)']
+total_num_count_products: ['224575 (-0.256864)']
+total_price_products: ['224575 (-0.232864)']

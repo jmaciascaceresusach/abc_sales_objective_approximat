@@ -1,0 +1,8 @@
+client_numeric: ['237809 (8007.0)']
+vendor_numeric: ['237809 (101.0)']
+year: ['237809 (2019.0)']
+month: ['237809 (1.0)']
+day: ['237809 (23.0)']
+sku_count_products: ['237809 (16.0)']
+total_num_count_products: ['237809 (47.0)']
+total_price_products: ['237809 (55694.0)']

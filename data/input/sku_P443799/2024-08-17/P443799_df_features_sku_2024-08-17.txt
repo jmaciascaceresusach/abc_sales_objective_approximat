@@ -1,0 +1,8 @@
+client_numeric: ['296615 (14032.0)']
+vendor_numeric: ['296615 (19.0)']
+year: ['296615 (2022.0)']
+month: ['296615 (8.0)']
+day: ['296615 (25.0)']
+sku_count_products: ['296615 (2.0)']
+total_num_count_products: ['296615 (7.0)']
+total_price_products: ['296615 (13472.0)']
