@@ -1,5 +1,5 @@
-numberOfIterations=100
-numberOfRefinements=100
+numberOfIterations=10
+numberOfRefinements=5
 tolerance=13
 daysToSimulate=30
 dayForSimulate=2024-08-17

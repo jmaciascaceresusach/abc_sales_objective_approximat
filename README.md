@@ -1,14 +1,26 @@
 **ABC_SALES_OBJECTIVE_APPROXIMAT**
 
-This is the v0.3 repository of the application of the ABC method in a pricing case study.
+This is the v0.4 repository of the application of the ABC method in a pricing case study.
 
 Below are the statements for the build of the project.
+
+Summary:
+- Project Structure: The project has an organized structure with separate directories for source code (src), header files (include), input data (data/input), and output data (data/output).
+- ABC Method Implementation: The project implements the Approximate Bayesian Computation (ABC) method to simulate and predict product prices. The ABCMethod class in ABCMethod.cpp contains the main logic for refining parameters, simulating future prices, and calculating probabilities.
+- Data Handling: The project uses various data structures such as SKUData to store information about products and their price ranges. The DataLoader class is responsible for loading data from CSV and text files.
+- Simulation: The SimulationEngine class in SimulationEngine.cpp is responsible for running the simulations. It handles data preparation, running multiple simulation iterations, and logging results.
+- Flexible configuration: The project allows configuring simulation parameters such as the number of iterations, tolerance, and days to simulate through a configuration file (simulation_config_initial.txt).
+- Detailed outputs: The program generates detailed log files (simulation_log) and statistics (statistics_simulations) for each simulation, allowing for later analysis of the results.
+- Handling multiple SKUs: The project can simulate for a specific SKU or for all available SKUs, making it flexible for different usage scenarios.
+- Use of advanced statistical techniques: The code implements calculations of historical trends, seasonality, autocorrelation, and volatility to adjust future price probabilities.
+- Error handling: The code includes input data checks and error handling to ensure program robustness.
+- Build tools: The project uses CMake and has a Makefile, making it easy to compile in different environments.
 
 ---
 
 ## Build
 
-This is the v0.3 repository of the application of the ABC (Approximate Bayesian Computation) method in a pricing case study.
+This is the v0.4 repository of the application of the ABC (Approximate Bayesian Computation) method in a pricing case study.
 
 Below are the statements for the build of the project.
 
@@ -35,18 +47,18 @@ Now, to test the project, you would have to use the following statements:
 
 The simulation_config_initial.txt file, can be modified according to:
 
-- numberOfIterations=4
-- numberOfRefinements=5
+- numberOfIterations=100
+- numberOfRefinements=100
 - tolerance=13
-- daysToSimulate=5
-- dayForSimulate=2024-08-03
-- skuForSimulate=Z285320
+- daysToSimulate=30
+- dayForSimulate=2024-08-17
+- skuForSimulate=U391805
 
 ó
 
-- numberOfIterations=4
-- numberOfRefinements=5
+- numberOfIterations=100
+- numberOfRefinements=100
 - tolerance=13
-- daysToSimulate=5
-- dayForSimulate=2024-08-03
+- daysToSimulate=30
+- dayForSimulate=2024-08-17
 - skuForSimulate=All
