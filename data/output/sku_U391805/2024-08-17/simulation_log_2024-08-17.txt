@@ -1,0 +1,17 @@
+*** Starting date: 2024-08-06 11:21:25 ***
+
+Starting simulation for SKU H401391 with 4 iterations, 5 days to simulate, and tolerance 13
+
+Initial parameters:
+  client_numeric: -0.500643
+  day: -0.714593
+  month: -0.730724
+  sku_count_products: -0.761513
+  total_num_count_products: -0.167031
+  total_price_products: -0.097598
+  vendor_numeric: -0.811805
+  year: 0.67019
+
+---Starting main simulation loop---
+
+Iteration 1 of 4
