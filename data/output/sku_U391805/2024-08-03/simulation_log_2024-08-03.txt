@@ -1,4 +1,4 @@
-*** Starting date: 2024-08-05 20:37:42 ***
+*** Starting date: 2024-08-17 12:03:24 ***
 
 Starting simulation for SKU U391805 with 4 iterations, 5 days to simulate, and tolerance 13
 
@@ -15,76 +15,76 @@ Initial parameters:
 ---Starting main simulation loop---
 
 Iteration 1 of 4
-  Distance: 0.456646
+  Distance: 0.438891
   -> New best simulation found!! (info: the distance value has decreased)
   Simulation summary:
-    Initial price: 363.041
-    Average price: 205.384
-    Min price: 101.454
-    Max price: 363.041
+    Initial price: 306.77
+    Average price: 267.77
+    Min price: 239.94
+    Max price: 306.77
   Satisfactory simulation found.
   Simulation accepted: 1
 
 Iteration 2 of 4
-  Distance: 0.478381
+  Distance: 0.490326
   Simulation summary:
-    Initial price: 280.905
-    Average price: 230.115
-    Min price: 156.101
-    Max price: 280.905
+    Initial price: 178.436
+    Average price: 209.007
+    Min price: 145.068
+    Max price: 336.704
   Satisfactory simulation found.
   Simulation accepted: 2
 
 Iteration 3 of 4
-  Distance: 0.44725
-  -> New best simulation found!! (info: the distance value has decreased)
+  Distance: 0.487506
   Simulation summary:
-    Initial price: 482.714
-    Average price: 257.426
-    Min price: 133.857
-    Max price: 482.714
+    Initial price: 163.353
+    Average price: 230.774
+    Min price: 99.3787
+    Max price: 335.452
   Satisfactory simulation found.
   Simulation accepted: 3
 
 Iteration 4 of 4
-  Distance: 0.471439
+  Distance: 0.428417
+  -> New best simulation found!! (info: the distance value has decreased)
   Simulation summary:
-    Initial price: 155.042
-    Average price: 144.017
-    Min price: 120.868
-    Max price: 173.315
+    Initial price: 430.712
+    Average price: 254.132
+    Min price: 136.321
+    Max price: 430.712
   Satisfactory simulation found.
   Simulation accepted: 4
 
 --- Finishing main simulation loop ---
 
 Final Results:
-Best simulation distance: 0.44725
+Best simulation distance: 0.428417
 Best number simulation (#): 2
 Number of accepted simulations: 4
 Best simulation prices:
-  Day 1: 482.714
-  Day 2: 133.857
-  Day 3: 224.48
-  Day 4: 223.004
-  Day 5: 223.074
+  Day 1: 430.712
+  Day 2: 225.839
+  Day 3: 275.568
+  Day 4: 136.321
+  Day 5: 202.218
 Total accepted simulations: 4
 Total rejected simulations: 0
 
 Average prices across all simulations:
-  Day 1: 320.425
-  Day 2: 152.401
-  Day 3: 219.271
-  Day 4: 185.634
-  Day 5: 168.445
+  Day 1: 269.818
+  Day 2: 264.215
+  Day 3: 237.197
+  Day 4: 211.313
+  Day 5: 219.56
 
 Final parameters:
   client_numeric: 1.63965
   day: 1.67759
   month: 1.30878
   sku_count_products: 2.54042
-  total_num_count_products: 0.0970323
-  total_price_products: 0.902968
+  total_num_count_products: 0.0589376
+  total_price_products: 0.941062
   vendor_numeric: -0.017444
   year: -1.05849
 
@@ -93,9 +93,9 @@ Final parameters (no normalized features):
   day: 30
   month: 11
   sku_count_products: 59
-  total_num_count_products: 321.955
-  total_price_products: 540157
+  total_num_count_products: 296.434
+  total_price_products: 554355
   vendor_numeric: 101
   year: 2018
 
-*** Finishing date: 2024-08-05 20:37:42 ***
+*** Finishing date: 2024-08-17 12:03:36 ***
