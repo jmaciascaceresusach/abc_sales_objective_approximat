@@ -1,4 +1,4 @@
-*** Starting date: 2024-08-17 23:42:15 ***
+*** Starting date: 2024-08-18 00:09:41 ***
 
 Starting simulation for SKU U391805 with 5 iterations, 30 days to simulate, and tolerance 13
 
@@ -15,136 +15,136 @@ Initial parameters:
 ---Starting main simulation loop---
 
 Iteration 1 of 5
-  Distance: 0.497729
+  Distance: 0.497496
   -> New best simulation found!! (info: the distance value has decreased)
   Simulation summary:
-    Initial price: 298.274
-    Average price: 227.002
-    Min price: 110.392
-    Max price: 342.198
+    Initial price: 221.129
+    Average price: 209.48
+    Min price: 100.669
+    Max price: 333.304
   Satisfactory simulation found.
   Simulation accepted: 1
 
 Iteration 2 of 5
-  Distance: 0.496714
-  -> New best simulation found!! (info: the distance value has decreased)
+  Distance: 0.497674
   Simulation summary:
-    Initial price: 424.092
-    Average price: 223.222
-    Min price: 98.4812
-    Max price: 424.092
+    Initial price: 486.717
+    Average price: 240.846
+    Min price: 100.056
+    Max price: 486.717
   Satisfactory simulation found.
   Simulation accepted: 2
 
 Iteration 3 of 5
-  Distance: 0.497118
+  Distance: 0.496914
+  -> New best simulation found!! (info: the distance value has decreased)
   Simulation summary:
-    Initial price: 164.963
-    Average price: 212.698
-    Min price: 95.2231
-    Max price: 334.478
+    Initial price: 487.574
+    Average price: 242.078
+    Min price: 99.197
+    Max price: 487.574
   Satisfactory simulation found.
   Simulation accepted: 3
 
 Iteration 4 of 5
-  Distance: 0.498422
+  Distance: 0.496983
   Simulation summary:
-    Initial price: 327.709
-    Average price: 213.157
-    Min price: 105.672
-    Max price: 338.42
+    Initial price: 473.791
+    Average price: 240.36
+    Min price: 94.717
+    Max price: 473.791
   Satisfactory simulation found.
   Simulation accepted: 4
 
 Iteration 5 of 5
-  Distance: 0.49817
+  Distance: 0.498427
   Simulation summary:
-    Initial price: 213.169
-    Average price: 220.167
-    Min price: 116.062
-    Max price: 342.099
+    Initial price: 498.536
+    Average price: 229.991
+    Min price: 95.4114
+    Max price: 498.536
   Satisfactory simulation found.
   Simulation accepted: 5
 
 --- Finishing main simulation loop ---
 
 Final Results:
-Best simulation distance: 0.496714
+Best simulation distance: 0.496914
 Best number simulation (#): 2
 Number of accepted simulations: 5
 Best simulation prices:
-  Day 1: 424.092
-  Day 2: 225.171
-  Day 3: 253.731
-  Day 4: 338.647
-  Day 5: 316.904
-  Day 6: 181.293
-  Day 7: 246.774
-  Day 8: 300.711
-  Day 9: 109.347
-  Day 10: 260.35
-  Day 11: 251.943
-  Day 12: 98.4812
-  Day 13: 145.381
-  Day 14: 163.296
-  Day 15: 307.028
-  Day 16: 191.457
-  Day 17: 177.2
-  Day 18: 208.932
-  Day 19: 162.727
-  Day 20: 119.791
-  Day 21: 99.3129
-  Day 22: 219.619
-  Day 23: 224.537
-  Day 24: 223.538
-  Day 25: 299.18
-  Day 26: 231.016
-  Day 27: 124.551
-  Day 28: 238.021
-  Day 29: 276.669
-  Day 30: 276.946
+  Day 1: 487.574
+  Day 2: 342.681
+  Day 3: 281.723
+  Day 4: 178.121
+  Day 5: 203.467
+  Day 6: 153.589
+  Day 7: 267.338
+  Day 8: 166.406
+  Day 9: 271.628
+  Day 10: 200.935
+  Day 11: 298.51
+  Day 12: 115.374
+  Day 13: 338.329
+  Day 14: 214.014
+  Day 15: 99.197
+  Day 16: 148.408
+  Day 17: 287.93
+  Day 18: 194.828
+  Day 19: 312.838
+  Day 20: 265.763
+  Day 21: 320.171
+  Day 22: 330.221
+  Day 23: 220.735
+  Day 24: 248.292
+  Day 25: 212.152
+  Day 26: 169.785
+  Day 27: 221.149
+  Day 28: 341.748
+  Day 29: 209.794
+  Day 30: 159.64
 Total accepted simulations: 5
 Total rejected simulations: 0
 
 Average prices across all simulations:
-  Day 1: 285.641
-  Day 2: 184.034
-  Day 3: 250.078
-  Day 4: 255.211
-  Day 5: 191.577
-  Day 6: 210.852
-  Day 7: 186.359
-  Day 8: 190.432
-  Day 9: 219.438
-  Day 10: 170.807
-  Day 11: 243.361
-  Day 12: 206.677
-  Day 13: 214.492
-  Day 14: 166.575
-  Day 15: 277.553
-  Day 16: 257.596
-  Day 17: 203.566
-  Day 18: 240.771
-  Day 19: 231.143
-  Day 20: 157.27
-  Day 21: 175.295
-  Day 22: 220.06
-  Day 23: 203.343
-  Day 24: 224.924
-  Day 25: 253.618
-  Day 26: 273.955
-  Day 27: 204.34
-  Day 28: 226.825
-  Day 29: 248.103
-  Day 30: 203.574
+  Day 1: 433.549
+  Day 2: 247.514
+  Day 3: 240.72
+  Day 4: 228.124
+  Day 5: 194.473
+  Day 6: 180.413
+  Day 7: 218.468
+  Day 8: 254.311
+  Day 9: 267.067
+  Day 10: 155.949
+  Day 11: 233.093
+  Day 12: 203.276
+  Day 13: 263.34
+  Day 14: 251.863
+  Day 15: 174.03
+  Day 16: 275.836
+  Day 17: 189.95
+  Day 18: 209.133
+  Day 19: 205.272
+  Day 20: 240.633
+  Day 21: 199.808
+  Day 22: 269.006
+  Day 23: 226.974
+  Day 24: 243.217
+  Day 25: 212.49
+  Day 26: 232.236
+  Day 27: 198.96
+  Day 28: 243.526
+  Day 29: 234.611
+  Day 30: 248.689
 
 Final parameters (normalized features):
   client_numeric: -0.834332
   day: -0.480656
   month: -0.148177
   sku_count_products: -0.709467
-  total_num_count_products: 0.397303
-  total_price_products: 0.602697
+  total_num_count_products: 0.489853
+  total_price_products: 0.510147
   vendor_numeric: 0.903272
   year: -0.382273
 
@@ -153,9 +153,9 @@ Final parameters (no normalized features):
   day: 11
   month: 6
   sku_count_products: 12
-  total_num_count_products: 523.114
-  total_price_products: 428246
+  total_num_count_products: 585.116
+  total_price_products: 393752
   vendor_numeric: 181
   year: 2019
 
-*** Finishing date: 2024-08-17 23:44:02 ***
+*** Finishing date: 2024-08-18 00:11:26 ***
