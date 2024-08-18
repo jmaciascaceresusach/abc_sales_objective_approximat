@@ -66,6 +66,9 @@ void SimulationEngine::loadMeanAndStdValues(const std::string& meanFilename,
     std::cout << "\n*** loadMeanAndStdValues ***" << std::endl;
     logFileForSKU << "\n*** loadMeanAndStdValues ***" << std::endl;
 
+    std::cout << "Preparing to load the average values ​​and standard deviation of the example case..." << std::endl;
+    logFileForSKU << "Preparing to load the average values ​​and standard deviation of the example case..." << std::endl;
+
     logFileForSKU << "Loading the average values ​​of the example case..." << std::endl;                                        
     meanValues = loadValues(meanFilename);
 
@@ -189,9 +192,14 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     std::vector<double> bestSimulation;
     double bestDistance = std::numeric_limits<double>::max();
 
-    logFile << "\nInitial parameters:" << std::endl;
+    logFile << "\nInitial parameters (normalized features):" << std::endl;
     for (const auto& param : parameters) {
         logFile << "  " << param.name << ": " << param.probability << std::endl;
+    }
+
+    logFile << "\nInitial parameters (no normalized features):" << std::endl;
+    for (const auto& feature : noNormalizedFeatures) {
+        logFile << "  " << feature.first << ": " << feature.second << std::endl;
     }
 
     int acceptedSimulations = 0;

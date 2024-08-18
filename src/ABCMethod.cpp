@@ -180,6 +180,9 @@ double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices,
         distance += std::abs(expectedProbability - actualProbability);
     }
 
+    std::cout << "\n** Probability Final: **" << std::endl;
+    logFileDistance << "\n** Probability Final: **" << std::endl;
+
     std::cout<< "-> Expected probability: " << expectedProbability << " (iter: " << numberOfIterations << ")" << std::endl;
     logFileDistance << "-> Expected probability: " << expectedProbability << " (iter: " << numberOfIterations << ")" << std::endl;
 

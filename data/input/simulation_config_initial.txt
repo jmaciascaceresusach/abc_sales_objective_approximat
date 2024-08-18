@@ -1,4 +1,4 @@
-numberOfIterations=5
+numberOfIterations=10
 numberOfRefinements=5
 tolerance=13
 daysToSimulate=30

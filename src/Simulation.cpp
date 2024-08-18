@@ -68,8 +68,6 @@ void runSimulationForSKU(SimulationEngine& simulationEngine,
     // loadMeanAndStdValues: Carga los valores medios y las desviaciones estándar de las características desde archivos CSV. Esto es importante para normalizar y desnormalizar 
     // los datos durante la simulación.
     // 18-08-2024 1240
-    std::cout << "Preparing to load the average values ​​and standard deviation of the example case..." << std::endl;
-    logFileForSKU << "Preparing to load the average values ​​and standard deviation of the example case..." << std::endl;
     simulationEngine.loadMeanAndStdValues(basePath + sku + "_mean_values_features_sku_" + dayForSimulate + ".csv",
                                           basePath + sku + "_std_values_features_sku_" + dayForSimulate + ".csv", logFileForSKU);
 
