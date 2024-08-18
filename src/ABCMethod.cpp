@@ -1,6 +1,7 @@
 #define _USE_MATH_DEFINES
 
 #include "../include/ABCMethod.h"
+#include "../include/DataLoader.h"
 #include <random>
 #include <algorithm>
 #include <cmath>
@@ -158,16 +159,25 @@ double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices,
                                     std::string currentDate,
                                     int numberOfIterations) {
 
+    std::ofstream logFile("../data/output/sku_" + skuData.sku + "/" + currentDate + "/simulation_cal_distance_log_" + currentDate + ".txt");
+    std::string currentDateTimeInitial = getCurrentDateTime();
+    logFile << "*** Starting date: " << currentDateTimeInitial <<  " ***\n" << std::endl;
+
     std::cout << "\n-> Entering calculateDistance function" << std::endl;
 
     double distance = 0.0;
     for (int i = 0; i < daysToSimulate; ++i) {
-        double expectedProbability = calculateProbability(simulatedPrices[i], skuData, i, currentDate, numberOfIterations); // Se mostrará en el log de consola
+        double expectedProbability = calculateProbability(simulatedPrices[i], skuData, i, currentDate, numberOfIterations, logFile); // Se mostrará en el log de consola
         double actualProbability = 1.0 / skuData.listProducts.size(); // Asumiendo distribución uniforme
         distance += std::abs(expectedProbability - actualProbability);
     }
 
     std::cout << "\n-> Exiting calculateDistance function\n" << std::endl;
+
+    std::string currentDateTimeFinal = getCurrentDateTime();
+    logFile << "\n*** Finishing date: " << currentDateTimeFinal <<  " ***" << std::endl;
+    logFile.close();
+
     return distance / daysToSimulate;
 }
 
@@ -238,12 +248,10 @@ double ABCMethod::calculateProbability(double price,
                                        const SKUData& skuData, 
                                        int day, 
                                        std::string currentDate, 
-                                       int numberOfIterations) {
+                                       int numberOfIterations,
+                                       std::ofstream& logFile) {
     double probability = 0.0;
     std::stringstream log;
-
-    std::ofstream logFile("../data/output/sku_" + skuData.sku + "/" + currentDate + "/simulation_cal_distance_log_" + currentDate + "_" + std::to_string(day) + ".txt");
-    //logFile << "\nIteration " << i + 1 << " of " << numberOfIterations << std::endl;
 
     std::cout << "\n** Log calculateProbability **" << std::endl;
     logFile << "\n** Log calculateProbability **" << std::endl;

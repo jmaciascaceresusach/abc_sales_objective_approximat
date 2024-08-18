@@ -107,7 +107,8 @@ private:
                                 const SKUData& skuData, 
                                 int day,
                                 std::string currentDate,
-                                int numberOfIterations);
+                                int numberOfIterations,
+                                std::ofstream& logFile);
 
     // Calcula la probabilidad de un precio dado en un día específico sin logs adicionales.
     double calculateProbabilityNoLog(double price, const SKUData& skuData, int day); // 05-08-2024 1532
