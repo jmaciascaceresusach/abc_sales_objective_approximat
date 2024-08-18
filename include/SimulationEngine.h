@@ -58,7 +58,10 @@ public:
     void runSimulations(int numberOfIterations, int daysToSimulate, double tolerance);
 
     // Carga los valores medios y las desviaciones estándar desde archivos.
-    void loadMeanAndStdValues(const std::string& meanFilename, const std::string& stdFilename);
+    // 18-08-2024 1535
+    void loadMeanAndStdValues(const std::string& meanFilename, 
+                              const std::string& stdFilename,
+                              std::ofstream& logFileForSKU);
 
     // 04-08-2024 2012
     // Establece el día para simular en el motor de simulación.

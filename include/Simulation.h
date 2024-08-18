@@ -37,7 +37,13 @@ Declaración de la Función
 // numberOfIterations: Número de iteraciones a realizar en la simulación.
 // daysToSimulate: Número de días a simular.
 // tolerance: Tolerancia para la simulación.
-void runSimulationForSKU(SimulationEngine& simulationEngine, const std::string& sku, const std::string& dayForSimulate, int numberOfIterations, int daysToSimulate, double tolerance);
+void runSimulationForSKU(SimulationEngine& simulationEngine, 
+                         const std::string& sku, 
+                         const std::string& dayForSimulate, 
+                         int numberOfIterations, 
+                         int daysToSimulate, 
+                         double tolerance,
+                         std::ofstream& logFileForSKU);
 
 // Esta línea cierra la protección del archivo de cabecera.
 #endif // SIMULATION_H

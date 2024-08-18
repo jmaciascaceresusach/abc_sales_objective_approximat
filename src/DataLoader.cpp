@@ -198,7 +198,8 @@ std::map<std::string, double> loadValues(const std::string& filename) {
 }
 
 // Esta función carga datos de SKU desde un archivo, extrayendo información sobre intervalos de precios y el rango de precios global.
-SKUData loadSKUData(const std::string& filename) {
+SKUData loadSKUData(const std::string& filename,
+                    std::ofstream& logFileForSKU) {
     SKUData data;
     std::ifstream file(filename);
     std::string line;
@@ -215,6 +216,7 @@ SKUData loadSKUData(const std::string& filename) {
     std::getline(headerStream, token, ';'); // Ignorar "sku"
     
     std::cout << "\n*** loadSKUData ***" << std::endl;
+    logFileForSKU << "\n*** loadSKUData ***" << std::endl;
 
     // Leer los encabezados de list_products
     while (std::getline(headerStream, token, ';')) {
@@ -248,14 +250,20 @@ SKUData loadSKUData(const std::string& filename) {
 
     std::cout << "Loaded SKU data for " << data.sku << " with " 
               << data.listProducts.size() << " price intervals" << std::endl;
+    logFileForSKU << "Loaded SKU data for " << data.sku << " with " 
+              << data.listProducts.size() << " price intervals" << std::endl;
+
     std::cout << "Global price range: [" << data.globalMinPrice 
+              << ", " << data.globalMaxPrice << "]" << std::endl;
+    logFileForSKU << "Global price range: [" << data.globalMinPrice 
               << ", " << data.globalMaxPrice << "]" << std::endl;
 
     return data;
 }
 
 // Estas funciones cargan características normalizadas y no normalizadas desde archivos de configuración, extrayendo y almacenando valores en un mapa.
-std::map<std::string, double> loadNormalizedFeatures(const std::string& filename) {
+std::map<std::string, double> loadNormalizedFeatures(const std::string& filename,
+                                                     std::ofstream& logFileForSKU) {
     std::map<std::string, double> features;
     std::ifstream file(filename);
     std::string line;
@@ -266,6 +274,7 @@ std::map<std::string, double> loadNormalizedFeatures(const std::string& filename
     }
 
     std::cout << "\n*** loadNormalizedFeatures ***" << std::endl;
+    logFileForSKU << "\n*** loadNormalizedFeatures ***" << std::endl;
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
@@ -294,11 +303,13 @@ std::map<std::string, double> loadNormalizedFeatures(const std::string& filename
 
     file.close();
     std::cout << "Loaded " << features.size() << " normalized features" << std::endl;
+    logFileForSKU << "Loaded " << features.size() << " normalized features" << std::endl;
 
     return features;
 }
 
-std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filename) {
+std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filename,
+                                                       std::ofstream& logFileForSKU) {
     std::map<std::string, double> features;
     std::ifstream file(filename);
     std::string line;
@@ -309,6 +320,7 @@ std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filena
     }
 
     std::cout << "\n*** loadNoNormalizedFeatures ***" << std::endl;
+    logFileForSKU << "\n*** loadNoNormalizedFeatures ***" << std::endl;
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
@@ -337,6 +349,7 @@ std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filena
 
     file.close();
     std::cout << "Loaded " << features.size() << " no normalized features \n" << std::endl;
+    logFileForSKU << "Loaded " << features.size() << " no normalized features \n" << std::endl;
 
     return features;
 }

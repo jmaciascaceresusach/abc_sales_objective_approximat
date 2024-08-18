@@ -74,7 +74,7 @@ void ABCMethod::refineParameters(std::vector<Parameter>& parameters,
         }
 
         double initialPrice = skuData.globalMinPrice + dis(gen) * (skuData.globalMaxPrice - skuData.globalMinPrice);
-        std::vector<double> simulatedPrices = simulateFuturePrices(skuData, normalizedFeatures, daysToSimulate, initialPrice);
+        std::vector<double> simulatedPrices = simulateFuturePrices(skuData, normalizedFeatures, daysToSimulate, initialPrice, logFileDistanceRefine);
         double distance = calculateDistance(simulatedPrices, skuData, initialPrice, daysToSimulate, currentDate, numberOfIterations, logFileDistanceRefine);
 
         if (distance < tolerance) {
@@ -108,16 +108,18 @@ void ABCMethod::setHistoricalData(const std::vector<std::map<std::string, double
     this->historicalData = data;
 }
 
-// 04-08-2024 1714
+// 18-08-2024 1240
 // Simula los precios futuros de los productos.
 // Utiliza la distribución discreta para seleccionar intervalos de precios y una distribución uniforme para generar precios dentro de esos intervalos.
 std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData, 
                                                     const std::map<std::string, double>& normalizedFeatures,
                                                     int daysToSimulate,
-                                                    double initialPrice) {
+                                                    double initialPrice,
+                                                    std::ofstream& logFileDistanceRefine) {
     std::stringstream log;
 
-    std::cout << "Entering simulateFuturePrices function" << std::endl;                                                 
+    std::cout << "Entering simulateFuturePrices function" << std::endl;
+    logFileDistanceRefine << "Entering simulateFuturePrices function" << std::endl;                                                 
 
     // La función genera una serie de precios futuros basados en los parámetros del SKU y las características normalizadas.
     std::vector<double> futurePrices;
@@ -152,6 +154,8 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
     }
 
     std::cout << "\nExiting simulateFuturePrices function" << std::endl;
+    logFileDistanceRefine << "\nExiting simulateFuturePrices function" << std::endl; 
+
     return futurePrices;
 }
 
@@ -314,16 +318,19 @@ double ABCMethod::calculateProbability(double price,
             double previousPrice = previousPrices.empty() ? price : previousPrices.back();
             probability *= std::exp(-volatility * std::abs(price - previousPrice));
 
-            // 05-08-2024 1033
+            // 18-08-2024 1240
             log << "-> volatility adjustment: " << volatility << " and previousPrice adjustment: " << previousPrice << std::endl;
-            logFileDistance << "-> volatility adjustment: " << volatility << " and previousPrice adjustment: " << previousPrice << std::endl;
+            logFileDistance << "-> volatility adjustment: " << volatility << std::endl;
+            logFileDistance << "-> previousPrice adjustment: " << previousPrice << std::endl;
 
             break;
         }
     }
 
     // Normalización: Al final, aseguramos que la probabilidad esté en el rango [0, 1].
+    // 18-08-2024 1240
     probability = std::max(0.0, std::min(1.0, probability));
+    logFileDistance << "-> probability adjustment: " << probability << " (day: " << day << ")" << std::endl;
 
     // Agregar el log al archivo de salida y a la consola
     std::cout << log.str();

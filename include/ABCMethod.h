@@ -79,7 +79,8 @@ public:
     std::vector<double> simulateFuturePrices(const SKUData& skuData, 
                                              const std::map<std::string, double>& normalizedFeatures,
                                              int daysToSimulate,
-                                             double initialPrice);
+                                             double initialPrice,
+                                             std::ofstream& logFileDistanceRefine);
 
     // Calcula la distancia entre los precios simulados y los datos históricos.
     double calculateDistance(const std::vector<double>& simulatedPrices, 

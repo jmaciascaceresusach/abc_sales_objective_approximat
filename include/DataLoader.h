@@ -41,13 +41,16 @@ public:
 };
 
 // loadSKUData: Carga los datos del SKU desde un archivo.
-SKUData loadSKUData(const std::string& filename);
+SKUData loadSKUData(const std::string& filename,
+                    std::ofstream& logFileForSKU);
 
 // loadNormalizedFeatures: Carga características normalizadas desde un archivo.
-std::map<std::string, double> loadNormalizedFeatures(const std::string& filename);
+std::map<std::string, double> loadNormalizedFeatures(const std::string& filename,
+                                                     std::ofstream& logFileForSKU);
 
 // loadNoNormalizedFeatures: Carga características no normalizadas desde un archivo.
-std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filename);
+std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filename,
+                                                       std::ofstream& logFileForSKU);
 
 // loadSimulationConfig: Carga la configuración de la simulación desde un archivo.
 void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& numberOfRefinements, int& tolerance, int& daysToSimulate, std::string& dayForSimulate, std::string& skuForSimulate); // 05-08-2024 1004

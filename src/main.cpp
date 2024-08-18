@@ -56,16 +56,26 @@ int main(int argc, char* argv[]) {
     SimulationEngine simulationEngine;
     simulationEngine.numberOfRefinements = numberOfRefinements;
 
+    // 18-08-2024 1240
+    std::ofstream logFileForSKU("../data/output/sku_" + skuForSimulate + "/" + dayForSimulate + "/simulation_sku_" + skuForSimulate + "_initial" + dayForSimulate + ".txt");
+    std::string currentDateTimeInitialForSKU = getCurrentDateTime();
+    logFileForSKU << "*** Starting date: " << currentDateTimeInitialForSKU <<  " (Buenos Aires -3 UTC) ***\n" << std::endl;
+
     // 04-08-2024 1714
     // Si skuForSimulate es "All", se obtiene una lista de todos los SKUs y se ejecuta la simulación para cada uno. De lo contrario, se ejecuta la simulación solo para el SKU especificado.
     if (skuForSimulate == "All") {
         std::vector<std::string> allSKUs = getAllSKUs();  // Nueva función para obtener todos los SKUs
         for (const auto& sku : allSKUs) {
-            std::cout << "Running simulation for SKU: " << sku << std::endl;
-            runSimulationForSKU(simulationEngine, skuForSimulate, dayForSimulate, numberOfIterations, daysToSimulate, tolerance);
+            std::cout << "Running simulation for SKU (All): " << sku << std::endl;
+            logFileForSKU << "Running simulation for SKU (All): " << sku << std::endl;
+
+            runSimulationForSKU(simulationEngine, skuForSimulate, dayForSimulate, numberOfIterations, daysToSimulate, tolerance, logFileForSKU);
         }
     } else {
-        runSimulationForSKU(simulationEngine, skuForSimulate, dayForSimulate, numberOfIterations, daysToSimulate, tolerance);
+        std::cout << "Running simulation for SKU (Only 1): " << std::endl;
+        logFileForSKU << "Running simulation for SKU (Only 1): " << std::endl;
+
+        runSimulationForSKU(simulationEngine, skuForSimulate, dayForSimulate, numberOfIterations, daysToSimulate, tolerance, logFileForSKU);
     }
 
     // 04-08-2024 1714
