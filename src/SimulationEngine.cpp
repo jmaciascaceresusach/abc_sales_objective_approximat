@@ -329,14 +329,12 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
     if (!bestSimulation.empty()) {
         logFile << "Best simulation prices:" << std::endl;
-        logFileBestSimulations << "Day,Price";
+        logFileBestSimulations << "Day,Price" << std::endl;
 
         for (size_t i = 0; i < bestSimulation.size(); ++i) {
             logFile << "  Day " << i + 1 << ": " << bestSimulation[i] << std::endl;
-            logFileBestSimulations << "," << i + 1 << bestSimulation[i];
+            logFileBestSimulations << i + 1 << "," << bestSimulation[i] << std::endl;
         }
-
-        logFileBestSimulations << std::endl;
     } else {
         logFile << "No satisfactory simulation found." << std::endl;
     }
@@ -357,10 +355,18 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         price /= allSimulatedPrices.size();
     }
 
+    // 18-08-2024 1920
+    std::ofstream logFileAveragePrices("../data/output/sku_" + skuData.sku + "/" + currentDate + "/statistics_simulations_average_prices_days_" + currentDate + ".txt");
+
     logFile << "\nAverage prices across all simulations:" << std::endl;
+    logFileAveragePrices << "Day,Price" << std::endl;
     for (size_t i = 0; i < averagePrices.size(); ++i) {
         logFile << "  Day " << i + 1 << ": " << averagePrices[i] << std::endl;
+        logFileAveragePrices << i + 1 << "," << averagePrices[i] << std::endl;
     }
+
+    // 18-08-2024 1920
+    logFileAveragePrices.close();
 
     logFile << "\nFinal parameters (normalized features):" << std::endl;
     for (const auto& param : parameters) {
