@@ -72,7 +72,8 @@ public:
                         double tolerance,
                         int numberOfRefinements,
                         std::string currentDate,
-                        int numberOfIterations);
+                        int numberOfIterations,
+                        std::ofstream& logFileDistanceRefine);
                           
     // Simula los precios futuros del SKU.
     std::vector<double> simulateFuturePrices(const SKUData& skuData, 
@@ -86,7 +87,8 @@ public:
                              double initialPrice,
                              int daysToSimulate,
                              std::string currentDate,
-                             int numberOfIterations);
+                             int numberOfIterations,
+                             std::ofstream& logFileDistance);
 
     // Establece los datos históricos para el modelo.
     void setHistoricalData(const std::vector<std::map<std::string, double>>& data);
@@ -108,7 +110,7 @@ private:
                                 int day,
                                 std::string currentDate,
                                 int numberOfIterations,
-                                std::ofstream& logFile);
+                                std::ofstream& logFileDistance);
 
     // Calcula la probabilidad de un precio dado en un día específico sin logs adicionales.
     double calculateProbabilityNoLog(double price, const SKUData& skuData, int day); // 05-08-2024 1532
