@@ -70,7 +70,9 @@ public:
                         const std::map<std::string, double>& normalizedFeatures,
                         int daysToSimulate,
                         double tolerance,
-                        int numberOfRefinements);
+                        int numberOfRefinements,
+                        std::string currentDate,
+                        int numberOfIterations);
                           
     // Simula los precios futuros del SKU.
     std::vector<double> simulateFuturePrices(const SKUData& skuData, 
@@ -82,7 +84,9 @@ public:
     double calculateDistance(const std::vector<double>& simulatedPrices, 
                              const SKUData& skuData,
                              double initialPrice,
-                             int daysToSimulate);
+                             int daysToSimulate,
+                             std::string currentDate,
+                             int numberOfIterations);
 
     // Establece los datos históricos para el modelo.
     void setHistoricalData(const std::vector<std::map<std::string, double>>& data);
@@ -99,7 +103,11 @@ private:
     void normalizeParameters(std::vector<Parameter>& parameters);
     
     // Calcula la probabilidad de un precio dado en un día específico.
-    double calculateProbability(double price, const SKUData& skuData, int day);
+    double calculateProbability(double price, 
+                                const SKUData& skuData, 
+                                int day,
+                                std::string currentDate,
+                                int numberOfIterations);
 
     // Calcula la probabilidad de un precio dado en un día específico sin logs adicionales.
     double calculateProbabilityNoLog(double price, const SKUData& skuData, int day); // 05-08-2024 1532

@@ -205,8 +205,15 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
         std::cout << "Refining parameters..." << std::endl;
 
-        // 05-08-2024 1026
-        abcMethod.refineParameters(parameters, skuData, normalizedFeatures, daysToSimulate, tolerance, numberOfRefinements);
+        // 17-08-2024 2210
+        abcMethod.refineParameters(parameters, 
+                                   skuData, 
+                                   normalizedFeatures, 
+                                   daysToSimulate, 
+                                   tolerance, 
+                                   numberOfRefinements,
+                                   currentDate,
+                                   numberOfIterations);
 
         std::cout << "Generating initial price..." << std::endl;
         double initialPrice = dis(gen);
@@ -215,7 +222,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         std::vector<double> simulatedPrices = abcMethod.simulateFuturePrices(skuData, normalizedFeatures, daysToSimulate, initialPrice);
 
         std::cout << "Calculating distance" << std::endl;
-        double distance = abcMethod.calculateDistance(simulatedPrices, skuData, initialPrice, daysToSimulate);
+        double distance = abcMethod.calculateDistance(simulatedPrices, skuData, initialPrice, daysToSimulate, currentDate, numberOfIterations);
 
         double saleValue = std::accumulate(simulatedPrices.begin(), simulatedPrices.end(), 0.0);
 
