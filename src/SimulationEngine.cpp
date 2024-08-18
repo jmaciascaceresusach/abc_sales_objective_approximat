@@ -63,8 +63,8 @@ void SimulationEngine::loadMeanAndStdValues(const std::string& meanFilename,
                                             const std::string& stdFilename,
                                             std::ofstream& logFileForSKU) {
 
-    std::cout << "\n*** loadMeanAndStdValues ***" << std::endl;
-    logFileForSKU << "\n*** loadMeanAndStdValues ***" << std::endl;
+    std::cout << "*** loadMeanAndStdValues ***" << std::endl;
+    logFileForSKU << "*** loadMeanAndStdValues ***" << std::endl;
 
     std::cout << "Preparing to load the average values ​​and standard deviation of the example case..." << std::endl;
     logFileForSKU << "Preparing to load the average values ​​and standard deviation of the example case..." << std::endl;
@@ -324,14 +324,25 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     logFile << "Best number simulation (#): " << bestNumberSimulation << std::endl;
     logFile << "Number of accepted simulations: " << acceptedSimulations << std::endl;
     
+    // 18-08-2024 1920
+    std::ofstream logFileBestSimulations("../data/output/sku_" + skuData.sku + "/" + currentDate + "/statistics_simulations_best_days_" + currentDate + ".txt");
+
     if (!bestSimulation.empty()) {
         logFile << "Best simulation prices:" << std::endl;
+        logFileBestSimulations << "Day,Price";
+
         for (size_t i = 0; i < bestSimulation.size(); ++i) {
             logFile << "  Day " << i + 1 << ": " << bestSimulation[i] << std::endl;
+            logFileBestSimulations << "," << i + 1 << bestSimulation[i];
         }
+
+        logFileBestSimulations << std::endl;
     } else {
         logFile << "No satisfactory simulation found." << std::endl;
     }
+
+    // 18-08-2024 1920
+    logFileBestSimulations.close();
 
     logFile << "Total accepted simulations: " << acceptedSimulations << std::endl;
     logFile << "Total rejected simulations: " << rejectedSimulations << std::endl;
