@@ -207,8 +207,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
         // 17-08-2024 2210
         std::ofstream logFileDistanceRefine("../data/output/sku_" + skuData.sku + "/" + currentDate + "/simulation_cal_distance_refine_log_" + currentDate + "_" + std::to_string(i) + ".txt"); // agregar iteraciones
-        std::string currentDateTimeInitial = getCurrentDateTime();
-        logFileDistanceRefine << "*** Starting date: " << currentDateTimeInitial <<  " ***\n" << std::endl;
+        std::string currentDateTimeInitialRefine = getCurrentDateTime();
+        logFileDistanceRefine << "*** Starting date: " << currentDateTimeInitialRefine <<  " ***\n" << std::endl;
 
         // 17-08-2024 2210
         abcMethod.refineParameters(parameters, 
@@ -222,8 +222,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
                                    logFileDistanceRefine);
 
         // 17-08-2024 2210
-        std::string currentDateTimeFinal = getCurrentDateTime();
-        logFileDistanceRefine << "\n*** Finishing date: " << currentDateTimeFinal <<  " ***" << std::endl;
+        std::string currentDateTimeFinalRefine = getCurrentDateTime();
+        logFileDistanceRefine << "\n*** Finishing date: " << currentDateTimeFinalRefine <<  " ***" << std::endl;
         logFileDistanceRefine.close();
 
         std::cout << "Generating initial price..." << std::endl;
@@ -236,14 +236,14 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
         // 17-08-2024 2210
         std::ofstream logFileDistance("../data/output/sku_" + skuData.sku + "/" + currentDate + "/simulation_cal_distance_log_" + currentDate + "_" + std::to_string(i) + ".txt"); // agregar iteraciones
-        std::string currentDateTimeInitial = getCurrentDateTime();
-        logFileDistance << "*** Starting date: " << currentDateTimeInitial <<  " ***\n" << std::endl;
+        std::string currentDateTimeInitialDistance = getCurrentDateTime();
+        logFileDistance << "*** Starting date: " << currentDateTimeInitialDistance <<  " ***\n" << std::endl;
 
         double distance = abcMethod.calculateDistance(simulatedPrices, skuData, initialPrice, daysToSimulate, currentDate, numberOfIterations, logFileDistance);
 
         // 17-08-2024 2210
-        std::string currentDateTimeFinal = getCurrentDateTime();
-        logFileDistance << "\n*** Finishing date: " << currentDateTimeFinal <<  " ***" << std::endl;
+        std::string currentDateTimeFinalDistance = getCurrentDateTime();
+        logFileDistance << "\n*** Finishing date: " << currentDateTimeFinalDistance <<  " ***" << std::endl;
         logFileDistance.close();
 
         double saleValue = std::accumulate(simulatedPrices.begin(), simulatedPrices.end(), 0.0);
