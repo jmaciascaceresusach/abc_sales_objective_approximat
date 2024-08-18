@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
     simulationEngine.numberOfRefinements = numberOfRefinements;
 
     // 18-08-2024 1240
-    std::ofstream logFileForSKU("../data/output/sku_" + skuForSimulate + "/" + dayForSimulate + "/simulation_sku_" + skuForSimulate + "_initial" + dayForSimulate + ".txt");
+    std::ofstream logFileForSKU("../data/output/sku_" + skuForSimulate + "/" + dayForSimulate + "/simulation_sku_" + skuForSimulate + "_initial_" + dayForSimulate + ".txt");
     std::string currentDateTimeInitialForSKU = getCurrentDateTime();
     logFileForSKU << "*** Starting date: " << currentDateTimeInitialForSKU <<  " (Buenos Aires -3 UTC) ***\n" << std::endl;
 
@@ -72,8 +72,8 @@ int main(int argc, char* argv[]) {
             runSimulationForSKU(simulationEngine, skuForSimulate, dayForSimulate, numberOfIterations, daysToSimulate, tolerance, logFileForSKU);
         }
     } else {
-        std::cout << "Running simulation for SKU (Only 1): " << std::endl;
-        logFileForSKU << "Running simulation for SKU (Only 1): " << std::endl;
+        std::cout << "Running simulation for SKU (Only 1)..." << std::endl;
+        logFileForSKU << "Running simulation for SKU (Only 1)..." << std::endl;
 
         runSimulationForSKU(simulationEngine, skuForSimulate, dayForSimulate, numberOfIterations, daysToSimulate, tolerance, logFileForSKU);
     }
@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
 
     // Obtiene y imprime la fecha y hora de finalización de la simulación antes de terminar el programa.
     std::string currentDateTime = getCurrentDateTime();
-    std::cout << "*** Finalization date: " << currentDateTime <<  " ***" << std::endl;
+    std::cout << "*** Finalization date: " << currentDateTime <<  " (Buenos Aires -3 UTC) ***" << std::endl;
 
     return 0;
 }

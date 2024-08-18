@@ -98,8 +98,8 @@ void runSimulationForSKU(SimulationEngine& simulationEngine,
     simulationEngine.setDayForSimulate(dayForSimulate);
 
     // 18-08-2024 1240
-    std::cout << "Finalizing simulation preparation for SKU..." << sku << std::endl;
-    logFileForSKU << "Finalizing simulation preparation for SKU..." << sku << std::endl;
+    std::cout << "Finalizing simulation preparation for SKU: " << sku << std::endl;
+    logFileForSKU << "Finalizing simulation preparation for SKU: " << sku << std::endl;
 
     // 18-08-2024 1240
     std::string currentDateTimeFinalForSKU = getCurrentDateTime();

@@ -153,8 +153,8 @@ std::vector<double> ABCMethod::simulateFuturePrices(const SKUData& skuData,
         previousPrices.push_back(price);
     }
 
-    std::cout << "\nExiting simulateFuturePrices function" << std::endl;
-    logFileDistanceRefine << "\nExiting simulateFuturePrices function" << std::endl; 
+    std::cout << "Exiting simulateFuturePrices function" << std::endl;
+    logFileDistanceRefine << "Exiting simulateFuturePrices function" << std::endl; 
 
     return futurePrices;
 }
@@ -172,11 +172,22 @@ double ABCMethod::calculateDistance(const std::vector<double>& simulatedPrices,
     logFileDistance << "\n-> Entering calculateDistance function" << std::endl;
 
     double distance = 0.0;
+    double expectedProbability = 0.0;
+    double actualProbability = 0.0;
     for (int i = 0; i < daysToSimulate; ++i) {
-        double expectedProbability = calculateProbability(simulatedPrices[i], skuData, i, currentDate, numberOfIterations, logFileDistance); // Se mostrará en el log de consola
-        double actualProbability = 1.0 / skuData.listProducts.size(); // Asumiendo distribución uniforme
+        expectedProbability = calculateProbability(simulatedPrices[i], skuData, i, currentDate, numberOfIterations, logFileDistance); // Se mostrará en el log de consola
+        actualProbability = 1.0 / skuData.listProducts.size(); // Asumiendo distribución uniforme
         distance += std::abs(expectedProbability - actualProbability);
     }
+
+    std::cout<< "-> Expected probability: " << expectedProbability << " (iter: " << numberOfIterations << ")" << std::endl;
+    logFileDistance << "-> Expected probability: " << expectedProbability << " (iter: " << numberOfIterations << ")" << std::endl;
+
+    std::cout<< "-> Actual probability: " << actualProbability << " (iter: " << numberOfIterations << ")" << std::endl;
+    logFileDistance << "-> Actual probability: " << actualProbability << " (iter: " << numberOfIterations << ")" << std::endl;
+
+    std::cout<< "-> Distance: " << distance << " (iter: " << numberOfIterations << ")" << std::endl;
+    logFileDistance << "-> Distance: " << distance << " (iter: " << numberOfIterations << ")" << std::endl;
 
     std::cout << "\n-> Exiting calculateDistance function\n" << std::endl;
     logFileDistance << "\n-> Exiting calculateDistance function\n" << std::endl;
@@ -303,15 +314,15 @@ double ABCMethod::calculateProbability(double price,
             double externalFactor = getExternalFactor(day);
             probability *= (1 + externalFactor);
 
-            log << "-> externalFactor adjustment: " << (1 + externalFactor) << std::endl;
-            logFileDistance << "-> externalFactor adjustment: " << (1 + externalFactor) << std::endl;
+            log << "-> External factor adjustment: " << (1 + externalFactor) << std::endl;
+            logFileDistance << "-> External factor adjustment: " << (1 + externalFactor) << std::endl;
 
             // Autocorrelación: Multiplicamos por (1 + autocorrelation). Una autocorrelación positiva aumentará la probabilidad de que el precio se mueva en la misma dirección que los precios recientes.
             double autocorrelation = calculateAutocorrelation(price, previousPrices);
             probability *= (1 + autocorrelation);
 
-            log << "-> autocorrelation adjustment: " << (1 + autocorrelation) << std::endl;
-            logFileDistance << "-> autocorrelation adjustment: " << (1 + autocorrelation) << std::endl;
+            log << "-> Autocorrelation adjustment: " << (1 + autocorrelation) << std::endl;
+            logFileDistance << "-> Autocorrelation adjustment: " << (1 + autocorrelation) << std::endl;
 
             // Volatilidad: Usamos una función exponencial para ajustar la probabilidad basada en la volatilidad y la diferencia entre el precio actual y el anterior. Una alta volatilidad y una gran diferencia de precio reducirán la probabilidad.
             double volatility = calculateVolatility(historicalData);
@@ -319,9 +330,9 @@ double ABCMethod::calculateProbability(double price,
             probability *= std::exp(-volatility * std::abs(price - previousPrice));
 
             // 18-08-2024 1240
-            log << "-> volatility adjustment: " << volatility << " and previousPrice adjustment: " << previousPrice << std::endl;
-            logFileDistance << "-> volatility adjustment: " << volatility << std::endl;
-            logFileDistance << "-> previousPrice adjustment: " << previousPrice << std::endl;
+            log << "-> Volatility adjustment: " << volatility << " and Previous price adjustment: " << previousPrice << std::endl;
+            logFileDistance << "-> Volatility adjustment: " << volatility << std::endl;
+            logFileDistance << "-> Previous price adjustment: " << previousPrice << std::endl;
 
             break;
         }
@@ -330,7 +341,6 @@ double ABCMethod::calculateProbability(double price,
     // Normalización: Al final, aseguramos que la probabilidad esté en el rango [0, 1].
     // 18-08-2024 1240
     probability = std::max(0.0, std::min(1.0, probability));
-    logFileDistance << "-> probability adjustment: " << probability << " (day: " << day << ")" << std::endl;
 
     // Agregar el log al archivo de salida y a la consola
     std::cout << log.str();
