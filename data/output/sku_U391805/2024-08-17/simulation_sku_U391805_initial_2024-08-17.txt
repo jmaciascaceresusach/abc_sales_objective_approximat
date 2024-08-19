@@ -1,4 +1,4 @@
-*** Starting date: 2024-08-18 20:33:51 (Buenos Aires -3 UTC) ***
+*** Starting date: 2024-08-18 20:52:27 (Buenos Aires -3 UTC) ***
 
 Running simulation for SKU (Only 1)...
 Preparing simulation for SKU: U391805
@@ -26,4 +26,4 @@ Adding the no-normalized features to the simulation...
 Adding the day of for the simulation...
 Finalizing simulation preparation for SKU: U391805
 
-*** Finishing date: 2024-08-18 20:33:51 (Buenos Aires -3 UTC) ***
+*** Finishing date: 2024-08-18 20:52:27 (Buenos Aires -3 UTC) ***
