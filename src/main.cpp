@@ -44,12 +44,14 @@ int main(int argc, char* argv[]) {
     // 05-08-2024 1009
     // Se llama a la función loadSimulationConfig para cargar la configuración de la simulación desde un archivo.
     loadSimulationConfig("../data/input/simulation_config_initial.txt", numberOfIterations, numberOfRefinements, tolerance, daysToSimulate, dayForSimulate, skuForSimulate);
+    std::cout << "Loading simulation configuration values ​​in progress..." << std::endl;
 
     // Se verifica si la configuración se cargó correctamente. Si alguna de las variables críticas es 0 o está vacía, el programa imprime un mensaje de error y termina.
     if (numberOfIterations == 0 || tolerance == 0 || daysToSimulate == 0 || dayForSimulate.empty() || skuForSimulate.empty()) {
         std::cerr << "Failed to load simulation configuration correctly." << std::endl;
         return 1;
     }
+    std::cout << "Successful loading of simulation configuration values..." << std::endl;
 
     // 05-08-2024 1009
     // Se crea una instancia de SimulationEngine y se configura el número de refinamientos.
