@@ -76,8 +76,8 @@ public:
                                      std::ofstream& logFile);
 
     // 19-08-2024 1645
-    void performCrossValidation(int folds = 5,
-                                std::ofstream& logFile,
+    void performCrossValidation(int folds,
+                                std::ofstream& crossValidationLogFile,
                                 int numberOfIterations, 
                                 int daysToSimulate, 
                                 double tolerance);

@@ -95,7 +95,8 @@ int main(int argc, char* argv[]) {
     std::ofstream crossValidationLogFile("../data/output/sku_" + skuForSimulate + "/" + dayForSimulate + "/cross_validation_log_" + skuForSimulate + "_" + dayForSimulate + ".txt");
 
     // Ejecutar validación cruzada
-    simulationEngine.performCrossValidation(5, crossValidationLogFile, numberOfIterations, daysToSimulate, tolerance);
+    int folds = 5;
+    simulationEngine.performCrossValidation(folds, crossValidationLogFile, numberOfIterations, daysToSimulate, tolerance);
 
     crossValidationLogFile.close();
 
