@@ -74,10 +74,10 @@ int main(int argc, char* argv[]) {
         std::vector<std::string> allSKUs = {"H401391", "P443799", "U391805", "Z285320", "Z449121"};
         std::cout << "Getting SKU names..." << std::endl;
 
+        std::cout << "Running simulation for SKU (All)..." << std::endl;
+        logFileForSKU << "Running simulation for SKU (All)..." << std::endl;
+        
         for (const auto& sku : allSKUs) {
-            std::cout << "Running simulation for SKU (All): " << sku << std::endl;
-            logFileForSKU << "Running simulation for SKU (All): " << sku << std::endl;
-
             logFileForSKU << "*** Starting simulation for SKU (All): " << sku << ", "<< currentDateTimeInitialForSKU <<  " (Buenos Aires -3 UTC) ***\n" << std::endl;
             runSimulationForSKU(simulationEngine, sku, dayForSimulate, numberOfIterations, daysToSimulate, tolerance, logFileForSKU);
         }
