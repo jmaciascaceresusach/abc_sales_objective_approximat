@@ -95,13 +95,22 @@ void HistoricalData::loadFromCSV(const std::string& filename) {
 std::vector<std::string> getAllSKUs() {
     std::vector<std::string> skus;
     std::string basePath = "../data/input/";
+
+    if (!std::filesystem::exists(basePath)) {
+        std::cerr << "Error: Base path does not exist: " << basePath << std::endl;
+        return skus;
+    }
     
-    for (const auto& entry : std::filesystem::directory_iterator(basePath)) {
-        if (entry.is_directory() && entry.path().filename().string().substr(0, 4) == "sku_") {
-            skus.push_back(entry.path().filename().string().substr(4));
-        }else{
-            std::cout << "Error when obtaining SKU name. (" << basePath << ")" << std::endl;
+    try {
+        for (const auto& entry : std::filesystem::directory_iterator(basePath)) {
+            if (entry.is_directory() && entry.path().filename().string().substr(0, 4) == "sku_") {
+                skus.push_back(entry.path().filename().string().substr(4));
+            } else {
+                std::cout << "Error when obtaining SKU name. (" << basePath << ")" << std::endl;
+            }
         }
+    } catch (const std::filesystem::filesystem_error& e) {
+        std::cerr << "Filesystem error: " << e.what() << std::endl;
     }
     
     return skus;
