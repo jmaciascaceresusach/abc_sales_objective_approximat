@@ -135,7 +135,17 @@ double SimulationEngine::LinearRegression::predict(double x) const {
 }
 
 // 18-08-2024 1245
-double SimulationEngine::calculateMSE(const std::vector<double>& predicted, const std::vector<double>& actual) const {
+double SimulationEngine::calculateMSE(const std::vector<double>& predicted, 
+                                      const std::vector<double>& actual,
+                                      std::ofstream& logFile) const {
+
+    if (predicted.empty() || actual.empty() || predicted.size() != actual.size()) {
+        logFile << "Error: Invalid data for MSE calculation." << std::endl;
+        return std::numeric_limits<double>::quiet_NaN();
+    }else {
+        logFile << "Success: Valid data for MSE calculation." << std::endl;
+    }
+
     double sum_squared_error = 0.0;
     for (size_t i = 0; i < predicted.size(); ++i) {
         double error = predicted[i] - actual[i];
@@ -160,6 +170,8 @@ void SimulationEngine::compareWithLinearRegression(int daysToSimulate,
     if (historicalPrices.size() < daysToSimulate) {
         logFile << "Warning: Not enough historical data for comparison." << std::endl;
         return;
+    }else {
+        logFile << "Success: Enough historical data for comparison." << std::endl;
     }
 
     // Ajustar regresión lineal
@@ -170,19 +182,36 @@ void SimulationEngine::compareWithLinearRegression(int daysToSimulate,
     std::vector<double> lr_predictions;
     for (int i = 0; i < daysToSimulate; ++i) {
         lr_predictions.push_back(lr.predict(i + 1));
+    }    
+
+    logFile << "Debug: bestSimulation size: " << bestSimulation.size() << std::endl;
+    logFile << "Debug: historicalPrices size: " << historicalPrices.size() << std::endl;
+    logFile << "Debug: lr_predictions size: " << lr_predictions.size() << std::endl;
+
+    // Imprimir algunos valores para verificar
+    if (!bestSimulation.empty()) {
+        logFile << "Debug: First 5 values of bestSimulation: ";
+        for (int i = 0; i < std::min(5, static_cast<int>(bestSimulation.size())); ++i) {
+            logFile << bestSimulation[i] << " ";
+        }
+        logFile << std::endl;
     }
 
     // Calcular MSE para ABC y regresión lineal
-    double mse_abc = calculateMSE(bestSimulation, historicalPrices);
-    double mse_lr = calculateMSE(lr_predictions, historicalPrices);
+    double mse_abc = calculateMSE(bestSimulation, historicalPrices, logFile);
+    double mse_lr = calculateMSE(lr_predictions, historicalPrices, logFile);
 
-    logFile << "Comparison Results:" << std::endl;
+    logFile << "\nComparison Results:" << std::endl;
     logFile << "MSE for ABC method: " << mse_abc << std::endl;
     logFile << "MSE for Linear Regression: " << mse_lr << std::endl;
 
     // Calcular y mostrar la mejora porcentual
-    double improvement = (mse_lr - mse_abc) / mse_lr * 100;
-    logFile << "ABC method improvement over Linear Regression: " << improvement << "%" << std::endl;
+    if (!std::isnan(mse_abc) && !std::isnan(mse_lr) && mse_lr != 0) {
+        double improvement = (mse_lr - mse_abc) / mse_lr * 100;
+        logFile << "ABC method improvement over Linear Regression: " << improvement << "%" << std::endl;
+    } else {
+        logFile << "Unable to calculate improvement percentage due to invalid MSE values" << std::endl;
+    }
 }
 
 // 04-08-2024 2114
@@ -353,6 +382,7 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
             bestSimulation = simulatedPrices;
             bestNumberSimulation++;            
             logFile << "  -> New best simulation found!! (info: the distance value has decreased)" << std::endl;
+            logFile << "  -> Best simulation size: " << bestSimulation.size() << std::endl;
         }
 
         allSimulatedPrices.push_back(simulatedPrices);

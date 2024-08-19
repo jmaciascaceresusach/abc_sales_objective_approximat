@@ -131,7 +131,9 @@ private:
 
     std::vector<double> bestSimulation; // 19-08-2024 1245
 
-    double calculateMSE(const std::vector<double>& predicted, const std::vector<double>& actual) const; // 19-08-2024 1245
+    double calculateMSE(const std::vector<double>& predicted, 
+                        const std::vector<double>& actual,
+                        std::ofstream& logFile) const; // 19-08-2024 1245
 };
 
 // Esta línea cierra la protección del archivo de cabecera.
