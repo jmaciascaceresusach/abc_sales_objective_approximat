@@ -1,372 +1,372 @@
-*** Starting date: 2024-08-19 16:12:16 (Buenos Aires -3 UTC) ***
+*** Starting date: 2024-08-19 17:10:41 (Buenos Aires -3 UTC) ***
 
 -> Entering calculateDistance function
 
 ** Log calculateProbability **
--> Day: 1, Price: 154.943
--> Base probability: 0.0224711
--> Interval adjustment: 0.449422
+-> Day: 1, Price: 96.8897
+-> Base probability: 0.0336392
+-> Interval adjustment: 0.672783
 -> Day adjustment: 0.904837
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.00174
--> External factor adjustment: 1.0019
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 0.993281
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 2, Price: 104.795
--> Base probability: 0.0492456
--> Interval adjustment: 0.984913
+-> Day: 2, Price: 97.6583
+-> Base probability: 0.0366898
+-> Interval adjustment: 0.733797
 -> Day adjustment: 0.860708
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.00262
--> External factor adjustment: 1.00643
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00973
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 3, Price: 103.983
--> Base probability: 0.0498943
--> Interval adjustment: 0.997885
+-> Day: 3, Price: 93.618
+-> Base probability: 0.0206203
+-> Interval adjustment: 0.412406
 -> Day adjustment: 0.818731
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.00349
--> External factor adjustment: 1.00008
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00773
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 4, Price: 109.278
--> Base probability: 0.036936
--> Interval adjustment: 0.73872
+-> Day: 4, Price: 99.9034
+-> Base probability: 0.0444646
+-> Interval adjustment: 0.889291
 -> Day adjustment: 0.778801
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.00436
--> External factor adjustment: 0.993801
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00784
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 5, Price: 105.63
--> Base probability: 0.0479849
--> Interval adjustment: 0.959697
+-> Day: 5, Price: 103.754
+-> Base probability: 0.0499707
+-> Interval adjustment: 0.999415
 -> Day adjustment: 0.740818
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.00523
--> External factor adjustment: 0.996111
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00779
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 6, Price: 113.664
--> Base probability: 0.0195892
--> Interval adjustment: 0.391783
+-> Day: 6, Price: 101.061
+-> Base probability: 0.0473732
+-> Interval adjustment: 0.947464
 -> Day adjustment: 0.704688
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.00609
--> External factor adjustment: 0.994392
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00909
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 7, Price: 109.429
--> Base probability: 0.0363502
--> Interval adjustment: 0.727004
+-> Day: 7, Price: 97.9965
+-> Base probability: 0.0379892
+-> Interval adjustment: 0.759783
 -> Day adjustment: 0.67032
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.00696
--> External factor adjustment: 0.998777
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00061
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 8, Price: 96.4157
--> Base probability: 0.0317158
--> Interval adjustment: 0.634316
+-> Day: 8, Price: 96.651
+-> Base probability: 0.032673
+-> Interval adjustment: 0.65346
 -> Day adjustment: 0.637628
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.00782
--> External factor adjustment: 0.996027
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00492
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 9, Price: 108.495
--> Base probability: 0.0398723
--> Interval adjustment: 0.797446
+-> Day: 9, Price: 110.097
+-> Base probability: 0.0336913
+-> Interval adjustment: 0.673826
 -> Day adjustment: 0.606531
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.00868
--> External factor adjustment: 1.00994
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00601
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 10, Price: 93.5713
--> Base probability: 0.0204481
--> Interval adjustment: 0.408962
+-> Day: 10, Price: 109.934
+-> Base probability: 0.0343496
+-> Interval adjustment: 0.686993
 -> Day adjustment: 0.57695
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.00954
--> External factor adjustment: 0.997526
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00118
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 11, Price: 103.302
--> Base probability: 0.0499822
--> Interval adjustment: 0.999645
+-> Day: 11, Price: 96.6519
+-> Base probability: 0.0326764
+-> Interval adjustment: 0.653528
 -> Day adjustment: 0.548812
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.0104
--> External factor adjustment: 1.0059
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00497
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 12, Price: 107.45
--> Base probability: 0.0434024
--> Interval adjustment: 0.868049
+-> Day: 12, Price: 95.1188
+-> Base probability: 0.0264402
+-> Interval adjustment: 0.528804
 -> Day adjustment: 0.522046
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.01125
--> External factor adjustment: 1.00938
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 0.994595
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 13, Price: 108.575
--> Base probability: 0.0395833
--> Interval adjustment: 0.791666
+-> Day: 13, Price: 93.5277
+-> Base probability: 0.0202876
+-> Interval adjustment: 0.405753
 -> Day adjustment: 0.496585
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.0121
--> External factor adjustment: 1.00154
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 0.995107
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 14, Price: 111.722
--> Base probability: 0.0270829
--> Interval adjustment: 0.541657
+-> Day: 14, Price: 105.77
+-> Base probability: 0.047717
+-> Interval adjustment: 0.95434
 -> Day adjustment: 0.472367
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.01294
--> External factor adjustment: 0.997416
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00451
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 15, Price: 99.4121
--> Base probability: 0.0429679
--> Interval adjustment: 0.859357
+-> Day: 15, Price: 113.282
+-> Base probability: 0.0209915
+-> Interval adjustment: 0.419831
 -> Day adjustment: 0.449329
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.01378
--> External factor adjustment: 1.00945
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 0.991296
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 16, Price: 111.14
--> Base probability: 0.0294466
--> Interval adjustment: 0.588932
+-> Day: 16, Price: 104.56
+-> Base probability: 0.0494928
+-> Interval adjustment: 0.989856
 -> Day adjustment: 0.427415
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.01462
--> External factor adjustment: 1.0035
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 0.997652
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 17, Price: 107.879
--> Base probability: 0.0420186
--> Interval adjustment: 0.840371
+-> Day: 17, Price: 93.3045
+-> Base probability: 0.0194759
+-> Interval adjustment: 0.389518
 -> Day adjustment: 0.40657
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.01545
--> External factor adjustment: 0.999488
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00838
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 18, Price: 96.5982
--> Base probability: 0.0324586
--> Interval adjustment: 0.649173
+-> Day: 18, Price: 113.338
+-> Base probability: 0.0207844
+-> Interval adjustment: 0.415688
 -> Day adjustment: 0.386741
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.01628
--> External factor adjustment: 1.00237
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00027
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 19, Price: 97.7658
--> Base probability: 0.037106
--> Interval adjustment: 0.742121
+-> Day: 19, Price: 97.7434
+-> Base probability: 0.0370197
+-> Interval adjustment: 0.740394
 -> Day adjustment: 0.367879
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.0171
--> External factor adjustment: 1.00694
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00721
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 20, Price: 93.0153
--> Base probability: 0.0184477
--> Interval adjustment: 0.368953
+-> Day: 20, Price: 113.131
+-> Base probability: 0.0215576
+-> Interval adjustment: 0.431151
 -> Day adjustment: 0.349938
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.01792
--> External factor adjustment: 0.997541
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00821
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 21, Price: 108.173
--> Base probability: 0.041017
--> Interval adjustment: 0.820341
+-> Day: 21, Price: 103.34
+-> Base probability: 0.0499884
+-> Interval adjustment: 0.999768
 -> Day adjustment: 0.332871
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.01873
--> External factor adjustment: 1.00495
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00302
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 22, Price: 111.113
--> Base probability: 0.029559
--> Interval adjustment: 0.591179
+-> Day: 22, Price: 108.089
+-> Base probability: 0.0413066
+-> Interval adjustment: 0.826132
 -> Day adjustment: 0.316637
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.01954
--> External factor adjustment: 1.00564
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 0.999189
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 23, Price: 112.59
--> Base probability: 0.0236299
--> Interval adjustment: 0.472598
+-> Day: 23, Price: 112.045
+-> Base probability: 0.0257854
+-> Interval adjustment: 0.515708
 -> Day adjustment: 0.301194
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.02034
--> External factor adjustment: 1.00175
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00351
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 24, Price: 113.057
--> Base probability: 0.0218372
--> Interval adjustment: 0.436743
+-> Day: 24, Price: 107.325
+-> Base probability: 0.0437852
+-> Interval adjustment: 0.875704
 -> Day adjustment: 0.286505
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.02113
--> External factor adjustment: 0.990823
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 0.995711
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 25, Price: 105.017
--> Base probability: 0.0489672
--> Interval adjustment: 0.979344
+-> Day: 25, Price: 112.674
+-> Base probability: 0.0233064
+-> Interval adjustment: 0.466129
 -> Day adjustment: 0.272532
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.02192
--> External factor adjustment: 0.995423
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 0.991347
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 26, Price: 102.619
--> Base probability: 0.0496489
--> Interval adjustment: 0.992979
+-> Day: 26, Price: 109.492
+-> Base probability: 0.0361028
+-> Interval adjustment: 0.722056
 -> Day adjustment: 0.25924
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.0227
--> External factor adjustment: 0.997413
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 0.994952
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 27, Price: 110.802
--> Base probability: 0.0308258
--> Interval adjustment: 0.616516
+-> Day: 27, Price: 108.474
+-> Base probability: 0.0399482
+-> Interval adjustment: 0.798963
 -> Day adjustment: 0.246597
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.02347
--> External factor adjustment: 0.992691
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 0.993212
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 28, Price: 109.38
--> Base probability: 0.0365407
--> Interval adjustment: 0.730813
+-> Day: 28, Price: 100.939
+-> Base probability: 0.0471121
+-> Interval adjustment: 0.942243
 -> Day adjustment: 0.23457
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.02424
--> External factor adjustment: 1.00854
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 0.999183
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 29, Price: 105.268
--> Base probability: 0.0486027
--> Interval adjustment: 0.972054
+-> Day: 29, Price: 100.024
+-> Base probability: 0.0448093
+-> Interval adjustment: 0.896186
 -> Day adjustment: 0.22313
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.025
 -> External factor adjustment: 1.05
--> Autocorrelation adjustment: 1.02902
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Log calculateProbability **
--> Day: 30, Price: 95.5477
--> Base probability: 0.0281747
--> Interval adjustment: 0.563495
+-> Day: 30, Price: 111.752
+-> Base probability: 0.0269626
+-> Interval adjustment: 0.539252
 -> Day adjustment: 0.212248
 -> Historical trend adjustment: 0.98047
 -> Seasonality adjustment: 1.02575
--> External factor adjustment: 0.999573
--> Autocorrelation adjustment: 1.02902
+-> External factor adjustment: 1.00185
+-> Autocorrelation adjustment: 1.17188
 -> Volatility adjustment: 876.5
--> Previous price adjustment: 95.5477
+-> Previous price adjustment: 111.752
 
 ** Probability Final: **
--> Expected probability: 0.00618612 (iter: 5)
+-> Expected probability: 0.00675725 (iter: 5)
 -> Actual probability: 0.05 (iter: 5)
--> Distance: 1.49381 (iter: 5)
+-> Distance: 1.49324 (iter: 5)
 
 -> Exiting calculateDistance function
 
-*** Finishing date: 2024-08-19 16:12:17 (Buenos Aires -3 UTC) ***
+*** Finishing date: 2024-08-19 17:10:42 (Buenos Aires -3 UTC) ***
