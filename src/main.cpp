@@ -79,7 +79,7 @@ int main(int argc, char* argv[]) {
             logFileForSKU << "Running simulation for SKU (All): " << sku << std::endl;
 
             logFileForSKU << "*** Starting simulation for SKU (All): " << sku << ", "<< currentDateTimeInitialForSKU <<  " (Buenos Aires -3 UTC) ***\n" << std::endl;
-            runSimulationForSKU(simulationEngine, skuForSimulate, dayForSimulate, numberOfIterations, daysToSimulate, tolerance, logFileForSKU);
+            runSimulationForSKU(simulationEngine, sku, dayForSimulate, numberOfIterations, daysToSimulate, tolerance, logFileForSKU);
         }
     } else {
         std::cout << "Running simulation for SKU (Only 1)..." << std::endl;
