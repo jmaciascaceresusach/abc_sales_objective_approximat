@@ -3,4 +3,4 @@ numberOfRefinements=5
 tolerance=13
 daysToSimulate=30
 dayForSimulate=2024-08-17
-skuForSimulate=U391805
+skuForSimulate=All

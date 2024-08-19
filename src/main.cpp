@@ -74,8 +74,6 @@ int main(int argc, char* argv[]) {
 
             logFileForSKU << "*** Starting simulation for SKU (All): " << sku << ", "<< currentDateTimeInitialForSKU <<  " (Buenos Aires -3 UTC) ***\n" << std::endl;
             runSimulationForSKU(simulationEngine, skuForSimulate, dayForSimulate, numberOfIterations, daysToSimulate, tolerance, logFileForSKU);
-            logFileForSKU << "*** Finishing simulation for SKU (All): " << sku << ", "<< currentDateTimeFinalForSKU <<  " (Buenos Aires -3 UTC) ***\n" << std::endl;
-
         }
     } else {
         std::cout << "Running simulation for SKU (Only 1)..." << std::endl;
@@ -83,7 +81,6 @@ int main(int argc, char* argv[]) {
 
         logFileForSKU << "*** Starting simulation for SKU (Only 1): " << skuForSimulate << ", "<< currentDateTimeInitialForSKU <<  " (Buenos Aires -3 UTC) ***\n" << std::endl;
         runSimulationForSKU(simulationEngine, skuForSimulate, dayForSimulate, numberOfIterations, daysToSimulate, tolerance, logFileForSKU);
-        logFileForSKU << "*** Finishing simulation for SKU (Only 1): " << skuForSimulate << ", "<< currentDateTimeFinalForSKU <<  " (Buenos Aires -3 UTC) ***\n" << std::endl;
     }
 
     // 04-08-2024 1714
