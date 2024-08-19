@@ -218,6 +218,75 @@ void SimulationEngine::compareWithLinearRegression(int daysToSimulate,
     }
 }
 
+// 19-08-2024 1625
+void SimulationEngine::performCrossValidation(int folds,
+                                              std::ofstream& logFile,
+                                              int numberOfIterations, 
+                                              int daysToSimulate, 
+                                              double tolerance) {
+                                                
+    if (historicalData.records.empty()) {
+        logFile << "Error: No historical data available for cross-validation." << std::endl;
+        return;
+    }
+
+    // Mezclar los datos aleatoriamente
+    std::vector<std::map<std::string, double>> shuffledData = historicalData.records;
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(shuffledData.begin(), shuffledData.end(), g);
+
+    int foldSize = shuffledData.size() / folds;
+    std::vector<double> foldErrors;
+
+    for (int i = 0; i < folds; ++i) {
+        int validationStart = i * foldSize;
+        int validationEnd = (i == folds - 1) ? shuffledData.size() : (i + 1) * foldSize;
+
+        std::vector<std::map<std::string, double>> validationData(
+            shuffledData.begin() + validationStart,
+            shuffledData.begin() + validationEnd
+        );
+
+        std::vector<std::map<std::string, double>> trainingData;
+        trainingData.insert(trainingData.end(), shuffledData.begin(), shuffledData.begin() + validationStart);
+        trainingData.insert(trainingData.end(), shuffledData.begin() + validationEnd, shuffledData.end());
+
+        double foldError = runSimulationOnData(trainingData, validationData, numberOfIterations, daysToSimulate, tolerance);
+        foldErrors.push_back(foldError);
+
+        logFile << "Fold " << i + 1 << " Error: " << foldError << std::endl;
+    }
+
+    double averageError = std::accumulate(foldErrors.begin(), foldErrors.end(), 0.0) / folds;
+    logFile << "Average Cross-Validation Error: " << averageError << std::endl;
+}
+
+// 19-08-2024 1625
+double SimulationEngine::runSimulationOnData(const std::vector<std::map<std::string, double>>& trainData,
+                                             const std::vector<std::map<std::string, double>>& validData,
+                                             int numberOfIterations, 
+                                             int daysToSimulate, 
+                                             double tolerance) {
+    
+    // Configurar el método ABC con los datos de entrenamiento
+    abcMethod.setHistoricalData(trainData);
+
+    // Ejecutar la simulación
+    runSimulations(numberOfIterations, daysToSimulate, tolerance);
+
+    // Calcular el error en el conjunto de validación
+    double totalError = 0.0;
+    for (size_t i = 0; i < validData.size(); ++i) {
+        double actualPrice = validData[i].at("total_price_products");
+        double predictedPrice = bestSimulation[i % bestSimulation.size()];
+        double error = std::abs(actualPrice - predictedPrice);
+        totalError += error;
+    }
+
+    return totalError / validData.size();
+}
+
 // 04-08-2024 2114
 /*
 Preparación y Carga de Datos:
@@ -493,9 +562,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         logFile << "  " << param.first << ": " << param.second << std::endl;
     }
 
-    // Después de todas las simulaciones
-    // 19-08-2024 1245
-    compareWithLinearRegression(daysToSimulate, logFile);
+    // 19-08-2024 1245 (Por mejorar. Quedó implementada pero no funciona correctamente la captura de los datos bestSimulation).
+    // compareWithLinearRegression(daysToSimulate, logFile);
 
     std::string currentDateTimeFinal = getCurrentDateTime();
     logFile << "\n*** Finishing date: " << currentDateTimeFinal <<  " (Buenos Aires -3 UTC) ***" << std::endl;

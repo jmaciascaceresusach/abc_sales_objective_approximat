@@ -89,6 +89,16 @@ int main(int argc, char* argv[]) {
         runSimulationForSKU(simulationEngine, skuForSimulate, dayForSimulate, numberOfIterations, daysToSimulate, tolerance, logFileForSKU);
     }
 
+    // Ejecutar validación cruzada
+    // 19-08-2024 1645
+    // Crear un archivo de log para la validación cruzada
+    std::ofstream crossValidationLogFile("../data/output/sku_" + skuForSimulate + "/" + dayForSimulate + "/cross_validation_log_" + skuForSimulate + "_" + dayForSimulate + ".txt");
+
+    // Ejecutar validación cruzada
+    simulationEngine.performCrossValidation(5, crossValidationLogFile, numberOfIterations, daysToSimulate, tolerance);
+
+    crossValidationLogFile.close();
+
     // 04-08-2024 1714
     // Imprime la configuración de la simulación.
     std::cout << "\n";

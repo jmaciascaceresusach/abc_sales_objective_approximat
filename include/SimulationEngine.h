@@ -75,6 +75,13 @@ public:
     void compareWithLinearRegression(int daysToSimulate,
                                      std::ofstream& logFile);
 
+    // 19-08-2024 1645
+    void performCrossValidation(int folds = 5,
+                                std::ofstream& logFile,
+                                int numberOfIterations, 
+                                int daysToSimulate, 
+                                double tolerance);
+
 private:
 
     // Lista de parámetros utilizados en la simulación.
@@ -134,6 +141,15 @@ private:
     double calculateMSE(const std::vector<double>& predicted, 
                         const std::vector<double>& actual,
                         std::ofstream& logFile) const; // 19-08-2024 1245
+
+    //std::vector<std::map<std::string, double>> historicalData; // 19-08-2024 1625
+
+    // 19-08-2024 1625
+    double runSimulationOnData(const std::vector<std::map<std::string, double>>& trainData,
+                               const std::vector<std::map<std::string, double>>& validData,
+                               int numberOfIterations, 
+                               int daysToSimulate, 
+                               double tolerance); 
 };
 
 // Esta línea cierra la protección del archivo de cabecera.
