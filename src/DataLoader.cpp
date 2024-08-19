@@ -367,7 +367,13 @@ std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filena
 
 // 05-08-2024 1005
 // Esta función carga la configuración de la simulación desde un archivo, asignando valores a las variables de referencia proporcionadas.
-void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& numberOfRefinements, int& tolerance, int& daysToSimulate, std::string& dayForSimulate, std::string& skuForSimulate) {
+void loadSimulationConfig(const std::string& filename, 
+                          int& numberOfIterations, 
+                          int& numberOfRefinements, 
+                          int& tolerance, 
+                          int& daysToSimulate, 
+                          std::string& dayForSimulate, 
+                          std::string& skuForSimulate) {
     std::ifstream file(filename);
     std::string line;
 

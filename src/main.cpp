@@ -70,7 +70,8 @@ int main(int argc, char* argv[]) {
     // Si skuForSimulate es "All", se obtiene una lista de todos los SKUs y se ejecuta la simulación para cada uno. De lo contrario, se ejecuta la simulación solo para el SKU especificado.
     if (skuForSimulate == "All") {
         std::cout << "Start loading SKU by value All..." << std::endl;
-        std::vector<std::string> allSKUs = getAllSKUs();  // Nueva función para obtener todos los SKUs
+        // std::vector<std::string> allSKUs = getAllSKUs();  // Nueva función para obtener todos los SKUs
+        std::vector<std::string> allSKUs = {"H401391", "P443799", "U391805", "Z285320", "Z449121"};
         std::cout << "Getting SKU names..." << std::endl;
 
         for (const auto& sku : allSKUs) {

@@ -53,7 +53,13 @@ std::map<std::string, double> loadNoNormalizedFeatures(const std::string& filena
                                                        std::ofstream& logFileForSKU);
 
 // loadSimulationConfig: Carga la configuración de la simulación desde un archivo.
-void loadSimulationConfig(const std::string& filename, int& numberOfIterations, int& numberOfRefinements, int& tolerance, int& daysToSimulate, std::string& dayForSimulate, std::string& skuForSimulate); // 05-08-2024 1004
+void loadSimulationConfig(const std::string& filename, 
+                          int& numberOfIterations, 
+                          int& numberOfRefinements, 
+                          int& tolerance, 
+                          int& daysToSimulate, 
+                          std::string& dayForSimulate, 
+                          std::string& skuForSimulate); // 05-08-2024 1004
 
 // loadValues: Carga valores desde un archivo.
 std::map<std::string, double> loadValues(const std::string& filename); // 04-08-2024 1714
