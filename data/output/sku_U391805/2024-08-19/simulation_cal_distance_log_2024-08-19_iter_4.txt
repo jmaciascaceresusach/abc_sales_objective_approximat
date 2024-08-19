@@ -1,0 +1,72 @@
+*** Starting date: 2024-08-19 12:53:42 (Buenos Aires -3 UTC) ***
+
+-> Entering calculateDistance function
+
+** Log calculateProbability **
+-> Day: 1, Price: 103.299
+-> Base probability: 0.0499817
+-> Interval adjustment: 0.999633
+-> Day adjustment: 0.904837
+-> Historical trend adjustment: 0.98047
+-> Seasonality adjustment: 1.00174
+-> External factor adjustment: 0.99595
+-> Autocorrelation adjustment: 1.71954
+-> Volatility adjustment: 876.5
+-> Previous price adjustment: 112.069
+
+** Log calculateProbability **
+-> Day: 2, Price: 102.951
+-> Base probability: 0.0498635
+-> Interval adjustment: 0.99727
+-> Day adjustment: 0.860708
+-> Historical trend adjustment: 0.98047
+-> Seasonality adjustment: 1.00262
+-> External factor adjustment: 0.992221
+-> Autocorrelation adjustment: 1.71954
+-> Volatility adjustment: 876.5
+-> Previous price adjustment: 112.069
+
+** Log calculateProbability **
+-> Day: 3, Price: 103.611
+-> Base probability: 0.0499944
+-> Interval adjustment: 0.999889
+-> Day adjustment: 0.818731
+-> Historical trend adjustment: 0.98047
+-> Seasonality adjustment: 1.00349
+-> External factor adjustment: 0.999296
+-> Autocorrelation adjustment: 1.71954
+-> Volatility adjustment: 876.5
+-> Previous price adjustment: 112.069
+
+** Log calculateProbability **
+-> Day: 4, Price: 105.564
+-> Base probability: 0.0481045
+-> Interval adjustment: 0.96209
+-> Day adjustment: 0.778801
+-> Historical trend adjustment: 0.98047
+-> Seasonality adjustment: 1.00436
+-> External factor adjustment: 1.0094
+-> Autocorrelation adjustment: 1.71954
+-> Volatility adjustment: 876.5
+-> Previous price adjustment: 112.069
+
+** Log calculateProbability **
+-> Day: 5, Price: 112.069
+-> Base probability: 0.0256859
+-> Interval adjustment: 0.513718
+-> Day adjustment: 0.740818
+-> Historical trend adjustment: 0.98047
+-> Seasonality adjustment: 1.00523
+-> External factor adjustment: 1.00323
+-> Autocorrelation adjustment: 1.71954
+-> Volatility adjustment: 876.5
+-> Previous price adjustment: 112.069
+
+** Probability Final: **
+-> Expected probability: 0.0323533 (iter: 5)
+-> Actual probability: 0.05 (iter: 5)
+-> Distance: 0.217647 (iter: 5)
+
+-> Exiting calculateDistance function
+
+*** Finishing date: 2024-08-19 12:53:43 (Buenos Aires -3 UTC) ***

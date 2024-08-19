@@ -1,1 +1,0 @@
-Iteration,AverageSaleValue,MinSaleValue,MaxSaleValue,Distance,Tolerance,client_numeric,day,month,sku_count_products,total_num_count_products,total_price_products,vendor_numeric,year,client_numeric,day,month,sku_count_products,total_num_count_products,total_price_products,vendor_numeric,year
