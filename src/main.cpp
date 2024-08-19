@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
         std::cerr << "Failed to load simulation configuration correctly." << std::endl;
         return 1;
     }
-    std::cout << "\nSuccessful loading of simulation configuration values..." << std::endl;
+    std::cout << "Successful loading of simulation configuration values..." << std::endl;
 
     // 05-08-2024 1009
     // Se crea una instancia de SimulationEngine y se configura el número de refinamientos.
@@ -69,8 +69,10 @@ int main(int argc, char* argv[]) {
     // 04-08-2024 1714
     // Si skuForSimulate es "All", se obtiene una lista de todos los SKUs y se ejecuta la simulación para cada uno. De lo contrario, se ejecuta la simulación solo para el SKU especificado.
     if (skuForSimulate == "All") {
-        std::cout << "\nStart loading SKU by value All..." << std::endl;
+        std::cout << "Start loading SKU by value All..." << std::endl;
         std::vector<std::string> allSKUs = getAllSKUs();  // Nueva función para obtener todos los SKUs
+        std::cout << "Getting SKU names..." << std::endl;
+
         for (const auto& sku : allSKUs) {
             std::cout << "Running simulation for SKU (All): " << sku << std::endl;
             logFileForSKU << "Running simulation for SKU (All): " << sku << std::endl;

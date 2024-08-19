@@ -99,6 +99,8 @@ std::vector<std::string> getAllSKUs() {
     for (const auto& entry : std::filesystem::directory_iterator(basePath)) {
         if (entry.is_directory() && entry.path().filename().string().substr(0, 4) == "sku_") {
             skus.push_back(entry.path().filename().string().substr(4));
+        }else{
+            std::cout << "Error when obtaining SKU name. (" << basePath << ")" << std::endl;
         }
     }
     
