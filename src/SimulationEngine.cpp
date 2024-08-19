@@ -166,6 +166,8 @@ void SimulationEngine::compareWithLinearRegression(int daysToSimulate,
         historicalPrices.push_back(record.at("total_price_products"));
     }
 
+    logFile << "\n*** compareWithLinearRegression ***" << std::endl;
+
     // Asegurar que tenemos suficientes datos históricos
     if (historicalPrices.size() < daysToSimulate) {
         logFile << "Warning: Not enough historical data for comparison." << std::endl;
@@ -195,6 +197,8 @@ void SimulationEngine::compareWithLinearRegression(int daysToSimulate,
             logFile << bestSimulation[i] << " ";
         }
         logFile << std::endl;
+    }else {
+        logFile << "Error: Best simulation is empty. Cannot perform comparison." << std::endl;
     }
 
     // Calcular MSE para ABC y regresión lineal
@@ -347,6 +351,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
         std::cout << "Simulating future prices..." << std::endl;
         std::vector<double> simulatedPrices = abcMethod.simulateFuturePrices(skuData, normalizedFeatures, daysToSimulate, initialPrice, logFileDistanceRefine);
+        
+        std::cout << "Current simulation size: " << simulatedPrices.size() << std::endl;
+        logFile << "Current simulation size: " << simulatedPrices.size() << std::endl;
 
         std::cout << "Calculating distance" << std::endl;
 
@@ -356,6 +363,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         logFileDistance << "*** Starting date: " << currentDateTimeInitialDistance <<  " (Buenos Aires -3 UTC) ***" << std::endl;
 
         double distance = abcMethod.calculateDistance(simulatedPrices, skuData, initialPrice, daysToSimulate, currentDate, numberOfIterations, logFileDistance);
+
+        std::cout << "Current distance: " << distance << std::endl;
+        logFile << "Current distance: " << distance << std::endl;
 
         // 18-08-2024 1240
         std::string currentDateTimeFinalDistance = getCurrentDateTime();
@@ -382,7 +392,6 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
             bestSimulation = simulatedPrices;
             bestNumberSimulation++;            
             logFile << "  -> New best simulation found!! (info: the distance value has decreased)" << std::endl;
-            logFile << "  -> Best simulation size: " << bestSimulation.size() << std::endl;
         }
 
         allSimulatedPrices.push_back(simulatedPrices);
