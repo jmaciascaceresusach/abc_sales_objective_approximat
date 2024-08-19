@@ -1,0 +1,8 @@
+client_numeric: ['365333 (37452.0)']
+vendor_numeric: ['365333 (58.0)']
+year: ['365333 (2019.0)']
+month: ['365333 (4.0)']
+day: ['365333 (22.0)']
+sku_count_products: ['365333 (40.0)']
+total_num_count_products: ['365333 (182.0)']
+total_price_products: ['365333 (210133.0)']

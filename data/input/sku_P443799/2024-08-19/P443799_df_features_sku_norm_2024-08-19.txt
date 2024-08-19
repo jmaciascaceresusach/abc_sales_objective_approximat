@@ -1,0 +1,8 @@
+client_numeric: ['365333 (3.202231)']
+vendor_numeric: ['365333 (-0.386207)']
+year: ['365333 (-0.994503)']
+month: ['365333 (-0.890024)']
+day: ['365333 (0.761323)']
+sku_count_products: ['365333 (1.800712)']
+total_num_count_products: ['365333 (0.176785)']
+total_price_products: ['365333 (0.063708)']

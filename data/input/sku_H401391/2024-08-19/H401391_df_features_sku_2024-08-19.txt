@@ -1,0 +1,8 @@
+client_numeric: ['455473 (10940.0)']
+vendor_numeric: ['455473 (263.0)']
+year: ['455473 (2018.0)']
+month: ['455473 (2.0)']
+day: ['455473 (28.0)']
+sku_count_products: ['455473 (14.0)']
+total_num_count_products: ['455473 (30.0)']
+total_price_products: ['455473 (55946.0)']

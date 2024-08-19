@@ -1,0 +1,8 @@
+client_numeric: ['366452 (10967.0)']
+vendor_numeric: ['366452 (40.0)']
+year: ['366452 (2021.0)']
+month: ['366452 (3.0)']
+day: ['366452 (19.0)']
+sku_count_products: ['366452 (16.0)']
+total_num_count_products: ['366452 (85.0)']
+total_price_products: ['366452 (119441.0)']

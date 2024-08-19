@@ -1,5 +1,0 @@
-*** Starting date: 2024-08-18 23:22:29 (Buenos Aires -3 UTC) ***
-
-Entering refineParameters function
-Refinement iteration 1 of 3
-Entering simulateFuturePrices function

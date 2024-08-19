@@ -50,10 +50,10 @@ void runSimulationForSKU(SimulationEngine& simulationEngine,
     // normalizedFeatures: Carga las características normalizadas desde un archivo de texto.
     // noNormalizedFeatures: Carga las características no normalizadas desde un archivo de texto.
 
-    // 18-08-2024 1240
-    std::cout << "Preparing to upload SKU information..." << std::endl;
-    logFileForSKU << "Preparing to upload SKU information..." << std::endl;
-    SKUData skuData = loadSKUData(basePath + sku + "_matriz_intervals_df_" + dayForSimulate + ".csv", logFileForSKU);
+    // 19-08-2024 1140
+    std::cout << "Preparing to upload SKU information (list_products_n until 20 max)..." << std::endl;
+    logFileForSKU << "Preparing to upload SKU information (list_products_n until 20 max)..." << std::endl;
+    SKUData skuData = loadSKUData(basePath + sku + "_matriz_intervals_df_maxlp20_" + dayForSimulate + ".csv", logFileForSKU);
 
     // 18-08-2024 1240
     std::cout << "Preparing to load standardized features..." << std::endl;
