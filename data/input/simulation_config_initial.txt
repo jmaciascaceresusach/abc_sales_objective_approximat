@@ -1,6 +1,6 @@
 numberOfIterations=5
-numberOfRefinements=5
+numberOfRefinements=3
 tolerance=13
-daysToSimulate=30
+daysToSimulate=5
 dayForSimulate=2024-08-17
 skuForSimulate=All
