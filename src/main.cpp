@@ -61,6 +61,9 @@ int main(int argc, char* argv[]) {
     std::string currentDateTimeInitialForSKU = getCurrentDateTime();
     logFileForSKU << "*** Starting date: " << currentDateTimeInitialForSKU <<  " (Buenos Aires -3 UTC) ***\n" << std::endl;
 
+    // 18-08-2024 1240
+    std::string currentDateTimeFinalForSKU = getCurrentDateTime();
+
     // 04-08-2024 1714
     // Si skuForSimulate es "All", se obtiene una lista de todos los SKUs y se ejecuta la simulación para cada uno. De lo contrario, se ejecuta la simulación solo para el SKU especificado.
     if (skuForSimulate == "All") {
@@ -69,13 +72,18 @@ int main(int argc, char* argv[]) {
             std::cout << "Running simulation for SKU (All): " << sku << std::endl;
             logFileForSKU << "Running simulation for SKU (All): " << sku << std::endl;
 
+            logFileForSKU << "*** Starting simulation for SKU (All): " << sku << ", "<< currentDateTimeInitialForSKU <<  " (Buenos Aires -3 UTC) ***\n" << std::endl;
             runSimulationForSKU(simulationEngine, skuForSimulate, dayForSimulate, numberOfIterations, daysToSimulate, tolerance, logFileForSKU);
+            logFileForSKU << "*** Finishing simulation for SKU (All): " << sku << ", "<< currentDateTimeFinalForSKU <<  " (Buenos Aires -3 UTC) ***\n" << std::endl;
+
         }
     } else {
         std::cout << "Running simulation for SKU (Only 1)..." << std::endl;
         logFileForSKU << "Running simulation for SKU (Only 1)..." << std::endl;
 
+        logFileForSKU << "*** Starting simulation for SKU (Only 1): " << skuForSimulate << ", "<< currentDateTimeInitialForSKU <<  " (Buenos Aires -3 UTC) ***\n" << std::endl;
         runSimulationForSKU(simulationEngine, skuForSimulate, dayForSimulate, numberOfIterations, daysToSimulate, tolerance, logFileForSKU);
+        logFileForSKU << "*** Finishing simulation for SKU (Only 1): " << skuForSimulate << ", "<< currentDateTimeFinalForSKU <<  " (Buenos Aires -3 UTC) ***\n" << std::endl;
     }
 
     // 04-08-2024 1714
