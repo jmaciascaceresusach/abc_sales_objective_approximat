@@ -71,6 +71,10 @@ public:
 
     int numberOfRefinements; // 05-08-2024 1006
 
+    // 19-08-2024 1245
+    void compareWithLinearRegression(int daysToSimulate,
+                                     std::ofstream& logFile);
+
 private:
 
     // Lista de parámetros utilizados en la simulación.
@@ -114,6 +118,20 @@ private:
 
     // Datos del SKU utilizados en la simulación.
     SKUData skuData; // 04-08-2024 2013
+
+    // 19-08-2024 1245
+    class LinearRegression {
+    public:
+        double slope;
+        double intercept;
+
+        void fit(const std::vector<double>& x, const std::vector<double>& y);
+        double predict(double x) const;
+    };
+
+    std::vector<double> bestSimulation; // 19-08-2024 1245
+
+    double calculateMSE(const std::vector<double>& predicted, const std::vector<double>& actual) const; // 19-08-2024 1245
 };
 
 // Esta línea cierra la protección del archivo de cabecera.

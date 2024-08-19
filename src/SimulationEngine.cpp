@@ -9,6 +9,7 @@
 #include <chrono>
 #include <iomanip>
 #include <sstream>
+#include <cmath> // 19-08-2024 1245
 #include <string> // 18-08-2024 1240
 
 /*
@@ -114,6 +115,74 @@ void SimulationEngine::loadHistoricalData(const std::string& filename) {
     }
     std::cout << "\n" << std::endl;
     //abcMethod.setHistoricalData(historicalData);
+}
+
+// 18-08-2024 1245
+void SimulationEngine::LinearRegression::fit(const std::vector<double>& x, const std::vector<double>& y) {
+    double n = x.size();
+    double sum_x = std::accumulate(x.begin(), x.end(), 0.0);
+    double sum_y = std::accumulate(y.begin(), y.end(), 0.0);
+    double sum_xy = std::inner_product(x.begin(), x.end(), y.begin(), 0.0);
+    double sum_xx = std::inner_product(x.begin(), x.end(), x.begin(), 0.0);
+
+    slope = (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x);
+    intercept = (sum_y - slope * sum_x) / n;
+}
+
+// 18-08-2024 1245
+double SimulationEngine::LinearRegression::predict(double x) const {
+    return slope * x + intercept;
+}
+
+// 18-08-2024 1245
+double SimulationEngine::calculateMSE(const std::vector<double>& predicted, const std::vector<double>& actual) const {
+    double sum_squared_error = 0.0;
+    for (size_t i = 0; i < predicted.size(); ++i) {
+        double error = predicted[i] - actual[i];
+        sum_squared_error += error * error;
+    }
+    return sum_squared_error / predicted.size();
+}
+
+// 18-08-2024 1245
+void SimulationEngine::compareWithLinearRegression(int daysToSimulate,
+                                                   std::ofstream& logFile) {
+    std::vector<double> days(daysToSimulate);
+    std::iota(days.begin(), days.end(), 1);
+
+    // Preparar datos históricos
+    std::vector<double> historicalPrices;
+    for (const auto& record : historicalData.records) {
+        historicalPrices.push_back(record.at("total_price_products"));
+    }
+
+    // Asegurar que tenemos suficientes datos históricos
+    if (historicalPrices.size() < daysToSimulate) {
+        logFile << "Warning: Not enough historical data for comparison." << std::endl;
+        return;
+    }
+
+    // Ajustar regresión lineal
+    LinearRegression lr;
+    lr.fit(days, historicalPrices);
+
+    // Generar predicciones de regresión lineal
+    std::vector<double> lr_predictions;
+    for (int i = 0; i < daysToSimulate; ++i) {
+        lr_predictions.push_back(lr.predict(i + 1));
+    }
+
+    // Calcular MSE para ABC y regresión lineal
+    double mse_abc = calculateMSE(bestSimulation, historicalPrices);
+    double mse_lr = calculateMSE(lr_predictions, historicalPrices);
+
+    logFile << "Comparison Results:" << std::endl;
+    logFile << "MSE for ABC method: " << mse_abc << std::endl;
+    logFile << "MSE for Linear Regression: " << mse_lr << std::endl;
+
+    // Calcular y mostrar la mejora porcentual
+    double improvement = (mse_lr - mse_abc) / mse_lr * 100;
+    logFile << "ABC method improvement over Linear Regression: " << improvement << "%" << std::endl;
 }
 
 // 04-08-2024 2114
@@ -384,6 +453,10 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     for (const auto& param : originalParams) {
         logFile << "  " << param.first << ": " << param.second << std::endl;
     }
+
+    // Después de todas las simulaciones
+    // 19-08-2024 1245
+    compareWithLinearRegression(daysToSimulate, logFile);
 
     std::string currentDateTimeFinal = getCurrentDateTime();
     logFile << "\n*** Finishing date: " << currentDateTimeFinal <<  " (Buenos Aires -3 UTC) ***" << std::endl;
