@@ -422,8 +422,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
         std::cout << "Simulating future prices..." << std::endl;
         std::vector<double> simulatedPrices = abcMethod.simulateFuturePrices(skuData, normalizedFeatures, daysToSimulate, initialPrice, logFileDistanceRefine);
         
-        std::cout << "Current simulation size: " << simulatedPrices.size() << std::endl;
-        logFile << "Current simulation size: " << simulatedPrices.size() << std::endl;
+        //std::cout << "Current simulation size: " << simulatedPrices.size() << std::endl;
+        //logFile << "Current simulation size: " << simulatedPrices.size() << std::endl;
 
         std::cout << "Calculating distance" << std::endl;
 
@@ -434,8 +434,8 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
 
         double distance = abcMethod.calculateDistance(simulatedPrices, skuData, initialPrice, daysToSimulate, currentDate, numberOfIterations, logFileDistance);
 
-        std::cout << "Current distance: " << distance << std::endl;
-        logFile << "Current distance: " << distance << std::endl;
+        //std::cout << "Current distance: " << distance << std::endl;
+        //logFile << "Current distance: " << distance << std::endl;
 
         // 18-08-2024 1240
         std::string currentDateTimeFinalDistance = getCurrentDateTime();
