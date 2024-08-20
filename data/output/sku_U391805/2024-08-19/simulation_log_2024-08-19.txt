@@ -1,4 +1,4 @@
-*** Starting date: 2024-08-19 17:07:26 (Buenos Aires -3 UTC) ***
+*** Starting date: 2024-08-19 20:43:54 (Buenos Aires -3 UTC) ***
 
 Starting simulation for SKU U391805 with 5 iterations, 30 days to simulate, and tolerance 13
 
@@ -28,146 +28,145 @@ Initial parameters (no normalized features):
 
 Iteration 1 of 5
 Current simulation size: 30
-Current distance: 0.0498087
-  Distance: 0.0498087
+Current distance: 0.0496529
+  Distance: 0.0496529
   -> New best simulation found!! (info: the distance value has decreased)
   Simulation summary:
-    Initial price: 197.624
-    Average price: 107.56
-    Min price: 93.6648
-    Max price: 197.624
+    Initial price: 195.161
+    Average price: 106.027
+    Min price: 93.6685
+    Max price: 195.161
   Satisfactory simulation found.
   Simulation accepted: 1
 
 Iteration 2 of 5
 Current simulation size: 30
-Current distance: 0.0497748
-  Distance: 0.0497748
-  -> New best simulation found!! (info: the distance value has decreased)
+Current distance: 0.049768
+  Distance: 0.049768
   Simulation summary:
-    Initial price: 96.8897
-    Average price: 103.605
-    Min price: 93.3045
-    Max price: 113.338
+    Initial price: 487.207
+    Average price: 115.595
+    Min price: 93.753
+    Max price: 487.207
   Satisfactory simulation found.
   Simulation accepted: 2
 
 Iteration 3 of 5
 Current simulation size: 30
-Current distance: 0.0499044
-  Distance: 0.0499044
+Current distance: 0.0495971
+  Distance: 0.0495971
+  -> New best simulation found!! (info: the distance value has decreased)
   Simulation summary:
-    Initial price: 97.7028
-    Average price: 104.105
-    Min price: 93.2261
-    Max price: 113.955
+    Initial price: 250.655
+    Average price: 113.192
+    Min price: 93.1305
+    Max price: 252.698
   Satisfactory simulation found.
   Simulation accepted: 3
 
 Iteration 4 of 5
 Current simulation size: 30
-Current distance: 0.0497047
-  Distance: 0.0497047
-  -> New best simulation found!! (info: the distance value has decreased)
+Current distance: 0.0496904
+  Distance: 0.0496904
   Simulation summary:
-    Initial price: 104.041
-    Average price: 102.739
-    Min price: 93.903
-    Max price: 113.874
+    Initial price: 283.202
+    Average price: 109.567
+    Min price: 94.2424
+    Max price: 283.202
   Satisfactory simulation found.
   Simulation accepted: 4
 
 Iteration 5 of 5
 Current simulation size: 30
-Current distance: 0.0498221
-  Distance: 0.0498221
+Current distance: 0.0496655
+  Distance: 0.0496655
   Simulation summary:
-    Initial price: 153.604
-    Average price: 105.104
-    Min price: 93.0378
-    Max price: 153.604
+    Initial price: 435.064
+    Average price: 113.909
+    Min price: 93.4697
+    Max price: 435.064
   Satisfactory simulation found.
   Simulation accepted: 5
 
 --- Finishing main simulation loop ---
 
 Final Results:
-Best simulation distance: 0.0497047
-Best number simulation (#): 3
+Best simulation distance: 0.0495971
+Best number simulation (#): 2
 Number of accepted simulations: 5
 Best simulation prices:
-  Day 1: 104.041
-  Day 2: 93.903
-  Day 3: 99.5154
-  Day 4: 107.753
-  Day 5: 97.8448
-  Day 6: 110.421
-  Day 7: 101.746
-  Day 8: 98.6501
-  Day 9: 102.972
-  Day 10: 94.6766
-  Day 11: 103.87
-  Day 12: 101.36
-  Day 13: 113.874
-  Day 14: 96.979
-  Day 15: 101.282
-  Day 16: 111.542
-  Day 17: 102.435
-  Day 18: 95.5277
-  Day 19: 109.516
-  Day 20: 110.378
-  Day 21: 113.837
-  Day 22: 109.996
-  Day 23: 98.6384
-  Day 24: 95.2245
-  Day 25: 100.436
-  Day 26: 106.187
-  Day 27: 98.3457
-  Day 28: 99.8666
-  Day 29: 102.648
-  Day 30: 98.6907
+  Day 1: 250.655
+  Day 2: 252.698
+  Day 3: 96.984
+  Day 4: 103.676
+  Day 5: 107.106
+  Day 6: 105.366
+  Day 7: 107.57
+  Day 8: 93.1305
+  Day 9: 105.587
+  Day 10: 94.8501
+  Day 11: 107.671
+  Day 12: 107.989
+  Day 13: 107.483
+  Day 14: 98.1408
+  Day 15: 93.4753
+  Day 16: 109.337
+  Day 17: 95.1866
+  Day 18: 107.084
+  Day 19: 111.71
+  Day 20: 103.565
+  Day 21: 101.932
+  Day 22: 98.5213
+  Day 23: 112.831
+  Day 24: 97.2868
+  Day 25: 105.915
+  Day 26: 112.004
+  Day 27: 95.0149
+  Day 28: 103.035
+  Day 29: 101.087
+  Day 30: 108.872
 Total accepted simulations: 5
 Total rejected simulations: 0
 
 Average prices across all simulations:
-  Day 1: 129.972
-  Day 2: 100.186
-  Day 3: 99.4441
-  Day 4: 104.202
-  Day 5: 102.051
-  Day 6: 106.111
-  Day 7: 103.471
-  Day 8: 103.493
-  Day 9: 105.437
-  Day 10: 102.66
-  Day 11: 105.489
-  Day 12: 98.7065
-  Day 13: 101.809
-  Day 14: 104.54
-  Day 15: 104.086
-  Day 16: 104.671
-  Day 17: 104.624
-  Day 18: 99.7833
-  Day 19: 103.486
-  Day 20: 106.26
-  Day 21: 108.425
-  Day 22: 102.554
-  Day 23: 104.975
-  Day 24: 103.788
-  Day 25: 103.481
-  Day 26: 107.446
-  Day 27: 104.458
-  Day 28: 105.026
-  Day 29: 102.632
-  Day 30: 105.407
+  Day 1: 330.258
+  Day 2: 131.267
+  Day 3: 98.4765
+  Day 4: 104.77
+  Day 5: 105.046
+  Day 6: 107.586
+  Day 7: 103.77
+  Day 8: 99.0339
+  Day 9: 100.524
+  Day 10: 103.83
+  Day 11: 105.678
+  Day 12: 108.435
+  Day 13: 100.583
+  Day 14: 101.183
+  Day 15: 104.291
+  Day 16: 107.558
+  Day 17: 102.599
+  Day 18: 105.141
+  Day 19: 106.755
+  Day 20: 104.509
+  Day 21: 102.251
+  Day 22: 101.67
+  Day 23: 103.792
+  Day 24: 98.5344
+  Day 25: 103.229
+  Day 26: 101.26
+  Day 27: 95.4032
+  Day 28: 103.754
+  Day 29: 101.024
+  Day 30: 107.524
 
 Final parameters (normalized features):
   client_numeric: -0.796381
   day: -0.026289
   month: -0.148177
   sku_count_products: -0.84776
-  total_num_count_products: 0.510657
-  total_price_products: 0.489343
+  total_num_count_products: 0.504184
+  total_price_products: 0.495816
   vendor_numeric: 0.281789
   year: 0.970167
 
@@ -176,23 +175,9 @@ Final parameters (no normalized features):
   day: 15
   month: 6
   sku_count_products: 10
-  total_num_count_products: 599.053
-  total_price_products: 385999
+  total_num_count_products: 594.716
+  total_price_products: 388411
   vendor_numeric: 127
   year: 2021
 
-*** compareWithLinearRegression ***
-Success: Enough historical data for comparison.
-Debug: bestSimulation size: 0
-Debug: historicalPrices size: 11040
-Debug: lr_predictions size: 30
-Error: Best simulation is empty. Cannot perform comparison.
-Error: Invalid data for MSE calculation.
-Error: Invalid data for MSE calculation.
-
-Comparison Results:
-MSE for ABC method: nan
-MSE for Linear Regression: nan
-Unable to calculate improvement percentage due to invalid MSE values
-
-*** Finishing date: 2024-08-19 17:15:37 (Buenos Aires -3 UTC) ***
+*** Finishing date: 2024-08-19 20:52:05 (Buenos Aires -3 UTC) ***
