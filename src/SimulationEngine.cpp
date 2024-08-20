@@ -319,8 +319,9 @@ void SimulationEngine::runSimulations(int numberOfIterations, int daysToSimulate
     std::cout << "Entering runSimulations function" << std::endl; 
     std::cout << "Running simulations for SKU: " << skuData.sku << ", Date: " << currentDate << std::endl;
 
-    attributeWeights = loadAttributeWeights("../data/input/attribute_weights.csv");
-    skuIntervals = loadSKUIntervals("../data/input/matriz_intervals_df_prodx5_maxlp20.csv");
+    // 19-08-2024 2020 (no están siendo utilizados aún)
+    // attributeWeights = loadAttributeWeights("../data/input/attribute_weights.csv");
+    // skuIntervals = loadSKUIntervals("../data/input/matriz_intervals_df_prodx5_maxlp20.csv");
 
     loadHistoricalData("../data/input/sku_" + skuData.sku + "/" + currentDate + "/" + skuData.sku + "_filtered_df_features_sku_" + currentDate + ".csv");
 
